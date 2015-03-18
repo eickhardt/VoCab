@@ -43,7 +43,12 @@ class Wotd extends Model {
 	public static function getCurrent()
 	{
 		$wotd = new Wotd;
-		$wotd = $wotd->orderBy('date', 'DESC')->first();
+		$wotd = $wotd->orderBy('date', 'DESC')->orderBy('id', 'DESC')->first();
+
+		if (Meaning::find($wotd->meaning_id)->deleted_at)
+		{
+			Artisan::call('setwordofday');
+		}
 
 		if ($wotd)
 			$meaning = Meaning::with('words')->find($wotd->meaning_id);

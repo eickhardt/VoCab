@@ -28,8 +28,6 @@ class HomeController extends Controller {
 	{
 		$wordcount = $word->count();
 		$wotd = Wotd::getCurrent();
-
-		dd($wotd);
 		
 		return view('home', compact('wordcount', 'wotd'));
 	}
