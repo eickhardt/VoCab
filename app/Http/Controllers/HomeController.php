@@ -24,10 +24,10 @@ class HomeController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index(Word $word, Wotd $wotd)
+	public function index(Word $word)
 	{
 		$wordcount = $word->count();
-		$wotd = $wotd->getCurrent();
+		$wotd = Wotd::getCurrent();
 
 		dd($wotd);
 		
