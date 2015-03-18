@@ -10,21 +10,21 @@
 			</h2>
 		</div> 
 		<div id="words" class="panel-body">
-			<?php /*<button onclick="document.location='{{ route('meaning_create_path') }}'" type="submit" class="btn btn-success">
+			<a href="{{ route('meaning_create_path') }}" type="submit" class="btn btn-success">
 				<span class="glyphicon glyphicon-plus-sign"></span> Create meaning
-			</button>
-			<button onclick="document.location='{{ route('meaning_wotd_path') }}'" type="submit" class="btn btn-primary">
+			</a>
+			<a href="{{ route('meaning_wotd_path') }}" type="submit" class="btn btn-primary">
 				<span class="glyphicon glyphicon-certificate"></span> Word of the Day
-			</button>
-			<button onclick="document.location='{{ route('statistics_path') }}'" type="submit" class="btn btn-primary">
+			</a>
+			<a href="{{ route('statistics_path') }}" type="submit" class="btn btn-primary">
 				<span class="glyphicon glyphicon-stats"></span> Statistics
-			</button>
-			<button onclick="document.location='{{ route('backup_show_path') }}'" type="submit" class="btn btn-primary">
+			</a>
+			<a href="{{ route('backup_show_path') }}" type="submit" class="btn btn-primary">
 				<span class="glyphicon glyphicon-hdd"></span> Backup
-			</button>*/ ?>
-			<button id="advanced_search_btn" type="submit" class="btn btn-info">
+			</a>
+			<a id="advanced_search_btn" type="submit" class="btn btn-info">
 				<span class="glyphicon glyphicon-cog Search settings"></span> Settings
-			</button>
+			</a>
 			<br><br>
 
 			<div id="search_settings" class="panel panel-default">
