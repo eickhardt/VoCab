@@ -19,8 +19,8 @@ return [
              * You can specify individual files as well.
              */
             'exclude' => [
-                storage_path(),
-                base_path('vendor'),
+                // storage_path(),
+                // base_path('vendor'),
             ],
         ],
 
