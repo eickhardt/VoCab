@@ -1,23 +1,31 @@
-## Laravel PHP Framework
+# LanguageWebApp
+This application is intended for language and code training purposes.
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/downloads.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+## Features:
+As the application expands, please update the information here if it does not reflect the current state of the project.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+* Login
+* User registration (currently disabled)
+* Word database REST
+	* Search functionality
+	* Word of the day
+	* Random word and different word lists
+	* Backup on the server and downloadable file
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+## To come:
+* Word API
+* Advanced search
+* Advanced statistics
+* Database restructuring
+* More languages
 
-## Official Documentation
+## To do (ideas from YLW):
+* New: Add a user with only viewing privileges
+* New: Add a column "Viewed" on the words for users, that when they click it it highlights the word so they remember they have seen it. Then add a menu "Words learned" where they can see those words they have highlighted. Later, this collection of words can be used for creating flashcards, memory exercises etc
+* New: An optional "advanced search", if accessed the user can specify options like which type, which language, find only matching of the search word, or start by the search word, etc
+* New: Statistics: allow for search options on period of times: redraw the table for a period between two dates that can be set as parameters (between 2014-01-20 and the date of today)
+* New: Statistics: in the Recently added words count, add a line for the total of the 3 lines :)
+* ~~New: Statistics: Add a line for the count of DK + PL + ES~~(done)
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+* Fix: when I search “wpl” it doesn’t return me the words containing “wpł” (= searching for “L” doesn’t give words with “Ł “ as it should)
+* ~~Fix: the categories are wrong in the Statistic page. Words with 1xx are adjectives, words with 2xx are nouns (I think only those two are wrong, they are inversed, but just in case you can also check 3xx = verbs, 4xx = adverbs and 5xx = others)~~(done)
