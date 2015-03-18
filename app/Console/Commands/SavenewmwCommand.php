@@ -48,12 +48,12 @@ class SavenewmwCommand extends Command {
 		$words = Word::all();
 		$words_count = $words->count();
 
-		Storage::put('static/words.json', $words->toJson());
+		Storage::put('words.json', $words->toJson());
 		$this->info('Words saved. Count: '.$words_count);
 
 		$meanings = Meaning::all();
 		$meanings_count = $meanings->count();
-		Storage::put('static/meanings.json', $meanings->toJson());
+		Storage::put('meanings.json', $meanings->toJson());
 		$this->info('Meanings saved. Count: '.$meanings_count);
 	}
 }
