@@ -24,7 +24,8 @@
 							<div class="col-md-6 col-md-offset-0">
 								<ul class="list-group">
 									<li class="list-group-item">
-										Text: <b>{{ $word->text }}</b>
+										Text: <b>
+										{!! link_to_route('meaning_edit_path', $word->text, $word->meaning_id) !!}</b>
 									</li>
 									<li class="list-group-item">
 										Language: <img src="{{ $word->language->image }}"> {{ $word->language->name }}
@@ -55,14 +56,6 @@
 						@endif
 
 						<br>
-
-						@if (isset($list_type) && $list_type != 'Trashed')
-						<br>
-							<h4>Meaning</h4>
-							<ul class="list-group">
-								<li class="list-group-item">{!! link_to_route('meaning_edit_path', 'Meaning', $word->meaning_id) !!}</li>
-							</ul>
-						@endif
 					</div>
 				</div>
 

@@ -61,7 +61,10 @@ class RestoreoldmwCommand extends Command {
 			$new_meaning = new Meaning;
 			$new_meaning->meaning_type_id = $meaning->word_type_id;
 			$new_meaning->real_word_type = $meaning->real_word_type;
-			$new_meaning->english = $meaning->english;
+			if (isset($meaning->english))
+				$new_meaning->root = $meaning->english;
+			else
+				$new_meaning->root = $meaning->root;
 			$new_meaning->created_at = $meaning->created_at;
 			$new_meaning->updated_at = $meaning->updated_at;
 			$new_meaning->save();

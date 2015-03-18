@@ -18,7 +18,7 @@ class CreateMeaningsTable extends Migration {
 			$table->integer('real_word_type')->unsigned()->index();
 			$table->integer('meaning_type_id')->unsigned()->index();
 			$table->foreign('meaning_type_id')->references('id')->on('meaning_types');
-			$table->char('english', 255)->nullable();
+			$table->char('root', 255)->nullable();
 			$table->softDeletes();
 			$table->timestamps();
 		});

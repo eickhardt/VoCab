@@ -21,6 +21,15 @@ class Wotd extends Model {
 	protected $table = 'wotds';
 
 	/**
+	 * Fillable fields for a wotd.
+	 *
+	 * @var array
+	 */
+	protected $fillable = [
+		'date', 'meaning_id'
+	];
+
+	/**
 	 * A word of the day has one meaning.
 	 */
 	public function meaning()

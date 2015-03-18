@@ -3,9 +3,12 @@
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use App\WordN;
-use App\WordWotd;
-use App\WordMeaning;
+
+use App\Word;
+use App\Wotd;
+use App\Meaning;
+
+use DB;
 
 class WotdCommand extends Command {
 
@@ -30,11 +33,11 @@ class WotdCommand extends Command {
 	 */
 	public function fire()
 	{
-		// Pick a random word from the words_all table
-		$word = WordMeaning::orderByRaw("RAND()")->take(1)->first();
+		// Pick a random word from the meanings table
+		$meaning = Meaning::orderBy(DB::raw("RAND()"))->first();
 
 		// Add it as a word of the day
-		WordWotd::create(['date' => date('Y-m-d'), 'word_meaning_id' => $word->id]);
+		Wotd::create(['date' => date('Y-m-d'), 'meaning_id' => $meaning->id]);
 
 		$this->info('Word of the day has been set.');
 	}

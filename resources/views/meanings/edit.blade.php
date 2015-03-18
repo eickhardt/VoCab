@@ -4,7 +4,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h2>
-				<span class="glyphicon glyphicon glyphicon-pencil"></span> Meanings / Edit / <b>{{ $meaning->english }}</b>
+				<span class="glyphicon glyphicon glyphicon-pencil"></span> Meanings / Edit / <b>{{ $meaning->root }}</b>
 			</h2>
 		</div>
 
@@ -58,11 +58,11 @@
 							</div>
 						</div>
 
-						<div class="form-group {{ $errors->has('english') ? 'has-error' : '' }}">
-							<label class="col-md-4 control-label">English</label>
+						<div class="form-group {{ $errors->has('root') ? 'has-error' : '' }}">
+							<label class="col-md-4 control-label">Root</label>
 							<div class="col-md-6">
-								{!! Form::text('english', NULL, ['class' => 'form-control']) !!}
-								{!! $errors->first('english', '<span class="help-block">:message</span>') !!}
+								{!! Form::text('root', NULL, ['class' => 'form-control']) !!}
+								{!! $errors->first('root', '<span class="help-block">:message</span>') !!}
 							</div>
 						</div>
 

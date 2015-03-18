@@ -68,8 +68,10 @@
 				<span class="glyphicon glyphicon-search"></span> Goto search
 			</a>
 
-			{!! link_to_route('mwdata1_path', 'One') !!}
-			{!! link_to_route('mwdata2_path', 'Two') !!}
+			@if(Auth::user()->name == 'Daniel Eickhardt')
+				{!! link_to_route('mwdata1_path', 'One') !!}
+				{!! link_to_route('mwdata2_path', 'Two') !!}
+			@endif
 		</div>
 	</div>
 @endsection

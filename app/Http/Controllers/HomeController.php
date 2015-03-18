@@ -27,10 +27,9 @@ class HomeController extends Controller {
 	public function index(Word $word, Wotd $wotd)
 	{
 		$wordcount = $word->count();
-		// $wotd = $wotd->getCurrent();
+		$wotd = $wotd->getCurrent();
 		
-		return view('home', compact('wordcount'));
-		// return view('home', compact('wordcount', 'wotd'));
+		return view('home', compact('wordcount', 'wotd'));
 	}
 
 	/**

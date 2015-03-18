@@ -31,7 +31,7 @@
 						{!! $errors->first('meaning_id', '<span class="help-block">:message</span>') !!}
 					</div>
 					<div class="col-md-4">
-						{!! Form::text('meaning_english', isset($meaning) ? $meaning->english : '', ['class' => 'form-control', 'disabled', 'id' => 'meaning_english']) !!}
+						{!! Form::text('meaning_root', isset($meaning) ? $meaning->root : '', ['class' => 'form-control', 'disabled', 'id' => 'meaning_root']) !!}
 					</div>
 				</div>
 
@@ -79,7 +79,7 @@
 			{
 				$('#words').remove();
 				meaning_id = $(this).val();
-				setMeaningEnglish(meaning_id, url, token);
+				setMeaningRoot(meaning_id, url, token);
 			}, 200);
 
 			var language_id = {{ $language_id }};
@@ -89,7 +89,7 @@
 			}
 		});
 
-		function setMeaningEnglish(meaning_id, url, token) 
+		function setMeaningRoot(meaning_id, url, token) 
 		{
 			$.ajax({
 				type: 'POST',
@@ -97,7 +97,7 @@
 				data: { meaning_id: meaning_id, _token: token },
 				success: function(meaning) 
 				{
-					$('#meaning_english').val(meaning['english']);
+					$('#meaning_root').val(meaning['root']);
 					console.log(meaning['words']);
 
 					links = '<p>Words with the same meaning:</p> ';

@@ -18,7 +18,7 @@
 						{!! $errors->first('meaning_id', '<span class="help-block">:message</span>') !!}
 					</div>
 					<div class="col-md-4">
-						{!! Form::text('meaning_english', isset($meaning) ? $meaning->english : '', ['class' => 'form-control', 'disabled', 'id' => 'meaning_english']) !!}
+						{!! Form::text('meaning_root', isset($meaning) ? $meaning->root : '', ['class' => 'form-control', 'disabled', 'id' => 'meaning_root']) !!}
 					</div>
 				</div>
 
@@ -121,23 +121,23 @@
 			var _globalObj = <?= json_encode(array('_token'=> csrf_token())) ?>;
 			var token = _globalObj._token;
 
-			setMeaningEnglish($('#meaning_id').val(), url, token);
+			setMeaningRoot($('#meaning_id').val(), url, token);
 
 			$('#meaning_id').bindWithDelay('input propertychange paste', function() 
 			{
 				meaning_id = $(this).val();
-				setMeaningEnglish(meaning_id, url, token);
+				setMeaningRoot(meaning_id, url, token);
 			}, 200);
 		});
 
-		function setMeaningEnglish(meaning_id, url, token) 
+		function setMeaningRoot(meaning_id, url, token) 
 		{
 			$.ajax({
 				type: 'POST',
 				url: url,
 				data: { meaning_id: meaning_id, _token: token },
 				success: function(meaning) {
-					$('#meaning_english').val(meaning['english']);
+					$('#meaning_root').val(meaning['root']);
 				}
 			})
 		}

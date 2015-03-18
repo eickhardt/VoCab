@@ -79,7 +79,7 @@ class MeaningsController extends Controller {
 		$meaning = new Meaning;
 		$meaning->meaning_type_id = $request->get('meaning_type_id');
 		$meaning->real_word_type = $request->get('real_word_type');
-		$meaning->english = $request->get('en');
+		$meaning->root = $request->get('en');
 		$meaning->save();
 
 		// We also want to create a word in each of the provided languages
@@ -99,7 +99,7 @@ class MeaningsController extends Controller {
 		}
 
 		// Tell the user what happened and redirect
-		Session::flash('success', "A new meaning '".$meaning->english."' was created, along with ".$new_word_count." associated words.");
+		Session::flash('success', "A new meaning '".$meaning->root."' was created, along with ".$new_word_count." associated words.");
 		return redirect()->route('meaning_edit_path', $meaning->id);
 	}
 
@@ -146,11 +146,11 @@ class MeaningsController extends Controller {
 		// Update the meaning, since validation has passed if we reach this code
 		$meaning->real_word_type = $request->get('real_word_type');
 		$meaning->meaning_type_id = $request->get('meaning_type_id');
-		$meaning->english = $request->get('english');
+		$meaning->root = $request->get('root');
 		$meaning->save();
 
 		// Tell the user what happened and redirect
-		Session::flash('success', "The meaning '".$meaning->english."' was updated.");
+		Session::flash('success', "The meaning '".$meaning->root."' was updated.");
 		return redirect()->route('meaning_edit_path', $meaning->id);
 	}
 
@@ -176,11 +176,11 @@ class MeaningsController extends Controller {
 		$meaning->words()->delete();
 		
 		// Finally, delete the meaning itself
-		$meaning_english = $meaning->english;
+		$meaning_root = $meaning->root;
 		$meaning->delete();
 
 		// Let the user know what happened
-		Session::flash('success', "The meaning '" .$meaning_english. "' was trashed, along with its associated words.");
+		Session::flash('success', "The meaning '" .$meaning_root. "' was trashed, along with its associated words.");
 		return redirect()->route('search_path');
 	}
 
@@ -223,7 +223,7 @@ class MeaningsController extends Controller {
 	 */
 	public function getSimpleMeaning()
 	{
-		$fail_array['english'] = 'No meaning found.';
+		$fail_array['root'] = 'No meaning found.';
 		if (Input::has('meaning_id'))
 		{
 			$meaning = Meaning::with('words')->find(Input::get('meaning_id'));
@@ -269,7 +269,7 @@ class MeaningsController extends Controller {
 		$restored_words_count = $words->count();
 		$words->restore();
 
-		Session::flash('success', "The meaning '" .$meaning->english. "' was restored, along with ".$words->count()." associated words.");
+		Session::flash('success', "The meaning '" .$meaning->root. "' was restored, along with ".$words->count()." associated words.");
 		return redirect()->route('meanings_trashed_path');
 	}
 }

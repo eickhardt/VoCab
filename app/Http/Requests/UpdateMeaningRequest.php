@@ -46,7 +46,7 @@ class UpdateMeaningRequest extends Request {
 		return [
 			'real_word_type' => 'required|integer|min:100|max:999',
 			'meaning_type_id' => 'required|exists:meaning_types,id',
-			'english' => 'required',
+			'root' => 'required',
 		];
 	}
 

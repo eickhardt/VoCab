@@ -10,7 +10,7 @@
 
 		<div class="panel-body">
 			@unless (Auth::guest())
-				You are logged in! Word of the day is: <b><?php /*{!! link_to_route('meaning_wotd_path', $wotd->english) !!}</b>*/ ?><br><br>
+				You are logged in! Word of the day is: <b>{!! link_to_route('meaning_wotd_path', $wotd->root) !!}</b><br><br>
 				<div class="list-group">
 					<div href="#" class="list-group-item active">
 						You have access to the following features:
