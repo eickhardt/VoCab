@@ -1,0 +1,105 @@
+.inline {
+	display: inline;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.pagination {
+	margin: 0;
+}
+
+#waitmsg {
+	display: none;
+}
+
+#words_table {
+	display: none;
+	margin: 18px 0 0 0;
+}
+
+#noresult {
+	display: none;
+}
+
+#search_settings {
+	display: none;
+}
+
+.search_language {
+	margin-right: 20px;
+}
+
+.splash-border {
+	margin: 0 16px;
+}
+
+#awesome {
+	-webkit-filter: grayscale(1); -webkit-filter: grayscale(100%);
+	filter: gray; filter: grayscale(100%);
+	filter: url(desaturate.svg#greyscale);
+	opacity: 0.3;
+	margin: 0 auto;
+	margin-bottom: 18px;
+	border-radius: 5px;
+}
+
+.search_settings_header {
+	margin: 0;
+}
+
+.language_checkbox {
+	vertical-align: sub;
+}
+
+.language_well {
+	margin: 0;
+}
+
+.panel-heading h2 {
+	margin-top: 10px;
+	color: #777777;
+}
+
+.panel-heading h3 {
+	color: #777777;
+}
+
+.panel-heading h2 .glyphicon, .panel-heading h3 .glyphicon {
+	vertical-align: top;
+}
+
+.meaning_words_flag {
+	margin-right: 10px;
+}
+
+button .glyphicon {
+	vertical-align: text-top;
+	margin-right: 5px;
+}
+
+.panel-default .panel-heading {
+	background: url(/img/white.jpg);
+	/*color: white;*/
+}
+
+.navbar-collapse, .navbar-header {
+	background: url(/img/white.jpg);
+}
+
+.navbar-brand, .navbar-nav > li > a {
+	font-weight: bold;
+}
+
+.vertical_middle > td {
+	vertical-align: middle !important;
+}
+
+.text_center {
+	text-align: center;
+}
+
+body {
+	color: #777777;
+}
