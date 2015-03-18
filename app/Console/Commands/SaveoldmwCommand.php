@@ -70,12 +70,12 @@ class SaveoldmwCommand extends Command {
 			}
 		}
 
-		Storage::put('words.json', $c->toJson());
+		Storage::put('static/words.json', $c->toJson());
 		$this->info('Words saved. Count: '.$words_count);
 
 		$meanings = WordMeaning::all();
 		$meanings_count = $meanings->count();
-		Storage::put('meanings.json', $meanings->toJson());
+		Storage::put('static/meanings.json', $meanings->toJson());
 		$this->info('Meanings saved. Count: '.$meanings_count);
 	}
 

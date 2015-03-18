@@ -47,7 +47,7 @@ class RestoreoldmwCommand extends Command {
 		$this->info('Starting restore old MW command.');
 
 		// The path where the stored files are
-		$meanings_file_path = storage_path().'/app/meanings.json';
+		$meanings_file_path = storage_path().'/static/meanings.json';
 		$meanings_json = File::get($meanings_file_path);
 
 		// Decode the Json into objects
@@ -69,7 +69,7 @@ class RestoreoldmwCommand extends Command {
 		$this->info('Meanings ('.$meanings_count.') done.');
 
 		// The path where the stored files are
-		$words_file_path = storage_path().'/app/words.json';
+		$words_file_path = storage_path().'/static/words.json';
 		$words_json = File::get($words_file_path);
 
 		// Decode the Json into objects
