@@ -45,13 +45,13 @@ class SavenewmwCommand extends Command {
 	{
 		$this->info('Starting save new MW command.');
 
-		$words = Word::withTrashed()->all();
+		$words = Word::withTrashed()->get();
 		$words_count = $words->count();
 
 		Storage::put('words.json', $words->toJson());
 		$this->info('Words saved. Count: '.$words_count);
 
-		$meanings = Meaning::withTrashed()->all();
+		$meanings = Meaning::withTrashed()->get();
 		$meanings_count = $meanings->count();
 		Storage::put('meanings.json', $meanings->toJson());
 		$this->info('Meanings saved. Count: '.$meanings_count);
