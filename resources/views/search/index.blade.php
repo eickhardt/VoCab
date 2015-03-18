@@ -78,7 +78,7 @@
 		</div>
 		<?php /*<img id="awesome" class="img-responsive" src="/img/awesome.png">*/ ?>
 		<div class="splash-border">
-			<img id="awesome" class="img-responsive" src="/img/pattern2.jpg">
+			<img id="awesome" class="img-responsive" src="/img/words.jpg">
 		</div>
 	</div>
 @endsection
