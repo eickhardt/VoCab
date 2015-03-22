@@ -180,16 +180,18 @@
 						{
 							for (var i = 0; i <= words.length -1; i++) 
 							{
-								var edit_link = "document.location = '/meanings/" + words[i]['meaning_id'] + "/edit'";
+								var edit_link = "/meanings/" + words[i]['meaning_id'] + "/edit";
 
 								var row = $('#cloneme').clone().removeAttr('id').removeAttr('style');
 
 								row.addClass('removeme');
-								row.find('.id').html(words[i]['id']).attr('onclick', edit_link);
-								row.find('.language').html( '<img src="' + languages[words[i]['language_id']-1].image + '"> ' + languages[words[i]['language_id']-1].name ).attr('onclick', edit_link);
-								row.find('.text').html(words[i]['text']).attr('onclick', edit_link);
-								row.find('.created_at').html(words[i]['created_at']).attr('onclick', edit_link);
-								row.find('.updated_at').html(words[i]['updated_at']).attr('onclick', edit_link);
+								row.find('.id').html(words[i]['id']);
+								row.find('.language').html( '<img src="' + languages[words[i]['language_id']-1].image + '"> ' + languages[words[i]['language_id']-1].name );
+								row.find('.text').html('<a href="'+ edit_link +'">' + words[i]['text'] + '</a>');
+								row.find('.created_at').html(words[i]['created_at']);
+								row.find('.updated_at').html(words[i]['updated_at']);
+
+								// .attr('onclick', edit_link);
 
 								row.appendTo($('#list'));
 							}
