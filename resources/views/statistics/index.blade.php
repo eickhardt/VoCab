@@ -41,7 +41,7 @@
 				</div>
 			</div>
 
-			<?php /*
+
 			<h3>General statistics</h3>
 
 			<div class="panel panel-default">
@@ -51,11 +51,10 @@
 							<tr class="active">
 								<th></th>
 								<th>Total</th>
-								<th>Adjectives</th>
-								<th>Nouns</th>
-								<th>Verbs</th>
-								<th>Other</th>
-								<th>%</th>
+								@foreach ($types as $type)
+									<th>{{ $type->name }}s</th>
+								@endforeach
+								<th>Total %</th>
 							</tr>
 						</thead>
 						@foreach ($statistics_data as $fields)
@@ -74,7 +73,6 @@
 					</table>
 				</div>
 			</div>
-			*/ ?>
 		</div>
 	</div>
 @endsection

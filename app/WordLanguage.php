@@ -23,7 +23,7 @@ class WordLanguage extends Model {
 	 */
 	public function words()
     {
-        return $this->hasMany('App\Word');
+        return $this->hasMany('App\Word', 'language_id');
     }
 
 	/**
