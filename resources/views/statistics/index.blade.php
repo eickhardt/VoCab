@@ -41,7 +41,7 @@
 				</div>
 			</div>
 
-
+			<?php /*
 			<h3>General statistics</h3>
 
 			<div class="panel panel-default">
@@ -73,6 +73,7 @@
 					</table>
 				</div>
 			</div>
+			*/ ?>
 		</div>
 	</div>
 @endsection

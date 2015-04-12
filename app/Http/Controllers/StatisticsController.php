@@ -50,6 +50,7 @@ class StatisticsController extends Controller {
 			}
 		}
 
+		/*
 		$statistics_data = [];
 
 		// Totals
@@ -174,5 +175,7 @@ class StatisticsController extends Controller {
 		$statistics_data['da_es']['total_percent'] = round( $statistics_data['da_es']['total_all'] / $statistics_data['total']['total_all'] * 100, 2 );
 
 		return view('statistics.index', compact('statistics_data', 'recent_words_data', 'types'));
+		*/
+		return view('statistics.index', compact('recent_words_data'));
 	}
 }
