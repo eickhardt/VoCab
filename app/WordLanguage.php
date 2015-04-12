@@ -19,6 +19,15 @@ class WordLanguage extends Model {
 	protected $table = 'word_languages';
 
 	/**
+	 * Fillable fields for a language.
+	 *
+	 * @var array
+	 */
+	protected $fillable = [
+		'name', 'short_name', 'image'
+	];
+
+	/**
 	 * A WordLanguage has many words related to it.
 	 */
 	public function words()

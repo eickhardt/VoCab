@@ -18,6 +18,8 @@ class Kernel extends ConsoleKernel {
 		'App\Console\Commands\RestoreoldmwCommand',
 		'App\Console\Commands\SavenewmwCommand',
 		'App\Console\Commands\ChangeWordDatesCommand',
+		'App\Console\Commands\CreateUserCommand',
+		'App\Console\Commands\CreateLanguageCommand',
 	];
 
 	/**
