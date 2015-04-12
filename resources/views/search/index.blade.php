@@ -50,35 +50,48 @@
 
 			<input id="searchbar" class="form-control" placeholder="Search for..." />
 
+			<ul id="words_table" class="list-group words_list">
+				<li id="cloneme" class="list-group-item" style="display:none;"></li>
+			</ul>
+
+			<?php /* This image is here so it's loaded before it needs to be used */ ?>
+			<img src="/img/loading.gif" style="display:none;">
+
+			<?php /*
 			<div id="words_table" class="panel panel-default">
 				<div class="table-responsive"> 
 					<table class="table table-hover table-bordered table-striped">
+						<?php /*
 						<thead>
 							<tr class="active">
-								<th>Text</th>
+								<th>Word</th>
 								<th>Language</th>
 								<th>Created at</th>
 								<th>Updated at</th>
 								<th>Row</th>
 							</tr>
 						</thead>
+						/ ?>
 						<tbody id="list">
 							<tr id="cloneme" style="display:none;">
-								<td class="clickable text"></td>
-								<td class="clickable language"></td>
-								<td class="clickable created_at"></td>
-								<td class="clickable updated_at"></td>
-								<td class="clickable id"></td>
+								<td class="text"></td>
+								<?php /*
+								<td class="language"></td>
+								<td class="created_at"></td>
+								<td class="updated_at"></td>
+								<td class="id"></td>
+								/ ?>
 							</tr>
 							<tr id="noresult"><td colspan="7">There seems to be nothing here.</td></tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
+			*/ ?>
 		</div>
 		<?php /*<img id="awesome" class="img-responsive" src="/img/awesome.png">*/ ?>
 		<div class="splash-border">
-			<img id="awesome" class="img-responsive" src="/img/words.jpg">
+			<img id="awesome" class="img-responsive meanings" src="/img/words.jpg">
 		</div>
 	</div>
 @endsection
@@ -87,7 +100,6 @@
 	<script type="text/javascript">
 		$(function() 
 		{
-
 			// Show advanced options when the corresponsing button is clicked
 			$('#advanced_search_btn').on('click', function() 
 			{
@@ -97,6 +109,7 @@
 			// Variables we will need for the ajax requests
 			var method = 'POST';
 			var url = '<?= route('ajax_word_search_path', [], false) ?>';
+			var translations_url = '<?= route('ajax_simple_meaning_path', [], false) ?>';
 			var _globalObj = <?= json_encode(array('_token'=> csrf_token())) ?>;
 			var token = _globalObj._token;
 
@@ -116,6 +129,27 @@
 				var search_term = $('#searchbar').val();
 				updateList2(search_term, token, method, url, languages, getOptions());
 			}, 200);
+
+			// Click event handler displaying all translations of a word
+			$(document).on('click', '.translations', function() 
+			{
+				var tip = new Opentip($(this), '<img class="loading_translations" src="/img/loading.gif">', { target: true, tipJoint: "right", background: "white", borderColor: "lightgray" });
+				
+				tip.show();
+
+				var meaning_id = $(this).data('id');
+
+				$.ajax({
+					type: 'POST',
+					url: translations_url,
+					data: { meaning_id: meaning_id, _token: token, html: true },
+					success: function(content) {
+						// console.log(content);
+						tip.setContent(content);
+					}
+				});
+				$(this).unbind('click');
+			});
 
 			// Check if there is something to search for already
 			var s = '{{ $s }}';
@@ -175,25 +209,29 @@
 					url: url,
 					data: { search_term: search_term, _token: token, options: options },
 					success: function(words) {
-						// console.log(words);
 						if (words.length > 0)
 						{
 							for (var i = 0; i <= words.length -1; i++) 
 							{
 								var edit_link = "/meanings/" + words[i]['meaning_id'] + "/edit";
 
-								var row = $('#cloneme').clone().removeAttr('id').removeAttr('style');
-
-								row.addClass('removeme');
-								row.find('.id').html(words[i]['id']);
-								row.find('.language').html( '<img src="' + languages[words[i]['language_id']-1].image + '"> ' + languages[words[i]['language_id']-1].name );
-								row.find('.text').html('<a href="'+ edit_link +'">' + words[i]['text'] + '</a>');
-								row.find('.created_at').html(words[i]['created_at']);
-								row.find('.updated_at').html(words[i]['updated_at']);
+								var row = $('#cloneme').clone().removeAttr('id').removeAttr('style').addClass('removeme');
+								// row.find('.id').html(words[i]['id']);
+								// row.find('.language').html( '<span class="meanings"><img src="' + languages[words[i]['language_id']-1].image + '"> ' + languages[words[i]['language_id']-1].name + '</span>' ).attr('data-meaningid', words[i]['meaning_id']);
+								row.html( '<img class="row_image" src="' + languages[words[i]['language_id']-1].image + '"> ' + '<a href="'+ edit_link +'">' + words[i]['text'] + '</a> <div class="btn btn-xs btn-primary pull-right translations" data-id="' + words[i]['meaning_id'] + '"><span class="glyphicon glyphicon-transfer"></span> Translations</div>');
+								// row.find('.created_at').html(words[i]['created_at']);
+								// row.find('.updated_at').html(words[i]['updated_at']);
 
 								// .attr('onclick', edit_link);
 
-								row.appendTo($('#list'));
+								row.prependTo($('.words_list'));
+
+								// row.each(function() 
+								// {
+								// 	$(this).click(translations(words[i]['meaning_id']));
+								// })
+								// new Opentip("#word_" + words[i]['meaning_id'], { target: "#word_" + words[i]['meaning_id'], tipJoint: "right" });
+								// console.log('s');
 							}
 							$('#noresult').hide();
 						}

@@ -9,6 +9,7 @@ use App\Http\Requests\CreateMeaningRequest;
 use App\Http\Requests\UpdateMeaningRequest;
 
 use DB;
+use Log;
 use Auth;
 use Input;
 use Session;
@@ -226,11 +227,16 @@ class MeaningsController extends Controller {
 		$fail_array['root'] = 'No meaning found.';
 		if (Input::has('meaning_id'))
 		{
-			$meaning = Meaning::with('words')->find(Input::get('meaning_id'));
+			$meaning = Meaning::with(['words', 'words.language'])->find(Input::get('meaning_id'));
 			if ($meaning)
 			{
 				$meaning_array = $meaning->toArray();
 				// $meaning_array['words'] = $meaning->words->toArray();
+				if (Input::has('html'))
+				{
+					return tipContent($meaning_array);
+				}
+
 				return $meaning_array;
 				// return $meaning->toArray();
 			}
@@ -272,4 +278,30 @@ class MeaningsController extends Controller {
 		Session::flash('success', "The meaning '" .$meaning->root. "' was restored, along with ".$words->count()." associated words.");
 		return redirect()->route('meanings_trashed_path');
 	}
+}
+
+/**
+ * Helper function to build HTML for translations tip on search page. 
+ * TODO: This should be done in JS!!
+ *
+ * @return String
+ */
+function tipContent($meaning_array)
+{
+	$result_array = [];
+	foreach ($meaning_array['words'] as $word) 
+	{
+		$result_array[$word['language']['name']][] = $word['text'];
+	}
+
+	$html = '';
+	foreach ($result_array as $name => $words) 
+	{
+		$language = WordLanguage::where('name', $name)->first();
+		$line = '<p><img class="translation_image" src="'.$language->image.'">'.implode(', ', $words).'</p>';
+
+		$html = $html.$line;
+	}
+
+	return $html;
 }

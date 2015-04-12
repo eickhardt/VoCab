@@ -9,8 +9,9 @@
 
 	<!-- Bootstrap -->
 	<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-	<link href="/css/app.css" rel="stylesheet">
-	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/opentip.css" rel="stylesheet" type="text/css" />
+	<link href="/css/app.css" rel="stylesheet" type="text/css" />
+	<link href="/css/custom.css" rel="stylesheet" type="text/css" />
 
 	<!-- Fonts -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -112,6 +113,8 @@
 	<script src="/js/jquery-ui.min.js"></script>
 	<script src="/js/bindWithDelay.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script src="/js/opentip.min.js"></script>
+	<?php /*<script src="/js/opentip-styles.js"></script>*/ ?>
 
 	<script type="text/javascript">
 		$(function() {

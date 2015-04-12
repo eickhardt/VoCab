@@ -103,7 +103,6 @@ $router->post('ajax/simple_meaning',
 $router->post('ajax/words_search', 
 	['as' => 'ajax_word_search_path', 'uses' => 'WordsController@search']
 );
-
 /**
  * Backup
  */

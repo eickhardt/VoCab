@@ -164,6 +164,11 @@ return [
 		 * Backup package
 		 */
 		'Spatie\Backup\BackupServiceProvider',
+
+		/**
+		 * Tail the log from console
+		 */
+		'Spatie\Tail\TailServiceProvider',
 	],
 
 	/*
