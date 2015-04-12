@@ -15,7 +15,7 @@ class CreateWordRequest extends Request {
 	{
 		$user = Auth::user();
 
-		$allowed_users = ['Daniel Eickhardt', 'Gabrielle Tranchet', 'Antoine Tranchet', 'Anne-Sophie Tranchet'];
+		$allowed_users = ['Daniel Eickhardt', 'Gabrielle Tranchet', 'Antoine Tranchet', 'Anne-Sophie Tranchet', 'Hicham Johra'];
 
 		if (in_array($user->name, $allowed_users))
 		{
