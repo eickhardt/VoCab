@@ -15,7 +15,7 @@ class CreateMeaningRequest extends Request {
 	{
 		$user = Auth::user();
 
-		$allowed_users = ['Daniel Eickhardt', 'Gabrielle Tranchet'];
+		$allowed_users = ['Daniel Eickhardt', 'Gabrielle Tranchet', 'Antoine Tranchet', 'Anne-Sophie Tranchet'];
 
 		if (in_array($user->name, $allowed_users))
 		{
