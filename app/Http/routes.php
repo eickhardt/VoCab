@@ -8,9 +8,9 @@ $router->get('/',
 );
 
 // TODO: Fix proper registration
-get('auth/register', function() {
-	return redirect('/');
-});
+// get('auth/register', function() {
+// 	return redirect('/');
+// });
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
