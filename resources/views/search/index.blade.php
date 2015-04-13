@@ -133,22 +133,23 @@
 			// Click event handler displaying all translations of a word
 			$(document).on('click', '.translations', function() 
 			{
-				var tip = new Opentip($(this), '<img class="loading_translations" src="/img/loading.gif">', { target: true, tipJoint: "right", background: "white", borderColor: "lightgray" });
-				
-				tip.show();
-
 				var meaning_id = $(this).data('id');
-
-				$.ajax({
-					type: 'POST',
-					url: translations_url,
-					data: { meaning_id: meaning_id, _token: token, html: true },
-					success: function(content) {
-						// console.log(content);
-						tip.setContent(content);
+				var tip = new Opentip(
+					$(this),
+					{ 
+						target: $(this).parent().find('a'), 
+						tipJoint: "left", 
+						background: "white", 
+						borderColor: "lightgray",
+						showOn: 'creation',
+						offset: [7, 0],
+						hideTrigger: 'closeButton',
+						closeButtonRadius: 10,
+						closeButtonCrossSize: 5,
+						closeButtonCrossColor: '#337ab7',
+						ajax: translations_url + '/' + meaning_id
 					}
-				});
-				$(this).unbind('click');
+				);
 			});
 
 			// Check if there is something to search for already

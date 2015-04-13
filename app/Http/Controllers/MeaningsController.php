@@ -222,25 +222,30 @@ class MeaningsController extends Controller {
 	 *
 	 * @return Array
 	 */
-	public function getSimpleMeaning()
+	public function getSimpleMeaning($meaning_id = null)
 	{
+		$html = false;
+		if ($meaning_id)
+			$html = true;
+			// return $meaning_id;
+
 		$fail_array['root'] = 'No meaning found.';
 		if (Input::has('meaning_id'))
 		{
-			$meaning = Meaning::with(['words', 'words.language'])->find(Input::get('meaning_id'));
-			if ($meaning)
+			$meaning_id = Input::get('meaning_id');
+		}
+		$meaning = Meaning::with(['words', 'words.language'])->find($meaning_id);
+		if ($meaning)
+		{
+			$meaning_array = $meaning->toArray();
+			// $meaning_array['words'] = $meaning->words->toArray();
+			if ($html)
 			{
-				$meaning_array = $meaning->toArray();
-				// $meaning_array['words'] = $meaning->words->toArray();
-				if (Input::has('html'))
-				{
-					return tipContent($meaning_array);
-				}
-
-				return $meaning_array;
-				// return $meaning->toArray();
+				return tipContent($meaning_array);
 			}
-			return $fail_array;
+
+			return $meaning_array;
+			// return $meaning->toArray();
 		}
 		return $fail_array;
 	}

@@ -100,6 +100,10 @@ $router->post('ajax/simple_meaning',
 	['as' => 'ajax_simple_meaning_path', 'uses' => 'MeaningsController@getSimpleMeaning']
 );
 
+$router->get('ajax/simple_meaning/{meaning_id}', 
+	['as' => 'ajax_get_simple_meaning_path', 'uses' => 'MeaningsController@getSimpleMeaning']
+);
+
 $router->post('ajax/words_search', 
 	['as' => 'ajax_word_search_path', 'uses' => 'WordsController@search']
 );
