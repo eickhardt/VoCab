@@ -123,8 +123,11 @@ body {
 
 .removeme {
 	transition: background-color 0.2s ease;
-	background-color: #fefefe;
 }
 .removeme:hover {
 	background-color: #f5f5f5;
+}
+
+.btn {
+	transition: all 0.2s ease;
 }
