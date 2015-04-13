@@ -294,15 +294,23 @@ function tipContent($meaning_array)
 	$result_array = [];
 	foreach ($meaning_array['words'] as $word) 
 	{
-		$result_array[$word['language']['name']][] = $word['text'];
+		$result_array[$word['language']['name']][] = $word['text'].'='.$word['id'];
 	}
 
 	$html = '';
 	foreach ($result_array as $name => $words) 
 	{
 		$language = WordLanguage::where('name', $name)->first();
-		$line = '<p><img class="translation_image" src="'.$language->image.'">'.implode(', ', $words).'</p>';
 
+		$line = '<p><img class="translation_image" src="'.$language->image.'">';
+		$word_links_in_line = [];
+		foreach ($words as $word) 
+		{
+			$word_exploded = explode('=', $word);
+			$word_links_in_line[] = link_to_route('word_path', $word_exploded[0], $word_exploded[1]);
+		}
+		$line .= implode(', ', $word_links_in_line);
+		$line .= '</p>';
 		$html = $html.$line;
 	}
 
