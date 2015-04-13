@@ -112,9 +112,14 @@
 						closeButtonRadius: 10,
 						closeButtonCrossSize: 5,
 						closeButtonCrossColor: '#337ab7',
+						removeElementsOnHide: true,
 						ajax: translations_url + '/' + meaning_id
 					}
 				);
+
+				setTimeout( function() {
+					tip.hide();
+				}, 3000, tip);
 			});
 
 			// Check if there is something to search for already
