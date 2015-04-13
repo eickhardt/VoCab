@@ -238,14 +238,12 @@ class MeaningsController extends Controller {
 		if ($meaning)
 		{
 			$meaning_array = $meaning->toArray();
-			// $meaning_array['words'] = $meaning->words->toArray();
 			if ($html)
 			{
 				return tipContent($meaning_array);
 			}
 
 			return $meaning_array;
-			// return $meaning->toArray();
 		}
 		return $fail_array;
 	}

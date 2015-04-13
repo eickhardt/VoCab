@@ -53,41 +53,6 @@
 			<ul id="words_table" class="list-group words_list">
 				<li id="cloneme" class="list-group-item" style="display:none;"></li>
 			</ul>
-
-			<?php /* This image is here so it's loaded before it needs to be used */ ?>
-			<img src="/img/loading.gif" style="display:none;">
-
-			<?php /*
-			<div id="words_table" class="panel panel-default">
-				<div class="table-responsive"> 
-					<table class="table table-hover table-bordered table-striped">
-						<?php /*
-						<thead>
-							<tr class="active">
-								<th>Word</th>
-								<th>Language</th>
-								<th>Created at</th>
-								<th>Updated at</th>
-								<th>Row</th>
-							</tr>
-						</thead>
-						/ ?>
-						<tbody id="list">
-							<tr id="cloneme" style="display:none;">
-								<td class="text"></td>
-								<?php /*
-								<td class="language"></td>
-								<td class="created_at"></td>
-								<td class="updated_at"></td>
-								<td class="id"></td>
-								/ ?>
-							</tr>
-							<tr id="noresult"><td colspan="7">There seems to be nothing here.</td></tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			*/ ?>
 		</div>
 		<?php /*<img id="awesome" class="img-responsive" src="/img/awesome.png">*/ ?>
 		<div class="splash-border">
@@ -215,24 +180,10 @@
 							for (var i = 0; i <= words.length -1; i++) 
 							{
 								var edit_link = "/meanings/" + words[i]['meaning_id'] + "/edit";
-
 								var row = $('#cloneme').clone().removeAttr('id').removeAttr('style').addClass('removeme');
-								// row.find('.id').html(words[i]['id']);
-								// row.find('.language').html( '<span class="meanings"><img src="' + languages[words[i]['language_id']-1].image + '"> ' + languages[words[i]['language_id']-1].name + '</span>' ).attr('data-meaningid', words[i]['meaning_id']);
 								row.html( '<img class="row_image" src="' + languages[words[i]['language_id']-1].image + '"> ' + '<a href="'+ edit_link +'">' + words[i]['text'] + '</a> <div class="btn btn-xs btn-primary pull-right translations" data-id="' + words[i]['meaning_id'] + '"><span class="glyphicon glyphicon-transfer"></span> Translations</div>');
-								// row.find('.created_at').html(words[i]['created_at']);
-								// row.find('.updated_at').html(words[i]['updated_at']);
-
-								// .attr('onclick', edit_link);
 
 								row.prependTo($('.words_list'));
-
-								// row.each(function() 
-								// {
-								// 	$(this).click(translations(words[i]['meaning_id']));
-								// })
-								// new Opentip("#word_" + words[i]['meaning_id'], { target: "#word_" + words[i]['meaning_id'], tipJoint: "right" });
-								// console.log('s');
 							}
 							$('#noresult').hide();
 						}
