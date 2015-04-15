@@ -15,11 +15,11 @@ class TestsController extends Controller {
 	 */
 	public function mail()
 	{
-		$message = 'This is a test mail.';
-		mail('ddeickhardt@gmail.com', 'My Subject', $message);
-		// Mail::send('emails.test', array('testvalue' => 'Pimp'), function($message)
-		// {
-		//     $message->to('ddeickhardt@gmail.com', 'John Smith')->subject('Test!');
-		// });
+		// $message = 'This is a test mail.';
+		// mail('ddeickhardt@gmail.com', 'My Subject', $message);
+		Mail::send('emails.test', array('testvalue' => 'Pimp'), function($message)
+		{
+		    $message->to('ddeickhardt@gmail.com', 'John Smith')->subject('Test!');
+		});
 	}
 }
