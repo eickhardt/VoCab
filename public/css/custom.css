@@ -131,3 +131,12 @@ body {
 .btn {
 	transition: all 0.2s ease;
 }
+
+.welcome-box {
+	margin-bottom: 0;
+}
+
+.btn .glyphicon {
+	vertical-align: top;
+	margin-right: 3px;
+}

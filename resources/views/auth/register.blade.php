@@ -2,7 +2,7 @@
 
 @section('content')
 	<div class="panel panel-default">
-		<div class="panel-heading">Register</div>
+		<div class="panel-heading"><h2><span class="glyphicon glyphicon-pencil"></span> Register</h2></div>
 		<div class="panel-body">
 			@if (count($errors) > 0)
 				<div class="alert alert-danger">
@@ -49,7 +49,7 @@
 				<div class="form-group">
 					<div class="col-md-6 col-md-offset-4">
 						<button type="submit" class="btn btn-primary">
-							Register
+							<span class="glyphicon glyphicon-pencil"></span> Register
 						</button>
 					</div>
 				</div>

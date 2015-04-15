@@ -2,7 +2,7 @@
 
 @section('content')
 	<div class="panel panel-default">
-		<div class="panel-heading">Login</div>
+		<div class="panel-heading"><h2><span class="glyphicon glyphicon-lock"></span> Login</h2></div>
 		<div class="panel-body">
 			@if (count($errors) > 0)
 				<div class="alert alert-danger">
@@ -45,10 +45,10 @@
 				<div class="form-group">
 					<div class="col-md-6 col-md-offset-4">
 						<button type="submit" class="btn btn-primary" style="margin-right: 15px;">
-							Login
+							<span class="glyphicon glyphicon-lock"></span> Login
 						</button>
 
-						<a href="/password/email">Forgot Your Password?</a>
+						<a href="/password/email"><span class="glyphicon glyphicon-question-sign"></span> Forgot Your Password?</a>
 					</div>
 				</div>
 			</form>

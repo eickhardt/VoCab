@@ -40,7 +40,7 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li>{!! link_to_route('home', 'Home') !!}</li>
+					<?php /*<li>{!! link_to_route('home', 'Home') !!}</li>*/ ?>
 					@unless (Auth::guest()) 
 						<li>{!! link_to_route('search_path', 'Search') !!}</li>
 						<li class="dropdown">
@@ -66,7 +66,6 @@
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::guest())
 						<li><a href="/auth/login">Login</a></li>
-						<?php /* <li><a href="/auth/register">Register</a></li> */ ?>
 						<li><a href="/auth/register">Register</a></li>
 					@else
 						<li class="dropdown">

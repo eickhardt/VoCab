@@ -102,12 +102,13 @@
 				var tip = new Opentip(
 					$(this),
 					{ 
-						target: $(this).parent().find('a'), 
-						tipJoint: "left", 
+						// target: $(this).parent().find('a'), 
+						target: true, 
+						tipJoint: "right", 
 						background: "white", 
 						borderColor: "lightgray",
 						showOn: 'creation',
-						offset: [7, 0],
+						offset: [-7, 0],
 						hideTrigger: 'closeButton',
 						closeButtonRadius: 10,
 						closeButtonCrossSize: 5,

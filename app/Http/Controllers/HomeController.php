@@ -6,6 +6,8 @@ use App\MeaningType;
 use App\Wotd;
 
 use Input;
+use Auth;
+// use Redirect;
 
 class HomeController extends Controller {
 
@@ -28,8 +30,11 @@ class HomeController extends Controller {
 	{
 		$wordcount = $word->count();
 		$wotd = Wotd::getCurrent();
-		
-		return view('home', compact('wordcount', 'wotd'));
+
+		if (Auth::guest())
+			return view('home', compact('wordcount', 'wotd'));
+		else
+			return $this->showSearch();
 	}
 
 	/**

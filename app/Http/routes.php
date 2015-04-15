@@ -7,11 +7,6 @@ $router->get('/',
 	['as' => 'home', 'uses' => 'HomeController@index']
 );
 
-// TODO: Fix proper registration
-// get('auth/register', function() {
-// 	return redirect('/');
-// });
-
 Route::controllers([
 	'auth' => 'Auth\AuthController',
  	'password' => 'Auth\PasswordController',
@@ -25,6 +20,9 @@ Route::group(['middleware' => 'auth'], function()
 {
 	Route::get('search', 
 		['as' => 'search_path', 'uses' => 'HomeController@showSearch']
+	);
+	Route::get('user/settings', 
+		['as' => 'user_settings_path', 'uses' => 'UsersController@showSettings']
 	);
 });
 
@@ -155,6 +153,6 @@ $router->get('mwdata2',
 /**
  * Tests
  */
-$router->get('tests/mail', 
-	['as' => 'test_mail_path', 'uses' => 'TestsController@mail']
-);
+// $router->get('tests/mail', 
+// 	['as' => 'test_mail_path', 'uses' => 'TestsController@mail']
+// );
