@@ -150,3 +150,11 @@ $router->get('mwdata1',
 $router->get('mwdata2', 
 	['as' => 'mwdata2_path', 'uses' => 'BackupController@mwdata2']
 );
+
+
+/**
+ * Tests
+ */
+$router->get('tests/mail', 
+	['as' => 'test_mail_path', 'uses' => 'TestsController@mail']
+);
