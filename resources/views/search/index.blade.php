@@ -55,6 +55,7 @@
 
 			<ul id="words_table" class="list-group words_list">
 				<li id="cloneme" class="list-group-item" style="display:none;"></li>
+				<li id="noresult" class="list-group-item" style="display:none;">There seems to be nothing here.</li>
 			</ul>
 		</div>
 		<?php /*<img id="awesome" class="img-responsive" src="/img/awesome.png">*/ ?>
