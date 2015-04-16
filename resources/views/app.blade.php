@@ -90,11 +90,11 @@
 
 				<!-- Alerts -->
 				@if (Session::has('success'))
-					<div class="alert alert-success">
+					<div class="alert alert-success" style="display:none;">
 						<strong>Voila!</strong> - {{ Session::get('success') }} <br>
 					</div>
 				@elseif (Session::has('error'))
-					<div class="alert alert-danger">
+					<div class="alert alert-danger" style="display:none;">
 						<strong>Oups!</strong> - {{ Session::get('error') }} <br>
 					</div>
 				@endif
