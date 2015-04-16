@@ -19,9 +19,12 @@
 			<a href="{{ route('statistics_path') }}" type="submit" class="btn btn-primary">
 				<span class="glyphicon glyphicon-stats"></span> Statistics
 			</a>
-			<a href="{{ route('backup_show_path') }}" type="submit" class="btn btn-primary">
-				<span class="glyphicon glyphicon-hdd"></span> Backup
-			</a>
+			<?php /* At the moment we only want to show backup for the admins */ ?>
+			@if (Auth::user()->name == 'Gabrielle Tranchet' || Auth::user()->name == 'Daniel Eickhardt')
+				<a href="{{ route('backup_show_path') }}" type="submit" class="btn btn-primary">
+					<span class="glyphicon glyphicon-hdd"></span> Backup
+				</a>
+			@endif
 			<a id="advanced_search_btn" type="submit" class="btn btn-info">
 				<span class="glyphicon glyphicon-cog Search settings"></span> Settings
 			</a>
@@ -35,7 +38,7 @@
 					<h4>Languages</h4>
 					<div class="well well-sm language_well">
 						@foreach ($languages as $language)
-							<span class="search_language"><img src="{{ $language->image }}"> {!! Form::checkbox($language->short_name, $language->id, true, ['class' => 'language_checkbox']) !!}</span>
+							<span class="search_language"><img src="{{ $language->image }}"> {!! Form::checkbox($language->short_name, $language->id, !in_array($language->id, $user_languages), ['class' => 'language_checkbox']) !!}</span>
 						@endforeach
 					</div>
 					<br>

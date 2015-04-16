@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Mail;
+use Auth;
 
 class TestsController extends Controller {
 
@@ -21,5 +22,12 @@ class TestsController extends Controller {
 		{
 		    $message->to('ddeickhardt@gmail.com', 'John Smith')->subject('Test!');
 		});
+	}
+
+	public function languages()
+	{
+		$languages = Auth::user()->languages;
+		// $languages = $user;
+		dd($languages);
 	}
 }

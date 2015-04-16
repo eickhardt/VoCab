@@ -21,8 +21,14 @@ Route::group(['middleware' => 'auth'], function()
 	Route::get('search', 
 		['as' => 'search_path', 'uses' => 'HomeController@showSearch']
 	);
-	Route::get('user/settings', 
+	Route::get('settings', 
 		['as' => 'user_settings_path', 'uses' => 'UsersController@showSettings']
+	);
+	Route::post('settings',
+		['as' => 'settings_store_path', 'uses' => 'UsersController@storeSettings']
+	);
+	Route::get('tests/languages', 
+		['as' => 'languages_test_path', 'uses' => 'TestsController@languages']
 	);
 });
 
@@ -105,6 +111,7 @@ $router->get('ajax/simple_meaning/{meaning_id}',
 $router->post('ajax/words_search', 
 	['as' => 'ajax_word_search_path', 'uses' => 'WordsController@search']
 );
+
 /**
  * Backup
  */
@@ -124,23 +131,6 @@ $router->get('backup',
 	['as' => 'backup_show_path', 'uses' => 'BackupController@show']
 );
 
-/**
- * Misc
- */
-$router->get('user', 
-	['as' => 'user_path', 'uses' => 'UsersController@show']
-);
-
-$router->get('user/settings', 
-	['as' => 'user_settings_path', 'uses' => 'UsersController@settings']
-);
-
-$router->get('statistics', 
-	['as' => 'statistics_path', 'uses' => 'StatisticsController@index']
-);
-
-
-
 $router->get('mwdata1', 
 	['as' => 'mwdata1_path', 'uses' => 'BackupController@mwdata1']
 );
@@ -149,6 +139,12 @@ $router->get('mwdata2',
 	['as' => 'mwdata2_path', 'uses' => 'BackupController@mwdata2']
 );
 
+/**
+ * Misc
+ */
+$router->get('statistics', 
+	['as' => 'statistics_path', 'uses' => 'StatisticsController@index']
+);
 
 /**
  * Tests

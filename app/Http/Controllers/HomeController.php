@@ -48,6 +48,10 @@ class HomeController extends Controller {
 		$languages = WordLanguage::all();
 		$info_array['languages'] = $languages;
 
+		// Get the languages the user does NOT want displayed (this is an inverse relationship)
+		$user_languages = Auth::user()->languages_id_array();
+		$info_array['user_languages'] = $user_languages;
+
 		$types = MeaningType::all();
 		$info_array['types'] = $types;
 
