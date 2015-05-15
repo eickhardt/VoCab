@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
 use DB;
+use Cache;
 
 use App\Word;
 use App\MeaningType;
@@ -50,7 +51,7 @@ class StatisticsController extends Controller {
 			}
 		}
 
-		/*
+		
 		$statistics_data = [];
 
 		// Totals
@@ -69,7 +70,17 @@ class StatisticsController extends Controller {
 
 			// Then we get all the words which belong to the language
 			// $words_in_language = Word::with('meaning')->where('language_id', $language->id)->get();
-			$words_in_language = Word::with('meaning')->where('language_id', $language->id)->get();
+			
+			// $words_in_language = Word::with('meaning')
+										// ->where('language_id', $language->id)
+										// ->get();
+			$words_in_language = Cache::remember('words_in_language', 60, function() use($language)
+			{
+			    return Word::with('meaning')
+							->where('language_id', $language->id)
+							->get();
+			});
+
 
 			// Here we save the total count of words in that language
 			$statistics_data[$language->short_name]['total_all'] = $words_in_language->count();
@@ -113,11 +124,25 @@ class StatisticsController extends Controller {
 		// Danish and Polish and Spanish
 		$statistics_data['da_pl_es']['name'] = 'DA + PL + ES';
 		$statistics_data['da_pl_es']['total_all'] = $dk_count + $pl_count + $es_count;
-		$combined_words = Word::with('meaning')->where('language_id', 3)->orWhere('language_id', 4)->orWhere('language_id', 5)->get();
+
+		// $combined_words = Word::with('meaning')
+		// 						->where('language_id', 3)
+		// 						->orWhere('language_id', 4)
+		// 						->orWhere('language_id', 5)
+		// 						->remember(60)->get();
+		$combined_words_DK_PL_ES = Cache::remember('combined_words_DK_PL_ES', 60, function()
+		{
+		    return Word::with('meaning')
+						->where('language_id', 3)
+						->orWhere('language_id', 4)
+						->orWhere('language_id', 5)
+						->get();
+		});
+
 		foreach ($types as $type) 
 		{
 			$count = 0;
-			foreach ($combined_words as $combined_word) 
+			foreach ($combined_words_DK_PL_ES as $combined_word) 
 			{
 				if ($combined_word->meaning->meaning_type_id == $type->id)
 					$count++;
@@ -129,11 +154,23 @@ class StatisticsController extends Controller {
 		// Danish and Polish
 		$statistics_data['da_pl']['name'] = 'DA + PL';
 		$statistics_data['da_pl']['total_all'] = $dk_count + $pl_count;
-		$combined_words = Word::with('meaning')->where('language_id', 3)->orWhere('language_id', 4)->get();
+
+		// $combined_words = Word::with('meaning')
+		// 						->where('language_id', 3)
+		// 						->orWhere('language_id', 4)
+		// 						->get();
+		$combined_words_DK_PL = Cache::remember('combined_words_DK_PL', 60, function()
+		{
+		    return Word::with('meaning')
+						->where('language_id', 3)
+						->orWhere('language_id', 4)
+						->get();
+		});
+
 		foreach ($types as $type)
 		{
 			$count = 0;
-			foreach ($combined_words as $combined_word)
+			foreach ($combined_words_DK_PL as $combined_word)
 			{
 				if ($combined_word->meaning->meaning_type_id == $type->id)
 					$count++;
@@ -145,11 +182,23 @@ class StatisticsController extends Controller {
 		// Spanish and Polish
 		$statistics_data['es_pl']['name'] = 'ES + PL';
 		$statistics_data['es_pl']['total_all'] = $es_count + $pl_count;
-		$combined_words = Word::with('meaning')->where('language_id', 5)->orWhere('language_id', 4)->get();
+
+		// $combined_words = Word::with('meaning')
+		// 						->where('language_id', 5)
+		// 						->orWhere('language_id', 4)
+		// 						->get();
+		$combined_words_ES_PL = Cache::remember('combined_words_ES_PL', 60, function()
+		{
+		    return Word::with('meaning')
+						->where('language_id', 4)
+						->orWhere('language_id', 5)
+						->get();
+		});
+
 		foreach ($types as $type)
 		{
 			$count = 0;
-			foreach ($combined_words as $combined_word)
+			foreach ($combined_words_ES_PL as $combined_word)
 			{
 				if ($combined_word->meaning->meaning_type_id == $type->id)
 					$count++;
@@ -161,11 +210,23 @@ class StatisticsController extends Controller {
 		// Danish and Spanish
 		$statistics_data['da_es']['name'] = 'ES + DA';
 		$statistics_data['da_es']['total_all'] = $es_count + $dk_count;
-		$combined_words = Word::with('meaning')->where('language_id', 5)->orWhere('language_id', 3)->get();
+
+		// $combined_words = Word::with('meaning')
+		// 						->where('language_id', 5)
+		// 						->orWhere('language_id', 3)
+		// 						->get();
+		$combined_words_DK_ES = Cache::remember('combined_words_DK_ES', 60, function()
+		{
+		    return Word::with('meaning')
+						->where('language_id', 5)
+						->orWhere('language_id', 3)
+						->get();
+		});
+
 		foreach ($types as $type)
 		{
 			$count = 0;
-			foreach ($combined_words as $combined_word)
+			foreach ($combined_words_DK_ES as $combined_word)
 			{
 				if ($combined_word->meaning->meaning_type_id == $type->id)
 					$count++;
@@ -175,7 +236,7 @@ class StatisticsController extends Controller {
 		$statistics_data['da_es']['total_percent'] = round( $statistics_data['da_es']['total_all'] / $statistics_data['total']['total_all'] * 100, 2 );
 
 		return view('statistics.index', compact('statistics_data', 'recent_words_data', 'types'));
-		*/
-		return view('statistics.index', compact('recent_words_data'));
+		
+		// return view('statistics.index', compact('recent_words_data'));
 	}
 }
