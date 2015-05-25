@@ -106,13 +106,13 @@
 				var tip = new Opentip(
 					$(this),
 					{ 
-						// target: $(this).parent().find('a'), 
-						target: true, 
+						target: $(this).parent().find('a'), 
+						// target: true, 
 						tipJoint: "left", 
 						background: "white", 
 						borderColor: "lightgray",
 						showOn: 'creation',
-						offset: [-7, 0],
+						offset: [5, 0],
 						hideTrigger: 'closeButton',
 						closeButtonRadius: 10,
 						closeButtonCrossSize: 5,
@@ -191,7 +191,7 @@
 							{
 								var edit_link = "/meanings/" + words[i]['meaning_id'] + "/edit";
 								var row = $('#cloneme').clone().removeAttr('id').removeAttr('style').addClass('removeme');
-								row.html( '<img class="row_image" src="' + languages[words[i]['language_id']-1].image + '"> ' + '<a href="'+ edit_link +'">' + words[i]['text'] + '</a><div class="btn btn-xs btn-primary translations" data-id="' + words[i]['meaning_id'] + '"><span class="glyphicon glyphicon-list"></span></div>');
+								row.html( '<div class="btn btn-xs btn-primary translations" data-id="' + words[i]['meaning_id'] + '"><span class="glyphicon glyphicon-list"></span></div><img class="row_image" src="' + languages[words[i]['language_id']-1].image + '"> ' + '<a href="'+ edit_link +'">' + words[i]['text'] + '</a>');
 
 								row.prependTo($('.words_list'));
 							}
