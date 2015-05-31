@@ -183,7 +183,7 @@ class WordsController extends Controller {
 				}
 			}
 
-			$words = $words->get();
+			$words = $words->orderBy('text', 'DESC')->get();
 
 			return $words->toArray();
 		}
