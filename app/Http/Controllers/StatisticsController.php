@@ -184,8 +184,11 @@ class StatisticsController extends Controller {
 			$count = 0;
 			foreach ($combined_words_DK_PL as $combined_word)
 			{
-				if ($combined_word->meaning->meaning_type_id == $type->id)
-					$count++;
+				if (isset($combined_word->meaning))
+				{
+					if ($combined_word->meaning->meaning_type_id == $type->id)
+						$count++;
+				}
 			}
 			$statistics_data['da_pl']['total_'.$type->name.'s'] = $count;
 		}
@@ -208,8 +211,11 @@ class StatisticsController extends Controller {
 			$count = 0;
 			foreach ($combined_words_ES_PL as $combined_word)
 			{
-				if ($combined_word->meaning->meaning_type_id == $type->id)
-					$count++;
+				if (isset($combined_word->meaning))
+				{
+					if ($combined_word->meaning->meaning_type_id == $type->id)
+						$count++;
+				}
 			}
 			$statistics_data['es_pl']['total_'.$type->name.'s'] = $count;
 		}
@@ -232,8 +238,11 @@ class StatisticsController extends Controller {
 			$count = 0;
 			foreach ($combined_words_DK_ES as $combined_word)
 			{
-				if ($combined_word->meaning->meaning_type_id == $type->id)
-					$count++;
+				if (isset($combined_word->meaning))
+				{
+					if ($combined_word->meaning->meaning_type_id == $type->id)
+						$count++;
+				}
 			}
 			$statistics_data['da_es']['total_'.$type->name.'s'] = $count;
 		}
