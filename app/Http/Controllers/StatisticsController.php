@@ -157,8 +157,11 @@ class StatisticsController extends Controller {
 			$count = 0;
 			foreach ($combined_words_DK_PL_ES as $combined_word) 
 			{
-				if ($combined_word->meaning->meaning_type_id == $type->id)
-					$count++;
+				if (isset($combined_word->meaning))
+				{
+					if ($combined_word->meaning->meaning_type_id == $type->id)
+						$count++;
+				}
 			}
 			$statistics_data['da_pl_es']['total_'.$type->name.'s'] = $count;
 		}
