@@ -8,12 +8,11 @@
 	<title>VoCab</title>
 
 	<!-- Bootstrap -->
-	{!! Minify::stylesheet('//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css') !!}
+	<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 	{!! Minify::stylesheet('/css/opentip.css') !!}
 	{!! Minify::stylesheet('/css/app.css') !!}
 	{!! Minify::stylesheet('/css/custom.css') !!}
 	{!! Minify::stylesheet('/css/jquery-ui.css') !!}
-	{{-- <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet"> --}}
 	{{-- <link href="/css/opentip.css" rel="stylesheet" type="text/css" /> --}}
 	{{-- <link href="/css/app.css" rel="stylesheet" type="text/css" /> --}}
 	{{-- <link href="/css/custom.css" rel="stylesheet" type="text/css" /> --}}
@@ -115,16 +114,11 @@
 	<!-- EO Page -->
 
 	<!-- Scripts -->
-	{!! Minify::javascript('//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js') !!}
-	{!! Minify::javascript('/js/jquery-ui.min.js') !!}
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="/js/jquery-ui.min.js"></script>
+	 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script src="/js/opentip.min.js"></script>
 	{!! Minify::javascript('/js/bindWithDelay.js') !!}
-	{!! Minify::javascript('//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js') !!}
-	{!! Minify::javascript('/js/opentip.min.js') !!}
-	{{-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> --}}
-	{{-- <script src="/js/jquery-ui.min.js"></script> --}}
-	{{-- <script src="/js/bindWithDelay.js"></script> --}}
-	{{-- <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>--}}
-	{{-- <script src="/js/opentip.min.js"></script> --}}
 	<?php /*<script src="/js/opentip-styles.js"></script>*/ ?>
 
 	<script type="text/javascript">
