@@ -1,5 +1,6 @@
 <?php
 
+// Move this!
 $monolog = Log::getMonolog();
 $syslog = new \Monolog\Handler\SyslogHandler('papertrail');
 $formatter = new \Monolog\Formatter\LineFormatter('%channel%.%level_name%: %message% %extra%');

@@ -7,7 +7,6 @@
 				<span class="glyphicon glyphicon-globe"></span> Home
 			</h2>
 		</div>
-		{{$total}}
 
 		<div class="panel-body">
 			<?php /*@unless (Auth::guest())
