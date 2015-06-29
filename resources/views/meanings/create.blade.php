@@ -4,7 +4,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h2>
-				<span class="glyphicon glyphicon-plus-sign"></span> Meanings / Create
+				<span class="glyphicon glyphicon-plus-sign"></span> Words / Create
 			</h2>
 		</div>
 

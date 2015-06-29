@@ -4,12 +4,12 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h2>
-				<span class="glyphicon glyphicon glyphicon-pencil"></span> Meanings / Edit / <b>{{ $meaning->root }}</b>
+				<span class="glyphicon glyphicon glyphicon-pencil"></span> Words / Edit / <b>{{ $meaning->root }}</b>
 			</h2>
 		</div>
 
 		<div class="panel-body">
-			<h4>Words</h4>
+			<h4>Translations</h4>
 			<ul class="list-group">
 				@foreach ($languages as $language)
 					<li class="list-group-item">
@@ -37,7 +37,7 @@
 				@endforeach
 			</ul>
 
-			<h4>Meaning information</h4>
+			<h4>Word information</h4>
 			<div class="panel panel-default">
 				<div class="panel-body">
 					{!! Form::model($meaning, ['route' => ['meaning_update_path', $meaning->id], 'method' => 'PATCH', 'class' => 'form-horizontal']) !!}

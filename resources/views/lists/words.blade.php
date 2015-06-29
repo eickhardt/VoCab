@@ -11,7 +11,7 @@
 				@else
 					<span class="glyphicon glyphicon-list-alt"></span>
 				@endif
-				Words / List / <b>{{ isset($list_type) ? $list_type : $words[0]->text }}</b>
+				Translations / List / <b>{{ isset($list_type) ? $list_type : $words[0]->text }}</b>
 			</h2>
 		</div>
 		<div class="panel-body">
@@ -19,7 +19,7 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 
-						<h4>Word information</h4>
+						<h4>Translation information</h4>
 						<div class="row">
 							<div class="col-md-6 col-md-offset-0">
 								<ul class="list-group">
@@ -47,11 +47,11 @@
 
 						@if ($word->deleted_at)
 							<a href="{{ route('word_restore_path', $word->id) }}" type="submit" class="btn btn-success">
-								<span class="glyphicon glyphicon-refresh"></span> Restore word
+								<span class="glyphicon glyphicon-refresh"></span> Restore translation
 							</a>
 						@else
 							<a href="{{ route('word_edit_path', $word->id) }}" type="submit" class="btn btn-success">
-								<span class="glyphicon glyphicon glyphicon-pencil"></span> Edit word
+								<span class="glyphicon glyphicon glyphicon-pencil"></span> Edit translation
 							</a>
 						@endif
 

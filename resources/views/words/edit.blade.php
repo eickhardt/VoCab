@@ -4,7 +4,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h2>
-				<span class="glyphicon glyphicon glyphicon-pencil"></span> Words / Edit / <b>{{ $word->text }}</b>
+				<span class="glyphicon glyphicon glyphicon-pencil"></span> Translations / Edit / <b>{{ $word->text }}</b>
 			</h2>
 		</div>
 
@@ -12,7 +12,7 @@
 			{!! Form::model($word, ['route' => ['word_update_path', $word->id], 'method' => 'PATCH', 'class' => 'form-horizontal']) !!}
 
 				<div class="form-group {{ $errors->has('meaning_id') ? 'has-error' : '' }}">
-					<label class="col-md-4 control-label">Meaning id</label>
+					<label class="col-md-4 control-label">Word id</label>
 					<div class="col-md-2">
 						{!! Form::text('meaning_id', $word->meaning_id, ['class' => 'form-control', 'id' => 'meaning_id']) !!}
 						{!! $errors->first('meaning_id', '<span class="help-block">:message</span>') !!}
@@ -77,7 +77,7 @@
 				<div class="form-group">
 					<div class="col-md-6 col-md-offset-4">
 						<a href="{{ route('meaning_path', $word->meaning_id) }}" class="btn btn-primary">
-							<span class="glyphicon glyphicon-tree-conifer"></span> Meaning
+							<span class="glyphicon glyphicon-tree-conifer"></span> Root word
 						</a>
 					</div>
 				</div>

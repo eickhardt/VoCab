@@ -5,7 +5,7 @@
 	<?php isset($language_id) ?: $language_id = 0; ?>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h2><span class="glyphicon glyphicon-plus-sign"></span> Words / Create</h2>
+			<h2><span class="glyphicon glyphicon-plus-sign"></span> Translations / Create</h2>
 		</div>
 
 		<div id="main-body" class="panel-body">
@@ -13,7 +13,7 @@
 			@if (isset($meaning))
 				<div id="words" class="panel panel-default">
 					<div class="panel-body">
-						<p>Words with the same meaning: </p>
+						<p>Translations with the same root: </p>
 						@foreach($meaning->words as $word)
 							<?php $links[] = link_to_route('word_edit_path', $word->text, $word->id); ?>
 						@endforeach
@@ -25,7 +25,7 @@
 			{!! Form::open(['route' => 'word_store_path', 'class' => 'form-horizontal']) !!}
 			
 				<div class="form-group {{ $errors->has('meaning_id') ? 'has-error' : '' }}">
-					<label class="col-md-4 control-label">Meaning id</label>
+					<label class="col-md-4 control-label">Word id</label>
 					<div class="col-md-2">
 						{!! Form::text('meaning_id', isset($meaning) ? $meaning->id : '', ['class' => 'form-control', 'id' => 'meaning_id']) !!}
 						{!! $errors->first('meaning_id', '<span class="help-block">:message</span>') !!}
@@ -44,7 +44,7 @@
 				</div>
 
 				<div class="form-group {{ $errors->has('text') ? 'has-error' : '' }}">
-					<label class="col-md-4 control-label">Word text</label>
+					<label class="col-md-4 control-label">Translation text</label>
 					<div class="col-md-6">
 						{!! Form::text('text', NULL, ['class' => 'form-control']) !!}
 						{!! $errors->first('text', '<span class="help-block">:message</span>') !!}
@@ -100,7 +100,7 @@
 					$('#meaning_root').val(meaning['root']);
 					console.log(meaning['words']);
 
-					links = '<p>Words with the same meaning:</p> ';
+					links = '<p>Translations with the same word root:</p> ';
 					for (var i = meaning['words'].length - 1; i >= 0; i--) 
 					{
 						links = links + '<a href="/words/' + meaning['words'][i].id + '/edit">' + meaning['words'][i].text + '</a>';

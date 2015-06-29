@@ -11,7 +11,7 @@
 		<div class="panel-body">
 			{!! Form::open(['route' => 'settings_store_path', 'class' => 'form-horizontal']) !!}
 				<h4>Languages</h4>
-				<p>These languages will be used by default when searching for words.</p>
+				<p>These languages will be used by default when searching.</p>
 				<div class="well well-sm language_well">
 					@foreach ($languages as $language)
 						<span class="search_language">

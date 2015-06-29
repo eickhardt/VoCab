@@ -51,15 +51,15 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><b>Goto</b> <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li>{!! link_to_route('meaning_create_path', 'Create meaning') !!}</li>
-								<li>{!! link_to_route('word_create_path', 'Create word') !!}</li>
+								<li>{!! link_to_route('meaning_create_path', 'Create word') !!}</li>
+								<li>{!! link_to_route('word_create_path', 'Create translation') !!}</li>
 								<li class="divider"></li>
 								<li>{!! link_to_route('meaning_wotd_path', 'Word of the day') !!}</li>
-								<li>{!! link_to_route('meaning_random_path', 'Random meaning') !!}</li>
-								<li>{!! link_to_route('word_random_path', 'Random word') !!}</li>
+								<li>{!! link_to_route('meaning_random_path', 'Random word') !!}</li>
+								<li>{!! link_to_route('word_random_path', 'Random translation') !!}</li>
 								<li class="divider"></li>
-								<li>{!! link_to_route('words_trashed_path', 'Trashed words') !!}</li>
-								<li>{!! link_to_route('meanings_trashed_path', 'Trashed meanings') !!}</li>
+								<li>{!! link_to_route('words_trashed_path', 'Trashed translations') !!}</li>
+								<li>{!! link_to_route('meanings_trashed_path', 'Trashed words') !!}</li>
 								<li class="divider"></li>
 								<li>{!! link_to_route('statistics_path', 'Statistics') !!}</li>
 								<li>{!! link_to_route('backup_show_path', 'Backup') !!}</li>

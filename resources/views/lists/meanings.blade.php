@@ -13,7 +13,7 @@
 				@else
 					<span class="glyphicon glyphicon-list-alt"></span>
 				@endif
-				Meanings / List / <b>{{ isset($list_type) ? $list_type : $meanings[0]->root }}</b>
+				Words / List / <b>{{ isset($list_type) ? $list_type : $meanings[0]->root }}</b>
 			</h2>
 		</div>
 		<div class="panel-body">
@@ -25,7 +25,7 @@
 						@if (isset($list_type) && $list_type == 'Trashed')
 							<?php /* We don't want any words to show up if it's the trashed list */ ?>
 						@else
-							<h4>Words</h4>
+							<h4>Translations</h4>
 							<ul class="list-group">
 								@foreach ($languages as $language)
 									<li class="list-group-item">
@@ -54,7 +54,7 @@
 							</ul>
 						@endif
 
-						<h4>Meaning information</h4>
+						<h4>Word information</h4>
 						<div class="row">
 							<div class="col-md-6 col-md-offset-0">
 								<ul class="list-group">
@@ -86,7 +86,7 @@
 
 						@if (isset($list_type) && $list_type == 'Trashed')
 							<a href="{{ route('meaning_restore_path', $meaning->id) }}" type="submit" class="btn btn-success">
-								<span class="glyphicon glyphicon glyphicon-refresh"></span> Restore meaning
+								<span class="glyphicon glyphicon glyphicon-refresh"></span> Restore word
 							</a>
 						@else
 							<a href="{{ route('meaning_edit_path', $meaning->id) }}" type="submit" class="btn btn-success">

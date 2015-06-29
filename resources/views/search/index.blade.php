@@ -11,7 +11,7 @@
 		</div> 
 		<div id="words" class="panel-body">
 			<a href="{{ route('meaning_create_path') }}" type="submit" class="btn btn-success">
-				<span class="glyphicon glyphicon-plus-sign"></span> Create meaning
+				<span class="glyphicon glyphicon-plus-sign"></span> Create translation
 			</a>
 			<a href="{{ route('meaning_wotd_path') }}" type="submit" class="btn btn-primary">
 				<span class="glyphicon glyphicon-certificate"></span> Word of the Day
@@ -97,7 +97,7 @@
 			{
 				var search_term = $('#searchbar').val();
 				updateList2(search_term, token, method, url, languages, getOptions());
-			}, 200);
+			}, 300);
 
 			// Click event handler displaying all translations of a word
 			$(document).on('click', '.translations', function() 
@@ -175,7 +175,7 @@
 		{
 			$('.removeme').remove();
 
-			if (search_term.length > 1)
+			if (search_term.length > 2)
 			{
 				$('#words_table').hide();
 				$('#waitmsg').show();
