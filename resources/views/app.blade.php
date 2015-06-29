@@ -8,14 +8,12 @@
 	<title>VoCab</title>
 
 	<!-- Bootstrap -->
-	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	{{-- <link href="/css/bootstrap.min.css" rel="stylesheet"> --}}
+	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
 	{!! Minify::stylesheet('/css/opentip.css') !!}
 	{!! Minify::stylesheet('/css/app.css') !!}
 	{!! Minify::stylesheet('/css/custom.css') !!}
 	{!! Minify::stylesheet('/css/jquery-ui.css') !!}
-
-	<!-- Fonts -->
-	<?php /*{!! Minify::stylesheet('//fonts.googleapis.com/css?family=Roboto:400,300') !!} */ ?>
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
