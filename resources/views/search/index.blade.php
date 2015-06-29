@@ -11,7 +11,7 @@
 		</div> 
 		<div id="words" class="panel-body">
 			<a href="{{ route('meaning_create_path') }}" type="submit" class="btn btn-success">
-				<span class="glyphicon glyphicon-plus-sign"></span> Create translation
+				<span class="glyphicon glyphicon-plus-sign"></span> Create word
 			</a>
 			<a href="{{ route('meaning_wotd_path') }}" type="submit" class="btn btn-primary">
 				<span class="glyphicon glyphicon-certificate"></span> Word of the Day
