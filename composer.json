@@ -12,7 +12,8 @@
 		"spatie/laravel-backup": "dev-master",
 		"spatie/laravel-tail": "~1.1",
 		"guzzlehttp/guzzle": "~4.0",
-		"devfactory/minify": "~1.0"
+		"devfactory/minify": "~1.0",
+		"intervention/image": "~2.3"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

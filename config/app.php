@@ -174,6 +174,11 @@ return [
 		 * Minify CSS and Javascript
 		 */
 		'Devfactory\Minify\MinifyServiceProvider',
+
+		/**
+		 * Used to size images correctly.
+		 */
+		'Intervention\Image\ImageServiceProvider',
 	],
 
 	/*
@@ -224,8 +229,9 @@ return [
 		
 		'Form' 		=> 'Illuminate\Html\FormFacade',
 		'Html' 		=> 'Illuminate\Html\HtmlFacade',
-		'Debugbar'  => 'Barryvdh\Debugbar\Facade',
-		'Minify'    => 'Devfactory\Minify\Facades\MinifyFacade',
+		'Debugbar'	=> 'Barryvdh\Debugbar\Facade',
+		'Minify'	=> 'Devfactory\Minify\Facades\MinifyFacade',
+		'Image'		=> 'Intervention\Image\Facades\Image'
 
 	],
 
