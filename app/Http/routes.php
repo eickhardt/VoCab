@@ -40,7 +40,7 @@ Route::group(['middleware' => 'auth'], function()
 	);
 });
 
-$router->bind('words', function($id) 
+$router->bind('translations', function($id) 
 {
 	return App\Word::with('language')->with('meaning')->find($id);
 });
