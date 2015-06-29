@@ -45,7 +45,7 @@ $router->bind('words', function($id)
 	return App\Word::with('language')->with('meaning')->find($id);
 });
 
-$router->resource('words', 'WordsController', [
+$router->resource('translations', 'WordsController', [
 	'names' => [
 		'index' => 'words_path',
 		'show' => 'word_path',
@@ -57,27 +57,27 @@ $router->resource('words', 'WordsController', [
 	]
 ]);
 
-$router->get('word/{id}/restore', 
+$router->get('translation/{id}/restore', 
 	['as' => 'word_restore_path', 'uses' => 'WordsController@restore']
 );
 
-$router->get('word/random', 
+$router->get('translation/random', 
 	['as' => 'word_random_path', 'uses' => 'WordsController@random']
 );
 
-$router->get('word/trashed', 
+$router->get('translation/trashed', 
 	['as' => 'words_trashed_path', 'uses' => 'WordsController@showTrashed']
 );
 
 /**
  * Meanings resource
  */
-$router->bind('meanings', function($id) 
+$router->bind('words', function($id) 
 {
 	return App\Meaning::with('words')->with('type')->find($id);
 });
 
-$router->resource('meanings', 'MeaningsController', [
+$router->resource('words', 'MeaningsController', [
 	'names' => [
 		'index' => 'meanings_path',
 		'show' => 'meaning_path',
@@ -89,19 +89,19 @@ $router->resource('meanings', 'MeaningsController', [
 	]
 ]);
 
-$router->get('meaning/{id}/restore', 
+$router->get('word/{id}/restore', 
 	['as' => 'meaning_restore_path', 'uses' => 'MeaningsController@restore']
 );
 
-$router->get('meaning/random', 
+$router->get('word/random', 
 	['as' => 'meaning_random_path', 'uses' => 'MeaningsController@random']
 );
 
-$router->get('meaning/word_of_the_day', 
+$router->get('word/word_of_the_day', 
 	['as' => 'meaning_wotd_path', 'uses' => 'MeaningsController@wotd']
 );
 
-$router->get('meaning/trashed', 
+$router->get('word/trashed', 
 	['as' => 'meanings_trashed_path', 'uses' => 'MeaningsController@showTrashed']
 );
 
