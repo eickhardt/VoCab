@@ -8,14 +8,20 @@
 	<title>VoCab</title>
 
 	<!-- Bootstrap -->
-	<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-	<link href="/css/opentip.css" rel="stylesheet" type="text/css" />
-	<link href="/css/app.css" rel="stylesheet" type="text/css" />
-	<link href="/css/custom.css" rel="stylesheet" type="text/css" />
+	{!! Minify::stylesheet('//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css') !!}
+	{!! Minify::stylesheet('/css/opentip.css') !!}
+	{!! Minify::stylesheet('/css/app.css') !!}
+	{!! Minify::stylesheet('/css/custom.css') !!}
+	{!! Minify::stylesheet('/css/jquery-ui.css') !!}
+	{{-- <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet"> --}}
+	{{-- <link href="/css/opentip.css" rel="stylesheet" type="text/css" /> --}}
+	{{-- <link href="/css/app.css" rel="stylesheet" type="text/css" /> --}}
+	{{-- <link href="/css/custom.css" rel="stylesheet" type="text/css" /> --}}
+	{{-- <link href='/css/jquery-ui.css' rel='stylesheet' type='text/css'> --}}
 
 	<!-- Fonts -->
-	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
-	<link href='/css/jquery-ui.css' rel='stylesheet' type='text/css'>
+	{!! Minify::stylesheet('//fonts.googleapis.com/css?family=Roboto:400,300') !!}
+	{{-- <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'> --}}
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -109,11 +115,16 @@
 	<!-- EO Page -->
 
 	<!-- Scripts -->
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script src="/js/jquery-ui.min.js"></script>
-	<script src="/js/bindWithDelay.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-	<script src="/js/opentip.min.js"></script>
+	{!! Minify::javascript('//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js') !!}
+	{!! Minify::javascript('/js/jquery-ui.min.js') !!}
+	{!! Minify::javascript('/js/bindWithDelay.js') !!}
+	{!! Minify::javascript('//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js') !!}
+	{!! Minify::javascript('/js/opentip.min.js') !!}
+	{{-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> --}}
+	{{-- <script src="/js/jquery-ui.min.js"></script> --}}
+	{{-- <script src="/js/bindWithDelay.js"></script> --}}
+	{{-- <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>--}}
+	{{-- <script src="/js/opentip.min.js"></script> --}}
 	<?php /*<script src="/js/opentip-styles.js"></script>*/ ?>
 
 	<script type="text/javascript">

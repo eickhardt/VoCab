@@ -169,6 +169,11 @@ return [
 		 * Tail the log from console
 		 */
 		'Spatie\Tail\TailServiceProvider',
+
+		/**
+		 * Minify CSS and Javascript
+		 */
+		'Devfactory\Minify\MinifyServiceProvider',
 	],
 
 	/*
@@ -220,6 +225,7 @@ return [
 		'Form' 		=> 'Illuminate\Html\FormFacade',
 		'Html' 		=> 'Illuminate\Html\HtmlFacade',
 		'Debugbar'  => 'Barryvdh\Debugbar\Facade',
+		'Minify'    => 'Devfactory\Minify\Facades\MinifyFacade',
 
 	],
 
