@@ -199,7 +199,7 @@
 						}
 						else 
 						{
-							$('#noresult').show();
+							$('#noresult').show().css('display', 'block');
 						}
 						$('#waitmsg').hide();
 						$('#awesome').slideUp();
