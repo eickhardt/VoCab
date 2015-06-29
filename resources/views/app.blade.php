@@ -10,7 +10,6 @@
 	<!-- Bootstrap -->
 	{{-- <link href="/css/bootstrap.min.css" rel="stylesheet"> --}}
 	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 	{!! Minify::stylesheet('/css/opentip.css') !!}
 	{!! Minify::stylesheet('/css/app.css') !!}
 	{!! Minify::stylesheet('/css/custom.css') !!}
