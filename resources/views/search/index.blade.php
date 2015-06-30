@@ -189,7 +189,7 @@
 						{
 							for (var i = 0; i <= words.length -1; i++) 
 							{
-								var edit_link = "/meanings/" + words[i]['meaning_id'] + "/edit";
+								var edit_link = "/translations/" + words[i]['meaning_id'] + "/edit";
 								var row = $('#cloneme').clone().removeAttr('id').removeAttr('style').addClass('removeme');
 								row.html( '<div class="btn btn-xs btn-primary translations" data-id="' + words[i]['meaning_id'] + '"><span class="glyphicon glyphicon-list"></span></div><img class="row_image" src="' + languages[words[i]['language_id']-1].image + '"> ' + '<a href="'+ edit_link +'">' + words[i]['text'] + '</a>');
 
