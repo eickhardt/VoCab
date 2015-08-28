@@ -33,16 +33,16 @@ class StatisticsController extends Controller {
 	 */
 	public function index()
 	{
-		Debugbar::startMeasure('query','Time for Query');
+		// Debugbar::startMeasure('query','Time for Query');
 
-		// Get all languages
-		// $languages = WordLanguage::all();
-		$types = MeaningType::all();
-		$languages = WordLanguage::with(['words', 'words.meaning', 'words.meaning.type'])->get();
-		// dd($data->first()->words->first());
-		// dd($data);
-		Debugbar::stopMeasure('query');
-		Debugbar::startMeasure('recent','Time recents');
+		// // Get all languages
+		$languages = WordLanguage::all();
+		// $types = MeaningType::all();
+		// $languages = WordLanguage::with(['words', 'words.meaning', 'words.meaning.type'])->get();
+		// // dd($data->first()->words->first());
+		// // dd($data);
+		// Debugbar::stopMeasure('query');
+		// Debugbar::startMeasure('recent','Time recents');
 
 		// Recently added words count
 		$days = 6;
@@ -75,180 +75,297 @@ class StatisticsController extends Controller {
 			}
 		}
 		// dd($recent_words_data);
-		Debugbar::stopMeasure('recent');
-		Debugbar::startMeasure('totals','Time for totals');
+		// Debugbar::stopMeasure('recent');
+		// Debugbar::startMeasure('totals','Time for totals');
 
-		$statistics_data = [];
+		// $statistics_data = [];
 
-		// Totals
-		$statistics_data['total']['name'] = 'All';
-		$statistics_data['total']['total_all'] = 0;
-		foreach ($types as $type) 
-		{
-			$statistics_data['total']['total_'.$type->name.'s'] = 0;
-		}
-		$statistics_data['total']['total_percent'] = 100;
+		// // Totals
+		// $statistics_data['total']['name'] = 'All';
+		// $statistics_data['total']['total_all'] = 0;
+		// foreach ($types as $type) 
+		// {
+		// 	$statistics_data['total']['total_'.$type->name.'s'] = 0;
+		// }
+		// $statistics_data['total']['total_percent'] = 100;
+
+		// foreach ($languages as $language) 
+		// {
+		// 	// First we need a name for the language we are assembling data for
+		// 	$statistics_data[$language->short_name]['name'] = $language->name;
+
+		// 	// Then we get all the words which belong to the language
+		// 	// $words_in_language = Word::with('meaning')
+		// 								// ->where('language_id', $language->id)
+		// 								// ->get();
+
+		// 	$words_in_language = $language->words;
+
+		// 	// Here we save the total count of words in that language
+		// 	// $statistics_data[$language->short_name]['total_all'] = $language->words->count();
+		// 	$statistics_data[$language->short_name]['total_all'] = $words_in_language->count();
+
+		// 	// Now we want to count how many words there are of each type
+		// 	foreach ($types as $type) 
+		// 	{
+		// 		$count = 0;
+		// 		foreach ($words_in_language as $word_in_language) 
+		// 		{
+		// 			// if ($word_in_language->meaning->meaning_type_id == $type->id)
+		// 			if ($word_in_language->meaning->meaning_type_id == $type->id)
+		// 				$count++;
+		// 		}
+		// 		$statistics_data[$language->short_name]['total_'.$type->name.'s'] = $count;
+
+		// 		// Totals for all
+		// 		$statistics_data['total']['total_'.$type->name.'s'] = $statistics_data['total']['total_'.$type->name.'s'] + $count;
+		// 		$statistics_data['total']['total_all'] = $statistics_data['total']['total_all'] + $count;
+		// 	}
+		// }
+
+		// // Calculate percentages
+		// foreach ($languages as $language) 
+		// {
+		// 	$statistics_data[$language->short_name]['total_percent'] = round($statistics_data[$language->short_name]['total_all'] / $statistics_data['total']['total_all'] * 100, 2);
+		// }
+
+		// Debugbar::stopMeasure('totals');
+		// // dd($statistics_data);
+		// Debugbar::startMeasure('da_pl_es','Time for da_pl_es');
+
+		// // Combinations of languages
+		// // $dk_pl_es_languages = $languages->filter(funnction() {
+		// 	// if ($language->id == 3 || $language->id == 4 || $language->id == 5)
+		// 		// return true;
+		// // });
+		// $dk_count = WordLanguage::find(3)->words()->count();
+		// $pl_count = WordLanguage::find(4)->words()->count();
+		// $es_count = WordLanguage::find(5)->words()->count();
+
+		// // Danish and Polish and Spanish
+		// $statistics_data['da_pl_es']['name'] = 'DA + PL + ES';
+		// $statistics_data['da_pl_es']['total_all'] = $dk_count + $pl_count + $es_count;
+
+		// $combined_words_DK_PL_ES = Word::with('meaning')
+		// 						->where('language_id', 3)
+		// 						->orWhere('language_id', 4)
+		// 						->orWhere('language_id', 5)
+		// 						->get();
+
+		// foreach ($types as $type) 
+		// {
+		// 	$count = 0;
+		// 	foreach ($combined_words_DK_PL_ES as $combined_word) 
+		// 	{
+		// 		if (isset($combined_word->meaning))
+		// 		{
+		// 			if ($combined_word->meaning->meaning_type_id == $type->id)
+		// 				$count++;
+		// 		}
+		// 	}
+		// 	$statistics_data['da_pl_es']['total_'.$type->name.'s'] = $count;
+		// }
+		// $statistics_data['da_pl_es']['total_percent'] = round( $statistics_data['da_pl_es']['total_all'] / $statistics_data['total']['total_all'] * 100, 2 );
+
+		// Debugbar::stopMeasure('da_pl_es');
+		// Debugbar::startMeasure('da_pl','Time for da_pl');
+
+		// // Danish and Polish
+		// $statistics_data['da_pl']['name'] = 'DA + PL';
+		// $statistics_data['da_pl']['total_all'] = $dk_count + $pl_count;
+
+		// $combined_words_DK_PL = Word::with('meaning')
+		// 						->where('language_id', 3)
+		// 						->orWhere('language_id', 4)
+		// 						->get();
+
+		// foreach ($types as $type)
+		// {
+		// 	$count = 0;
+		// 	foreach ($combined_words_DK_PL as $combined_word)
+		// 	{
+		// 		if (isset($combined_word->meaning))
+		// 		{
+		// 			if ($combined_word->meaning->meaning_type_id == $type->id)
+		// 				$count++;
+		// 		}
+		// 	}
+		// 	$statistics_data['da_pl']['total_'.$type->name.'s'] = $count;
+		// }
+		// $statistics_data['da_pl']['total_percent'] = round( $statistics_data['da_pl']['total_all'] / $statistics_data['total']['total_all'] * 100, 2 );
+		
+		// Debugbar::stopMeasure('da_pl');
+		// Debugbar::startMeasure('es_pl','Time for es_pl');
+
+		// // Spanish and Polish
+		// $statistics_data['es_pl']['name'] = 'ES + PL';
+		// $statistics_data['es_pl']['total_all'] = $es_count + $pl_count;
+
+		// $combined_words_ES_PL = Word::with('meaning')
+		// 						->where('language_id', 5)
+		// 						->orWhere('language_id', 4)
+		// 						->get();
+
+		// foreach ($types as $type)
+		// {
+		// 	$count = 0;
+		// 	foreach ($combined_words_ES_PL as $combined_word)
+		// 	{
+		// 		if (isset($combined_word->meaning))
+		// 		{
+		// 			if ($combined_word->meaning->meaning_type_id == $type->id)
+		// 				$count++;
+		// 		}
+		// 	}
+		// 	$statistics_data['es_pl']['total_'.$type->name.'s'] = $count;
+		// }
+		// $statistics_data['es_pl']['total_percent'] = round( $statistics_data['es_pl']['total_all'] / $statistics_data['total']['total_all'] * 100, 2 );
+
+		// Debugbar::stopMeasure('es_pl');
+		// Debugbar::startMeasure('da_es','Time for da_es');
+
+		// // Danish and Spanish
+		// $statistics_data['da_es']['name'] = 'ES + DA';
+		// $statistics_data['da_es']['total_all'] = $es_count + $dk_count;
+
+		// $combined_words_DK_ES = Word::with('meaning')
+		// 						->where('language_id', 5)
+		// 						->orWhere('language_id', 3)
+		// 						->get();
+
+		// foreach ($types as $type)
+		// {
+		// 	$count = 0;
+		// 	foreach ($combined_words_DK_ES as $combined_word)
+		// 	{
+		// 		if (isset($combined_word->meaning))
+		// 		{
+		// 			if ($combined_word->meaning->meaning_type_id == $type->id)
+		// 				$count++;
+		// 		}
+		// 	}
+		// 	$statistics_data['da_es']['total_'.$type->name.'s'] = $count;
+		// }
+		// $statistics_data['da_es']['total_percent'] = round( $statistics_data['da_es']['total_all'] / $statistics_data['total']['total_all'] * 100, 2 );
+		
+		// Debugbar::stopMeasure('da_es');
+
+		$allLines = [];
+
+		$allLine = [];
+
+		// Line 1, All words line
+		$allLine['total'] = Word::count();
+		$allLine['adjectives'] = Word::whereHas('meaning.type', function ($query) {
+		    $query->where('id', '=', 1);
+		})->count();
+		$allLine['nouns'] = Word::whereHas('meaning.type', function ($query) {
+		    $query->where('id', '=', 2);
+		})->count();
+		$allLine['verbs'] = Word::whereHas('meaning.type', function ($query) {
+		    $query->where('id', '=', 3);
+		})->count();
+		$allLine['adverbs'] = Word::whereHas('meaning.type', function ($query) {
+		    $query->where('id', '=', 4);
+		})->count();
+		$allLine['others'] = Word::whereHas('meaning.type', function ($query) {
+		    $query->where('id', '=', 5);
+		})->count();
+		$allLine['percent'] = 100;
+
+		// Save the line
+		$allLines['All'] = $allLine;
+
+		// Loop the languages
+		$languages = WordLanguage::all();
+		$fields = [
+			0 => 'total', 1 => 'adjectives', 2 => 'nouns', 3 => 'verbs', 4 => 'adverbs', 5 => 'others', 6 => 'percent'
+		];
 
 		foreach ($languages as $language) 
 		{
-			// First we need a name for the language we are assembling data for
-			$statistics_data[$language->short_name]['name'] = $language->name;
-
-			// Then we get all the words which belong to the language
-			// $words_in_language = Word::with('meaning')
-										// ->where('language_id', $language->id)
-										// ->get();
-
-			$words_in_language = $language->words;
-
-			// Here we save the total count of words in that language
-			// $statistics_data[$language->short_name]['total_all'] = $language->words->count();
-			$statistics_data[$language->short_name]['total_all'] = $words_in_language->count();
-
-			// Now we want to count how many words there are of each type
-			foreach ($types as $type) 
+			foreach ($fields as $id => $field) 
 			{
-				$count = 0;
-				foreach ($words_in_language as $word_in_language) 
+				if ($field == 'total')
 				{
-					// if ($word_in_language->meaning->meaning_type_id == $type->id)
-					if ($word_in_language->meaning->meaning_type_id == $type->id)
-						$count++;
+					$allLines[$language->name][$field] = Word::where('language_id', $language->id)->count();
 				}
-				$statistics_data[$language->short_name]['total_'.$type->name.'s'] = $count;
-
-				// Totals for all
-				$statistics_data['total']['total_'.$type->name.'s'] = $statistics_data['total']['total_'.$type->name.'s'] + $count;
-				$statistics_data['total']['total_all'] = $statistics_data['total']['total_all'] + $count;
-			}
-		}
-
-		// Calculate percentages
-		foreach ($languages as $language) 
-		{
-			$statistics_data[$language->short_name]['total_percent'] = round($statistics_data[$language->short_name]['total_all'] / $statistics_data['total']['total_all'] * 100, 2);
-		}
-
-		Debugbar::stopMeasure('totals');
-		// dd($statistics_data);
-		Debugbar::startMeasure('da_pl_es','Time for da_pl_es');
-
-		// Combinations of languages
-		// $dk_pl_es_languages = $languages->filter(funnction() {
-			// if ($language->id == 3 || $language->id == 4 || $language->id == 5)
-				// return true;
-		// });
-		$dk_count = WordLanguage::find(3)->words()->count();
-		$pl_count = WordLanguage::find(4)->words()->count();
-		$es_count = WordLanguage::find(5)->words()->count();
-
-		// Danish and Polish and Spanish
-		$statistics_data['da_pl_es']['name'] = 'DA + PL + ES';
-		$statistics_data['da_pl_es']['total_all'] = $dk_count + $pl_count + $es_count;
-
-		$combined_words_DK_PL_ES = Word::with('meaning')
-								->where('language_id', 3)
-								->orWhere('language_id', 4)
-								->orWhere('language_id', 5)
-								->get();
-
-		foreach ($types as $type) 
-		{
-			$count = 0;
-			foreach ($combined_words_DK_PL_ES as $combined_word) 
-			{
-				if (isset($combined_word->meaning))
+				else if ($field == 'percent')
 				{
-					if ($combined_word->meaning->meaning_type_id == $type->id)
-						$count++;
+					$allLines[$language->name][$field] = $allLines[$language->name]['total'] / $allLines['All']['total'] * 100;
+				}
+				else
+				{
+					$allLines[$language->name][$field] = Word::whereHas('meaning.type', function ($query) use ($id) {
+				    	$query->where('id', '=', $id);
+					})->where('language_id', $language->id)->count();
 				}
 			}
-			$statistics_data['da_pl_es']['total_'.$type->name.'s'] = $count;
 		}
-		$statistics_data['da_pl_es']['total_percent'] = round( $statistics_data['da_pl_es']['total_all'] / $statistics_data['total']['total_all'] * 100, 2 );
 
-		Debugbar::stopMeasure('da_pl_es');
-		Debugbar::startMeasure('da_pl','Time for da_pl');
-
-		// Danish and Polish
-		$statistics_data['da_pl']['name'] = 'DA + PL';
-		$statistics_data['da_pl']['total_all'] = $dk_count + $pl_count;
-
-		$combined_words_DK_PL = Word::with('meaning')
-								->where('language_id', 3)
-								->orWhere('language_id', 4)
-								->get();
-
-		foreach ($types as $type)
+		$combinations = [
+			'DA + PL' => [1, 4],
+			'ES + PL' => [5, 4],
+			'ES + DA' => [5, 1],
+			'DA + PL + ES' => [5, 4, 1]
+		];
+		foreach ($combinations as $combination => $values) 
 		{
-			$count = 0;
-			foreach ($combined_words_DK_PL as $combined_word)
+			foreach ($fields as $id => $field) 
 			{
-				if (isset($combined_word->meaning))
+				if ($field == 'total')
 				{
-					if ($combined_word->meaning->meaning_type_id == $type->id)
-						$count++;
+					if (count($values) == 2)
+					{
+						$allLines[$combination][$field] = Meaning::whereHas('words', function($query) use ($values) {
+							$query->where('language_id', $values[0]);
+						})->whereHas('words', function($query) use ($values) {
+							$query->where('language_id', $values[1]);
+						})->count();
+					}
+					else if (count($values == 3))
+					{
+						$allLines[$combination][$field] = Meaning::whereHas('words', function($query) use ($values) {
+							$query->where('language_id', $values[0]);
+						})->whereHas('words', function($query) use ($values) {
+							$query->where('language_id', $values[1]);
+						})->whereHas('words', function($query) use ($values) {
+							$query->where('language_id', $values[2]);
+						})->count();
+					}
+				}
+				else if ($field == 'percent')
+				{
+					$allLines[$combination][$field] = $allLines[$combination]['total'] / $allLines['All']['total'] * 100;
+				}
+				else
+				{
+					if (count($values) == 2)
+					{
+						$allLines[$combination][$field] = Meaning::whereHas('words', function($query) use ($values) {
+							$query->where('language_id', $values[0]);
+						})->whereHas('words', function($query) use ($values) {
+							$query->where('language_id', $values[1]);
+						})->where('meaning_type_id', $id)->count();
+					}
+					else if (count($values == 3))
+					{
+						$allLines[$combination][$field] = Meaning::whereHas('words', function($query) use ($values) {
+							$query->where('language_id', $values[0]);
+						})->whereHas('words', function($query) use ($values) {
+							$query->where('language_id', $values[1]);
+						})->whereHas('words', function($query) use ($values) {
+							$query->where('language_id', $values[2]);
+						})->where('meaning_type_id', $id)->count();
+					}
 				}
 			}
-			$statistics_data['da_pl']['total_'.$type->name.'s'] = $count;
 		}
-		$statistics_data['da_pl']['total_percent'] = round( $statistics_data['da_pl']['total_all'] / $statistics_data['total']['total_all'] * 100, 2 );
+
+		// en fr da pl es de it
+		$statistics_data = $allLines;
 		
-		Debugbar::stopMeasure('da_pl');
-		Debugbar::startMeasure('es_pl','Time for es_pl');
-
-		// Spanish and Polish
-		$statistics_data['es_pl']['name'] = 'ES + PL';
-		$statistics_data['es_pl']['total_all'] = $es_count + $pl_count;
-
-		$combined_words_ES_PL = Word::with('meaning')
-								->where('language_id', 5)
-								->orWhere('language_id', 4)
-								->get();
-
-		foreach ($types as $type)
-		{
-			$count = 0;
-			foreach ($combined_words_ES_PL as $combined_word)
-			{
-				if (isset($combined_word->meaning))
-				{
-					if ($combined_word->meaning->meaning_type_id == $type->id)
-						$count++;
-				}
-			}
-			$statistics_data['es_pl']['total_'.$type->name.'s'] = $count;
-		}
-		$statistics_data['es_pl']['total_percent'] = round( $statistics_data['es_pl']['total_all'] / $statistics_data['total']['total_all'] * 100, 2 );
-
-		Debugbar::stopMeasure('es_pl');
-		Debugbar::startMeasure('da_es','Time for da_es');
-
-		// Danish and Spanish
-		$statistics_data['da_es']['name'] = 'ES + DA';
-		$statistics_data['da_es']['total_all'] = $es_count + $dk_count;
-
-		$combined_words_DK_ES = Word::with('meaning')
-								->where('language_id', 5)
-								->orWhere('language_id', 3)
-								->get();
-
-		foreach ($types as $type)
-		{
-			$count = 0;
-			foreach ($combined_words_DK_ES as $combined_word)
-			{
-				if (isset($combined_word->meaning))
-				{
-					if ($combined_word->meaning->meaning_type_id == $type->id)
-						$count++;
-				}
-			}
-			$statistics_data['da_es']['total_'.$type->name.'s'] = $count;
-		}
-		$statistics_data['da_es']['total_percent'] = round( $statistics_data['da_es']['total_all'] / $statistics_data['total']['total_all'] * 100, 2 );
-		
-		Debugbar::stopMeasure('da_es');
+		$types = MeaningType::all();
 
 		return view('statistics.index', compact('statistics_data', 'recent_words_data', 'types'));
 		

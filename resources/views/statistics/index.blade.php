@@ -41,8 +41,40 @@
 				</div>
 			</div>
 
-			
+
 			<h3>General statistics</h3>
+
+			<div class="panel panel-default">
+				<div class="table-responsive"> 
+					<table class="table table-hover table-bordered table-striped">
+						<thead>
+
+							<tr class="active">
+								<th></th>
+								<th>Total</th>
+								@foreach ($types as $type)
+									<th>{{ $type->name }}s</th>
+								@endforeach
+								<th>Total %</th>
+							</tr>
+						</thead>
+						@foreach ($statistics_data as $key => $fields)
+							<tr>
+								<td class="active">{{ $key }}</td>
+								@foreach ($fields as $field)
+									<td>{{ $field }}</td>
+								@endforeach
+							</tr>
+						@endforeach
+					</table>
+				</div>
+				
+			</div>
+
+
+
+			
+			<?php /*<h3>General statistics</h3>
 
 			<div class="panel panel-default">
 				<div class="table-responsive"> 
@@ -73,7 +105,7 @@
 					</table>
 				</div>
 				
-			</div>
+			</div> */ ?>
 			
 		</div>
 	</div>
