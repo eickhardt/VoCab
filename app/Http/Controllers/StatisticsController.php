@@ -292,7 +292,7 @@ class StatisticsController extends Controller {
 				}
 				else if ($field == 'percent')
 				{
-					$allLines[$language->name][$field] = $allLines[$language->name]['total'] / $allLines['All']['total'] * 100;
+					$allLines[$language->name][$field] = round($allLines[$language->name]['total'] / $allLines['All']['total'] * 100, 2);
 				}
 				else
 				{
@@ -336,7 +336,7 @@ class StatisticsController extends Controller {
 				}
 				else if ($field == 'percent')
 				{
-					$allLines[$combination][$field] = $allLines[$combination]['total'] / $allLines['All']['total'] * 100;
+					$allLines[$combination][$field] = round($allLines[$combination]['total'] / $allLines['All']['total'] * 100, 2);
 				}
 				else
 				{
