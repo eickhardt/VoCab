@@ -29,6 +29,9 @@ Route::group(['middleware' => 'auth'], function()
 	Route::get('search', 
 		['as' => 'search_path', 'uses' => 'HomeController@showSearch']
 	);
+	Route::post('search', 
+		['as' => 'search_bar_path', 'uses' => 'HomeController@showSpecificSearch']
+	);
 	Route::get('settings', 
 		['as' => 'user_settings_path', 'uses' => 'UsersController@showSettings']
 	);
@@ -152,6 +155,10 @@ $router->get('mwdata2',
  */
 $router->get('statistics', 
 	['as' => 'statistics_path', 'uses' => 'StatisticsController@index']
+);
+
+$router->get('statistics_2', 
+	['as' => 'statistics_path2', 'uses' => 'StatsFileController@index']
 );
 
 /**

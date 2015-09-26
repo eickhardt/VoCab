@@ -62,4 +62,16 @@ class HomeController extends Controller {
 
 		return view('search.index', $info_array);
 	}
+
+	/**
+	 * Show the search page.
+	 *
+	 * @param Word $word
+	 * @return View
+	 */
+	public function showSpecificSearch()
+	{
+		$query = ['s' => Input::get('s')];
+		return redirect()->route('search_path', $query);
+	}
 }

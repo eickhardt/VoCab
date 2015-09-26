@@ -40,7 +40,7 @@
 				<ul class="nav navbar-nav">
 					<?php /*<li>{!! link_to_route('home', 'Home') !!}</li>*/ ?>
 					@unless (Auth::guest()) 
-						<li>{!! link_to_route('search_path', 'Search') !!}</li>
+						<?php /*<li>{!! link_to_route('search_path', 'Search') !!}</li>*/ ?>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><b>Goto</b> <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
@@ -58,6 +58,12 @@
 								<li>{!! link_to_route('backup_show_path', 'Backup') !!}</li>
 							</ul>
 						</li>
+						{!! Form::open(['method' => 'POST', 'role' => 'search', 'class' => 'navbar-form navbar-left', 'route' => 'search_bar_path']) !!}
+							<div class="form-group">
+								<input type="text" class="form-control" name="s" placeholder="Search">
+							</div>
+							<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Search</button>
+						{!! Form::close() !!}
 					@endunless
 				</ul>
 

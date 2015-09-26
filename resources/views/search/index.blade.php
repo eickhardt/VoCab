@@ -16,6 +16,9 @@
 			<a href="{{ route('meaning_wotd_path') }}" type="submit" class="btn btn-primary">
 				<span class="glyphicon glyphicon-certificate"></span> Word of the Day
 			</a>
+			<a href="{{ route('statistics_path2') }}" type="submit" class="btn btn-primary">
+				<span class="glyphicon glyphicon-certificate"></span> NEW STATS
+			</a>
 			<a href="{{ route('statistics_path') }}" type="submit" class="btn btn-primary">
 				<span class="glyphicon glyphicon-stats"></span> Statistics
 			</a>
