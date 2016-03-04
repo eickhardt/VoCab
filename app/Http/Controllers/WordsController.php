@@ -73,10 +73,7 @@ class WordsController extends Controller {
 	 */
 	public function update(UpdateWordRequest $request, Word $word)
 	{
-		$word->text = $request->get('text');
-		$word->language_id = $request->get('language_id');
-		$word->meaning_id = $request->get('meaning_id');
-		$word->save();
+		$word->update($request->except('created_at', 'updated_at'));
 
 		Session::flash('success', "The word '".$word->text."' was updated.");
 		return redirect()->route('word_edit_path', $word->id);

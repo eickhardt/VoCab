@@ -41,8 +41,8 @@ class CreateWordRequest extends Request {
 	public function rules()
 	{
 		return [
-			'text' => 'required',
-			'meaning_id' => 'required|integer|exists:meanings,id',
+			'text'        => 'required',
+			'meaning_id'  => 'required|integer|exists:meanings,id',
 			'language_id' => 'required|integer|exists:word_languages,id',
 		];
 	}

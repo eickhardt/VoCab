@@ -30,6 +30,14 @@
 					</div>
 				</div>
 
+				<div class="form-group {{ $errors->has('comment') ? 'has-error' : '' }}">
+					<label class="col-md-4 control-label">Comment</label>
+					<div class="col-md-6">
+						{!! Form::text('comment', NULL, ['class' => 'form-control']) !!}
+						{!! $errors->first('comment', '<span class="help-block">:message</span>') !!}
+					</div>
+				</div>
+
 				<div class="form-group {{ $errors->has('language_id') ? 'has-error' : '' }}">
 					<label class="col-md-4 control-label">Language</label>
 					<div class="col-md-6">

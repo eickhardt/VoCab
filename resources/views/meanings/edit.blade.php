@@ -40,12 +40,19 @@
 			<h4>Word information</h4>
 			<div class="panel panel-default">
 				<div class="panel-body">
-					{!! Form::model($meaning, ['route' => ['meaning_update_path', $meaning->id], 'method' => 'PATCH', 'class' => 'form-horizontal']) !!}
+					{!! Form::model($meaning, [
+						'route'  => ['meaning_update_path', $meaning->id], 
+						'method' => 'PATCH', 
+						'class'  => 'form-horizontal'
+					]) !!}
 
 						<div class="form-group {{ $errors->has('meaning_type_id') ? 'has-error' : '' }}">
 							<label class="col-md-4 control-label">Type</label>
 							<div class="col-md-6">
-								{!! Form::select('meaning_type_id', $types, $meaning->meaning_type_id, ['class' => 'form-control', 'id' => 'type_selector']) !!}
+								{!! Form::select('meaning_type_id', $types, $meaning->meaning_type_id, [
+									'class' => 'form-control', 
+									'id' => 'type_selector'
+								]) !!}
 								{!! $errors->first('meaning_type_id', '<span class="help-block">:message</span>') !!}
 							</div>
 						</div>

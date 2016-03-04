@@ -294,9 +294,10 @@ function tipContent($meaning_array)
 	$result_array = [];
 	foreach ($meaning_array['words'] as $word) 
 	{
-		$result_array[$word['language']['name']][] = $word['text'].'='.$word['id'];
+		$result_array[$word['language']['name']][] = $word['text'].'='.$word['id'].'='.$word['comment'];
 	}
 
+	\Log::info($result_array);
 	$html = '';
 	foreach ($result_array as $name => $words) 
 	{
@@ -307,8 +308,12 @@ function tipContent($meaning_array)
 		foreach ($words as $word) 
 		{
 			$word_exploded = explode('=', $word);
-			$word_links_in_line[] = link_to_route('word_path', $word_exploded[0], $word_exploded[1]);
+			if ($word_exploded[2])
+				$word_links_in_line[] = link_to_route('word_edit_path', $word_exploded[0], $word_exploded[1]) . ' - "<i>'.$word_exploded[2].'</i>"';
+			else
+				$word_links_in_line[] = link_to_route('word_edit_path', $word_exploded[0], $word_exploded[1]);
 		}
+		// \Log::info($meaning_array['words']);
 		$line .= implode(', ', $word_links_in_line);
 		$line .= '</p>';
 		$html = $html.$line;

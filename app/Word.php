@@ -20,7 +20,7 @@ class Word extends Eloquent {
 	 * @var array
 	 */
 	protected $fillable = [
-		'language_id', 'text', 'meaning_id'
+		'language_id', 'text', 'meaning_id', 'comment'
 	];
 
 	/**
