@@ -114,8 +114,9 @@ class WordsController extends Controller {
 		// If this code is executed, validation has passed and we can create the word.
 		$word = Word::create([
 			'language_id' => $request->get('language_id'), 
-			'text' => $request->get('text'),
-			'meaning_id' => $request->get('meaning_id'),
+			'text'        => $request->get('text'),
+			'meaning_id'  => $request->get('meaning_id'),
+			'comment'     => $request->get('comment'),
 		]);
 
 		Session::flash('success', "A new word '".$word->text."' was created.");

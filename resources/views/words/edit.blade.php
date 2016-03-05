@@ -84,7 +84,7 @@
 			<div class="form-horizontal">
 				<div class="form-group">
 					<div class="col-md-6 col-md-offset-4">
-						<a href="{{ route('meaning_path', $word->meaning_id) }}" class="btn btn-primary">
+						<a href="{{ route('meaning_edit_path', $word->meaning_id) }}" class="btn btn-primary">
 							<span class="glyphicon glyphicon-tree-conifer"></span> Root word
 						</a>
 					</div>
