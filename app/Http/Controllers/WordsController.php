@@ -161,7 +161,8 @@ class WordsController extends Controller {
 		{
 			$search_term = Input::get('search_term');
 			$search_term = "%{$search_term}%";
-			$words = Word::where('text', 'LIKE', $search_term);
+			$words = Word::where('text', 'LIKE', $search_term)
+				->orWhere('comment', 'LIKE', $search_term);
 
 			if (Input::has('options') && Input::get('options'))
 			{
