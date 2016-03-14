@@ -23,7 +23,10 @@
 						@foreach ($meaning->words as $word)
 							@if ($word->language_id == $language->id)
 								<?php 
-								$links_array[] = link_to_route('word_edit_path', $word->text, $word->id);
+								$entry = link_to_route('word_edit_path', $word->text, $word->id);
+								if ($word->comment)
+									$entry .= ' - '.$word->comment;
+								$links_array[] = $entry;
 								$count++; 
 								?>
 							@endif
