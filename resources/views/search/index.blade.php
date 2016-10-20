@@ -127,9 +127,9 @@
 					}
 				);
 
-				setTimeout( function() {
-					tip.hide();
-				}, 3000, tip);
+				//setTimeout( function() {
+					//tip.hide();
+				//}, 3000, tip);
 			});
 
 			// Check if there is something to search for already
