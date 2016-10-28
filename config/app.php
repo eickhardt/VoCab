@@ -135,6 +135,7 @@ return [
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
+		'Illuminate\Broadcasting\BroadcastServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -148,7 +149,7 @@ return [
 		/**
 		 * Pretty errors provider
 		 */
-		'GrahamCampbell\Exceptions\ExceptionsServiceProvider',
+		// 'GrahamCampbell\Exceptions\ExceptionsServiceProvider',
 
 		/**
 		 * Html class
