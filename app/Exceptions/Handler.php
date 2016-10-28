@@ -2,8 +2,8 @@
 
 use Exception;
 
-use GrahamCampbell\Exceptions\ExceptionHandler as ExceptionHandler;
-// use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+// use GrahamCampbell\Exceptions\ExceptionHandler as ExceptionHandler;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler {
 
