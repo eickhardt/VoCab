@@ -74,6 +74,9 @@
 	<script type="text/javascript">
 		$(function() 
 		{
+			// For holding our opentips
+			var openTips = {};
+
 			// Show advanced options when the corresponsing button is clicked
 			$('#advanced_search_btn').on('click', function() 
 			{
@@ -108,28 +111,36 @@
 			$(document).on('click', '.translations', function() 
 			{
 				var meaning_id = $(this).data('id');
-				var tip = new Opentip(
-					$(this),
-					{ 
-						target: $(this).parent().find('a'), 
-						// target: true, 
-						tipJoint: "left", 
-						background: "white", 
-						borderColor: "lightgray",
-						showOn: 'creation',
-						offset: [5, 0],
-						hideTrigger: 'closeButton',
-						closeButtonRadius: 10,
-						closeButtonCrossSize: 5,
-						closeButtonCrossColor: '#337ab7',
-						removeElementsOnHide: true,
-						ajax: translations_url + '/' + meaning_id
-					}
-				);
 
-				//setTimeout( function() {
-					//tip.hide();
-				//}, 3000, tip);
+				// Check if the tip already exists
+				if (openTips.hasOwnProperty(meaning_id) && openTips[meaning_id])
+				{
+					// Tip already exists, deactivate it
+					openTips[meaning_id].deactivate();
+					openTips[meaning_id] = null;
+				}
+				else {
+					// Create the tip
+					var tip = new Opentip(
+						$(this),
+						{ 
+							target: $(this).parent().find('a'), 
+							// target: true, 
+							tipJoint: "left", 
+							background: "white", 
+							borderColor: "lightgray",
+							showOn: 'creation',
+							offset: [5, 0],
+							hideTrigger: 'closeButton',
+							closeButtonRadius: 10,
+							closeButtonCrossSize: 5,
+							closeButtonCrossColor: '#337ab7',
+							removeElementsOnHide: true,
+							ajax: translations_url + '/' + meaning_id
+						}
+					);	
+					openTips[meaning_id] = tip;
+				}
 			});
 
 			// Check if there is something to search for already
