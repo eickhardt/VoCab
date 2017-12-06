@@ -48,7 +48,7 @@ class BackupController extends Controller {
 		// Create a corresponding database row
 		$backup_path = storage_path().'/app/';
 		$files = scandir($backup_path, SCANDIR_SORT_DESCENDING);
-		$newest_file = $files[1];
+		$newest_file = $files[2];
 		$backup = Backup::create(['user_id' => $user->id, 'file' => $newest_file]);
 		
 		// Redirect back with a message to the user
