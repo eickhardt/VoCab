@@ -10,9 +10,10 @@
 		"barryvdh/laravel-debugbar": "^2.3",
 		"spatie/laravel-backup": "^3.0.0",
 		"spatie/laravel-tail": "~1.1",
-		"guzzlehttp/guzzle": "~4.0",
+		"guzzlehttp/guzzle": "~6.0",
 		"devfactory/minify": "~1.0",
-		"intervention/image": "~2.3"
+		"intervention/image": "~2.3",
+		"laravel/homestead": "5.2"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",
