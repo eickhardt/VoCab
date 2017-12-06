@@ -47,7 +47,7 @@ return [
          * be automatically placed in this directory so you don't
          * accidentally end up committing these backups.
          */
-        'path' => 'backups',
+        'path' => '',
     ],
 
     /*
