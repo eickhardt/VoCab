@@ -51,9 +51,9 @@ class BackupCommand extends Command {
 			{
 				Artisan::call('backup:run');
 
-				$backup_path = storage_path().'/app/backups/';
+				$backup_path = storage_path().'/app/';
 				$files = scandir($backup_path, SCANDIR_SORT_DESCENDING);
-				$newest_file = $files[0];
+				$newest_file = $files[2];
 				$backup = Backup::create(['user_id' => $user->id, 'file' => $newest_file]);
 
 				$this->info('Snapshot has been saved.');
