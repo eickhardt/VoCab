@@ -96,6 +96,10 @@ $router->get('word/{id}/restore',
 	['as' => 'meaning_restore_path', 'uses' => 'MeaningsController@restore']
 );
 
+$router->get('word/recent', 
+	['as' => 'recent_words_path', 'uses' => 'WordsController@showMostRecent']
+);
+
 $router->get('word/random', 
 	['as' => 'meaning_random_path', 'uses' => 'MeaningsController@random']
 );
