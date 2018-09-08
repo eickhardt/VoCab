@@ -233,4 +233,17 @@ class WordsController extends Controller {
 		Session::flash('success', "The word '" .$word->text. "' was restored.");
 		return redirect()->route('words_trashed_path');
 	}
+
+	/**
+	 * Show all words paginated ordered by the time of creation.
+	 * 
+	 * @return mixed
+	 */
+	public function showMostRecent() {
+		$list_type = 'Recent';
+		$languages = WordLanguage::all();
+		$words = Word::orderBy('created_at', 'desc')->paginate(50);
+
+		return view('lists.words', compact('words', 'list_type', 'languages'));
+	}
 }

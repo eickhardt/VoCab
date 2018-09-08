@@ -8,6 +8,8 @@
 					<span class="glyphicon glyphicon-question-sign"></span>
 				@elseif (isset($list_type) && $list_type == 'Trashed')
 					<span class="glyphicon glyphicon-trash"></span>
+				@elseif (isset($list_type) && $list_type == 'Recent')
+					<span class="glyphicon glyphicon-star"></span>
 				@else
 					<span class="glyphicon glyphicon-list-alt"></span>
 				@endif

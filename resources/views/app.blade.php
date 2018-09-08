@@ -51,6 +51,8 @@
 								<li>{!! link_to_route('meaning_random_path', 'Random word') !!}</li>
 								<li>{!! link_to_route('word_random_path', 'Random translation') !!}</li>
 								<li class="divider"></li>
+								<li>{!! link_to_route('recent_words_path', 'Recent words') !!}</li>
+								<li class="divider"></li>
 								<li>{!! link_to_route('words_trashed_path', 'Trashed translations') !!}</li>
 								<li>{!! link_to_route('meanings_trashed_path', 'Trashed words') !!}</li>
 								<li class="divider"></li>
