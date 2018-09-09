@@ -24,6 +24,9 @@
 			<a href="{{ route('statistics_path') }}" type="submit" class="btn btn-primary">
 				<span class="glyphicon glyphicon-stats"></span> Statistics
 			</a>
+			<a href="{{ route('recent_words_path') }}" type="submit" class="btn btn-primary">
+				<span class="glyphicon glyphicon-stats"></span> Recent words
+			</a>
 			<?php /* At the moment we only want to show backup for the admins */ ?>
 			@if (Auth::user()->name == 'Gabrielle Tranchet' || Auth::user()->name == 'Daniel Eickhardt')
 				<a href="{{ route('backup_show_path') }}" type="submit" class="btn btn-primary">
