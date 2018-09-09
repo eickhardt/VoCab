@@ -17,6 +17,11 @@
 			</h2>
 		</div>
 		<div class="panel-body">
+		
+			@if (isset($list_type) && $list_type == 'Recent')
+				{!! $words->render() !!} <br><br>
+			@endif()
+			
 			@forelse ($words as $word)
 				<div class="panel panel-default">
 					<div class="panel-body">
@@ -74,7 +79,7 @@
 			@endif
 
 			@if (isset($list_type) && $list_type == 'Recent')
-				{!! $words->render() !!} <br>
+				{!! $words->render() !!} <br><br>
 			@endif()
 
 			<a href="{{ route('search_path') }}" type="submit" class="btn btn-primary">
