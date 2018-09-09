@@ -74,7 +74,7 @@
 			@endif
 
 			@if (isset($list_type) && $list_type == 'Recent')
-				{!! $words->render() !!}
+				{!! $words->render() !!} <br>
 			@endif()
 
 			<a href="{{ route('search_path') }}" type="submit" class="btn btn-primary">
