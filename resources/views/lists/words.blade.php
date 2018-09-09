@@ -73,6 +73,10 @@
 				</a>
 			@endif
 
+			@if (isset($list_type) && $list_type == 'Recent')
+				{!! $words->render() !!}
+			@endif()
+
 			<a href="{{ route('search_path') }}" type="submit" class="btn btn-primary">
 				<span class="glyphicon glyphicon-search"></span> Goto search
 			</a>
