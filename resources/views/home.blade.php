@@ -24,8 +24,8 @@
 					<h1>Welcome to VoCab!</h1>
 					<p>Here you can expand your vocabulary in several languages and contribute to a fast growing body of international, up-to-date words and translations.</p>
 					<p>
-						<a class="btn btn-primary btn-lg" href="/auth/login" role="button"><span class="glyphicon glyphicon-lock"></span> Log in</a> or
-						<a class="btn btn-primary btn-lg" href="/auth/register" role="button"><span class="glyphicon glyphicon-pencil"></span> Register</a>
+						<a class="btn btn-primary btn-lg" href="/login" role="button"><span class="glyphicon glyphicon-lock"></span> Log in</a> or
+						<a class="btn btn-primary btn-lg" href="/register" role="button"><span class="glyphicon glyphicon-pencil"></span> Register</a>
 					</p>
 				</div>
 			<?php /*@endunless*/ ?>

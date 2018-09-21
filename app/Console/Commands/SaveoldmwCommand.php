@@ -46,7 +46,7 @@ class SaveoldmwCommand extends Command {
 	 *
 	 * @return mixed
 	 */
-	public function fire()
+	public function handle()
 	{
 		$this->info('Starting save old MW command.');
 

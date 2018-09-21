@@ -2,6 +2,10 @@
 
 return [
 
+	'name' => 'Vocab',
+
+	'env' => env('APP_ENV', 'production'),
+
 	/*
 	|--------------------------------------------------------------------------
 	| Application Debug Mode
@@ -113,12 +117,10 @@ return [
 		/*
 		 * Laravel Framework Service Providers...
 		 */
-		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
 		'Illuminate\Auth\AuthServiceProvider',
-		'Illuminate\Bus\BusServiceProvider',
+		// 'Illuminate\Bus\BusServiceProvider',
 		'Illuminate\Cache\CacheServiceProvider',
 		'Illuminate\Foundation\Providers\ConsoleSupportServiceProvider',
-		'Illuminate\Routing\ControllerServiceProvider',
 		'Illuminate\Cookie\CookieServiceProvider',
 		'Illuminate\Database\DatabaseServiceProvider',
 		'Illuminate\Encryption\EncryptionServiceProvider',
@@ -141,10 +143,12 @@ return [
 		 * Application Service Providers...
 		 */
 		'App\Providers\AppServiceProvider',
-		'App\Providers\BusServiceProvider',
+		// 'App\Providers\BusServiceProvider',
 		'App\Providers\ConfigServiceProvider',
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
+		'App\Providers\AuthServiceProvider',
+		'App\Providers\BroadcastServiceProvider',
 
 		/**
 		 * Pretty errors provider
@@ -154,7 +158,7 @@ return [
 		/**
 		 * Html class
 		 */
-		'Illuminate\Html\HtmlServiceProvider',
+		// 'Illuminate\Html\HtmlServiceProvider',
 
 		/**
 		 * Debugbar
@@ -169,7 +173,7 @@ return [
 		/**
 		 * Tail the log from console
 		 */
-		'Spatie\Tail\TailServiceProvider',
+		// 'Spatie\Tail\TailServiceProvider',
 
 		/**
 		 * Minify CSS and Javascript
@@ -180,6 +184,10 @@ return [
 		 * Used to size images correctly.
 		 */
 		'Intervention\Image\ImageServiceProvider',
+
+		Collective\Html\HtmlServiceProvider::class,
+		Illuminate\Notifications\NotificationServiceProvider::class,
+		// AltThree\Bus\BusServiceProvider::class,
 	],
 
 	/*
@@ -227,12 +235,14 @@ return [
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
+		'Gate'      => 'Illuminate\Support\Facades\Gate',
 		
-		'Form' 		=> 'Illuminate\Html\FormFacade',
-		'Html' 		=> 'Illuminate\Html\HtmlFacade',
+		'Form' => Collective\Html\FormFacade::class,
+    'Html' => Collective\Html\HtmlFacade::class,
 		'Debugbar'	=> 'Barryvdh\Debugbar\Facade',
-		'Minify'	=> 'Devfactory\Minify\Facades\MinifyFacade',
-		'Image'		=> 'Intervention\Image\Facades\Image'
+		'Minify'	  => 'Devfactory\Minify\Facades\MinifyFacade',
+		'Image'		  => 'Intervention\Image\Facades\Image',
+		'Image'		  => 'Illuminate\Support\Facades\Notification',
 
 	],
 

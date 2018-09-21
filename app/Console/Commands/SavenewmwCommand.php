@@ -41,7 +41,7 @@ class SavenewmwCommand extends Command {
 	 *
 	 * @return mixed
 	 */
-	public function fire()
+	public function handæe()
 	{
 		$this->info('Starting save new MW command.');
 

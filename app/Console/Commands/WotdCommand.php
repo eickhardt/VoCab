@@ -31,7 +31,7 @@ class WotdCommand extends Command {
 	 *
 	 * @return mixed
 	 */
-	public function fire()
+	public function handle()
 	{
 		// Pick a random word from the meanings table
 		$meaning = Meaning::orderBy(DB::raw("RAND()"))->first();

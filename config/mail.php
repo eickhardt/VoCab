@@ -121,5 +121,12 @@ return [
 	*/
 
 	'pretend' => env('MAIL_PRETEND'),
+	
+	'markdown' => [
+		'theme' => 'default',
 
+		'paths' => [
+			resource_path('views/vendor/mail'),
+		],
+	],
 ];

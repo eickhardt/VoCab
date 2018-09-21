@@ -1,6 +1,20 @@
 # LanguageWebApp
 This application is intended for language and code training purposes.
 
+## Development environment:
+* Install Vagrant / Virtualbox
+* Clone this repo
+* vagrant up from that location
+* composer install inside box from that location
+* Create a .env file from the .env.example file. If using homestead it can be used as-is, otherwise check db credentials.
+* php artisan key:generate If you at some point get a "cipher" related error
+* php artisan migrate
+* php artisan db:seed
+* php artisan restoreoldmw
+* php artisan setwordofday
+* Remember to have something in your hosts file if on windows i.e. "192.168.10.10 vocab.test"
+* Go to vocab.test in browser and log in with ddeickhardt@gmail.com and the USER1_PW set in .env
+
 ## Features:
 As the application expands, please update the information here if it does not reflect the current state of the project.
 

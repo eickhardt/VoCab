@@ -42,7 +42,7 @@ class RestoreoldmwCommand extends Command {
 	 *
 	 * @return mixed
 	 */
-	public function fire()
+	public function handle()
 	{
 		$this->info('Starting restore old MW command.');
 

@@ -6,10 +6,10 @@ authorize: ~/.ssh/id_rsa.pub
 keys:
     - ~/.ssh/id_rsa
 folders:
-    - map: /home/daniel/Code/vocab
-      to: /home/vagrant/Code/vocab
+    - map: 'C:\Users\dde\Code\vocab'
+      to: /home/vagrant/vocab
 sites:
-    - map: vocab.app
+    - map: vocab.test
       to: /home/vagrant/Code/vocab/public
 databases:
     - homestead

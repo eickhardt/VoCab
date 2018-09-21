@@ -41,7 +41,7 @@ class ChangeWordDatesCommand extends Command {
 	 *
 	 * @return mixed
 	 */
-	public function fire()
+	public function handle()
 	{
 		$this->info('Starting date change command.');
 

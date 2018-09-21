@@ -11,10 +11,10 @@
 		</div> 
 		<div id="words" class="panel-body">
 			<a href="{{ route('meaning_create_path') }}" type="submit" class="btn btn-success">
-				<span class="glyphicon glyphicon-plus-sign"></span> Create word
+				<span class="glyphicon glyphicon-plus-sign"></span> <span class="hidden-xs">Create word</span>
 			</a>
 			<a href="{{ route('meaning_wotd_path') }}" type="submit" class="btn btn-primary">
-				<span class="glyphicon glyphicon-certificate"></span> Word of the Day
+				<span class="glyphicon glyphicon-certificate"></span> <span class="hidden-xs">Word of the Day</span>
 			</a>
 			<?php /*
 			<a href="{{ route('statistics_path2') }}" type="submit" class="btn btn-primary">
@@ -22,19 +22,19 @@
 			</a>
 			*/ ?>
 			<a href="{{ route('statistics_path') }}" type="submit" class="btn btn-primary">
-				<span class="glyphicon glyphicon-stats"></span> Statistics
+				<span class="glyphicon glyphicon-stats"></span> <span class="hidden-xs">Statistics</span>
 			</a>
 			<a href="{{ route('recent_words_path') }}" type="submit" class="btn btn-primary">
-				<span class="glyphicon glyphicon-stats"></span> Recent words
+				<span class="glyphicon glyphicon-stats"></span> <span class="hidden-xs">Recent words</span>
 			</a>
 			<?php /* At the moment we only want to show backup for the admins */ ?>
 			@if (Auth::user()->name == 'Gabrielle Tranchet' || Auth::user()->name == 'Daniel Eickhardt')
 				<a href="{{ route('backup_show_path') }}" type="submit" class="btn btn-primary">
-					<span class="glyphicon glyphicon-hdd"></span> Backup
+					<span class="glyphicon glyphicon-hdd"></span> <span class="hidden-xs">Backup</span>
 				</a>
 			@endif
 			<a id="advanced_search_btn" type="submit" class="btn btn-info">
-				<span class="glyphicon glyphicon-cog Search settings"></span> Settings
+				<span class="glyphicon glyphicon-cog Search settings"></span> <span class="hidden-xs">Settings</span>
 			</a>
 			<br><br>
 
@@ -208,7 +208,7 @@
 						{
 							for (var i = 0; i <= words.length -1; i++) 
 							{
-								var edit_link = "/words/" + words[i]['meaning_id'] + "/edit";
+								var edit_link = "/word/" + words[i]['meaning_id'] + "/edit";
 								var row = $('#cloneme').clone().removeAttr('id').removeAttr('style').addClass('removeme');
 								row.html( '<div class="btn btn-xs btn-primary translations" data-id="' + words[i]['meaning_id'] + '"><span class="glyphicon glyphicon-list"></span></div><img class="row_image" src="' + languages[words[i]['language_id']-1].image + '"> ' + '<a href="'+ edit_link +'">' + words[i]['text'] + '</a>');
 

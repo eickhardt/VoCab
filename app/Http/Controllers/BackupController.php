@@ -43,10 +43,10 @@ class BackupController extends Controller {
 		}
 
 		// Create the backup
-		Artisan::call('backup:run');
+		// Artisan::call('backup:run');
 
 		// Create a corresponding database row
-		$backup_path = storage_path().'/app/';
+		$backup_path = storage_path().'/app/Vocab';
 		$files = scandir($backup_path, SCANDIR_SORT_DESCENDING);
 		$newest_file = $files[2];
 		$backup = Backup::create(['user_id' => $user->id, 'file' => $newest_file]);
@@ -77,7 +77,7 @@ class BackupController extends Controller {
 	public function download($id)
 	{
 		$backup = Backup::find($id);
-		return Response::download(storage_path().'/app/'.$backup->file, $backup->file, []);
+		return Response::download(storage_path().'/app/Vocab/'.$backup->file, $backup->file, []);
 	}
 
 
@@ -99,7 +99,7 @@ class BackupController extends Controller {
 
 		$backup = Backup::find($id);
 
-		unlink(storage_path().'/app/'.$backup->file);
+		unlink(storage_path().'/app/Vocab/'.$backup->file);
 
 		$backup_name = $backup->file;
 		$backup->delete();

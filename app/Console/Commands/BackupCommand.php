@@ -41,7 +41,7 @@ class BackupCommand extends Command {
 	 *
 	 * @return mixed
 	 */
-	public function fire()
+	public function handle()
 	{
 		if (Auth::attempt(['email' => $this->argument('email'), 'password' => $this->argument('password')]))
 		{

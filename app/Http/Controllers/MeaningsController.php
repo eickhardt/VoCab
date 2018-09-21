@@ -187,7 +187,7 @@ class MeaningsController extends Controller {
 
 
 	/**
-	 * Show a random word.
+	 * Show a random meaning.
 	 *
 	 * @return mixed
 	 */
