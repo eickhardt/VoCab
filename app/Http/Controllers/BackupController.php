@@ -36,15 +36,16 @@ class BackupController extends Controller {
 	{
 		// Check if the user has permission to do this
 		$user = Auth::user();
-		$allowed_users = ['Daniel Eickhardt', 'Gabrielle Tranchet'];
-		if (!in_array($user->name, $allowed_users))
-		{
-			Session::flash('error', "You don't have permission to do that.");
-			return redirect()->back();
-		}
+		// $allowed_users = ['Daniel Eickhardt', 'Gabrielle Tranchet'];
+		// if (!in_array($user->name, $allowed_users))
+		// {
+		// 	Session::flash('error', "You don't have permission to do that.");
+		// 	return redirect()->back();
+		// }
 
 		// Create the backup
-		Artisan::call('backup:run');
+		// Artisan::call('backup:run');
+		Artisan::call('backup:run', ['--only-db' => true]);
 
 		// Create a corresponding database row
 		$backup_path = storage_path().'/app/Vocab';
@@ -54,7 +55,7 @@ class BackupController extends Controller {
 		
 		// Redirect back with a message to the user
 		Session::flash('success', "A new snapshot has been created.");
-		return redirect()->back();
+		return $this->show();
 	}
 
 
