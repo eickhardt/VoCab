@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Bus\Dispatcher;
 
 use Response;
 use Session;
@@ -43,7 +44,7 @@ class BackupController extends Controller {
 		}
 
 		// Create the backup
-		// Artisan::call('backup:run');
+		Artisan::call('backup:run');
 
 		// Create a corresponding database row
 		$backup_path = storage_path().'/app/Vocab';
