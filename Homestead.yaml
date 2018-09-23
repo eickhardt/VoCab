@@ -10,7 +10,7 @@ folders:
       to: /home/vagrant/vocab
 sites:
     - map: vocab.test
-      to: /home/vagrant/Code/vocab/public
+      to: /home/vagrant/vocab/public
 databases:
     - homestead
 name: vocab
