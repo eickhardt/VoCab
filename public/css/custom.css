@@ -38,7 +38,7 @@
 #awesome {
 	-webkit-filter: grayscale(1); -webkit-filter: grayscale(100%);
 	filter: gray; filter: grayscale(100%);
-	filter: url(desaturate.svg#greyscale);
+	/* filter: url(desaturate.svg#greyscale); */
 	opacity: 0.3;
 	margin: 0 auto;
 	margin-bottom: 18px;
