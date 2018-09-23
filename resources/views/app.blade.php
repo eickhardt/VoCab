@@ -33,9 +33,11 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<div id="navbar-header-shortcuts" class="visible-xs">
-					@include('partials.shortcuts')
-				</div>
+				@unless (Auth::guest()) 
+					<div id="navbar-header-shortcuts" class="visible-xs">
+						@include('partials.shortcuts')
+					</div>
+				@endunless
 				<a class="navbar-brand" href="/">VoCab</a>
 			</div>
 
