@@ -69,6 +69,10 @@
 .panel-heading h2 .glyphicon, .panel-heading h3 .glyphicon {
 	vertical-align: top;
 }
+.panel-heading h2 .btn .glyphicon, .panel-heading h3 .btn .glyphicon {
+	vertical-align: text-top;
+	margin-right: 0px;
+}
 
 .meaning_words_flag {
 	margin-right: 10px;
@@ -136,11 +140,39 @@ body {
 	margin-bottom: 0;
 }
 
-.btn .glyphicon {
-	vertical-align: top;
-	margin-right: 3px;
+.translations {
+	margin-right: 10px;
 }
 
-.translations {
+#navbar-shortcuts .btn .glyphicon {
+	margin-right: 0px;
+}
+
+@media only screen and (min-width : 768px) and (max-width : 992px) {
+	#navbar-search-field {
+		width: 115px;
+	}
+}
+
+@media only screen and (min-width : 768px) {
+	.btn .glyphicon {
+		vertical-align: top;
+		margin-right: 3px;
+	}
+}
+
+@media only screen and (max-width : 768px) {
+	#navbar-search-form {
+		padding-left: 30px;
+		padding-right: 30px;
+	}
+	#navbar-search-field {
+		width: 100%;
+	}
+}
+
+#navbar-header-shortcuts {
+	float: right;
+	margin-top: 8px;
 	margin-right: 10px;
 }

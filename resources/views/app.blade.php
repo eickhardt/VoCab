@@ -33,6 +33,9 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
+				<div id="navbar-header-shortcuts" class="visible-xs">
+					@include('partials.shortcuts')
+				</div>
 				<a class="navbar-brand" href="/">VoCab</a>
 			</div>
 
@@ -60,11 +63,13 @@
 								<li>{!! link_to_route('backup_show_path', 'Backup') !!}</li>
 							</ul>
 						</li>
-						{!! Form::open(['method' => 'POST', 'role' => 'search', 'class' => 'navbar-form navbar-left', 'route' => 'search_bar_path']) !!}
-							<div class="form-group">
-								<input type="text" class="form-control" name="s" placeholder="Search">
+						{!! Form::open(['method' => 'POST', 'role' => 'search', 'id' => 'navbar-search-form', 'class' => 'navbar-form navbar-left', 'route' => 'search_bar_path']) !!}
+							<div class="input-group">
+								<input id="navbar-search-field" type="text" class="form-control" name="s" placeholder="Search&hellip;">
+								<span class="input-group-btn">
+									<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+								</span>
 							</div>
-							<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Search</button>
 						{!! Form::close() !!}
 					@endunless
 				</ul>
@@ -74,6 +79,11 @@
 						<li><a href="/login">Login</a></li>
 						<li><a href="/register">Register</a></li>
 					@else
+						<div id="navbar-shortcuts" class="navbar-form navbar-left hidden-xs">
+							<div class="form-group">
+								@include('partials.shortcuts')
+							</div>
+						</div>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">

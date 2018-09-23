@@ -7,37 +7,12 @@
 			<h2>
 				<span class="glyphicon glyphicon-search"></span> Search 
 				<span id="waitmsg">/ <span class="glyphicon glyphicon-hourglass"></span> Searching...</span>
+				<a id="advanced_search_btn" type="submit" class="btn btn-info pull-right">
+					<span class="glyphicon glyphicon-cog"></span> <span class="hidden-xs"></span>
+				</a>
 			</h2>
 		</div> 
 		<div id="words" class="panel-body">
-			<a href="{{ route('meaning_create_path') }}" type="submit" class="btn btn-success">
-				<span class="glyphicon glyphicon-plus-sign"></span> <span class="hidden-xs">Create word</span>
-			</a>
-			<a href="{{ route('meaning_wotd_path') }}" type="submit" class="btn btn-primary">
-				<span class="glyphicon glyphicon-certificate"></span> <span class="hidden-xs">Word of the Day</span>
-			</a>
-			<?php /*
-			<a href="{{ route('statistics_path2') }}" type="submit" class="btn btn-primary">
-				<span class="glyphicon glyphicon-certificate"></span> NEW STATS
-			</a>
-			*/ ?>
-			<a href="{{ route('statistics_path') }}" type="submit" class="btn btn-primary">
-				<span class="glyphicon glyphicon-stats"></span> <span class="hidden-xs">Statistics</span>
-			</a>
-			<a href="{{ route('recent_words_path') }}" type="submit" class="btn btn-primary">
-				<span class="glyphicon glyphicon-stats"></span> <span class="hidden-xs">Recent words</span>
-			</a>
-			<?php /* At the moment we only want to show backup for the admins */ ?>
-			@if (Auth::user()->name == 'Gabrielle Tranchet' || Auth::user()->name == 'Daniel Eickhardt')
-				<a href="{{ route('backup_show_path') }}" type="submit" class="btn btn-primary">
-					<span class="glyphicon glyphicon-hdd"></span> <span class="hidden-xs">Backup</span>
-				</a>
-			@endif
-			<a id="advanced_search_btn" type="submit" class="btn btn-info">
-				<span class="glyphicon glyphicon-cog Search settings"></span> <span class="hidden-xs">Settings</span>
-			</a>
-			<br><br>
-
 			<div id="search_settings" class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="search_settings_header"><span class="glyphicon glyphicon-cog Search settings"></span> Search settings</h3>
@@ -196,8 +171,8 @@
 
 			if (search_term.length > 2)
 			{
-				$('#words_table').hide();
-				$('#waitmsg').show();
+				$('#words_table').hide('fast');
+				$('#waitmsg').show('fast');
 
 				$.ajax({
 					type: method,
@@ -214,15 +189,15 @@
 
 								row.prependTo($('.words_list'));
 							}
-							$('#noresult').hide();
+							$('#noresult').hide('fast');
 						}
 						else 
 						{
 							$('#noresult').show().css('display', 'block');
 						}
-						$('#waitmsg').hide();
-						$('#awesome').slideUp();
-						$('#words_table').slideDown();
+						$('#waitmsg').hide('fast');
+						$('#awesome').slideUp('fast');
+						$('#words_table').slideDown('fast');
 					}
 				});
 			}
