@@ -58,7 +58,7 @@
 			// Show advanced options when the corresponsing button is clicked
 			$('#advanced_search_btn').on('click', function() 
 			{
-				$('#search_settings').slideToggle();
+				$('#search_settings').slideToggle('fast');
 			});
 
 			// Variables we will need for the ajax requests

@@ -133,10 +133,10 @@
 
 	<script type="text/javascript">
 		$(function() {
-			$('.alert').slideDown();
+			$('.alert').slideDown('fast');
 			$('.alert').on('click', function() 
 			{
-				$(this).slideUp();
+				$(this).slideUp('fast');
 			});
 			$('input').on('focus', function (e) 
 			{
