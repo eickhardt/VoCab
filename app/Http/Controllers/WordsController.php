@@ -242,7 +242,7 @@ class WordsController extends Controller {
 	public function showMostRecent() {
 		$list_type = 'Recent';
 		$languages = WordLanguage::all();
-		$words = Word::orderBy('created_at', 'desc')->paginate(50);
+		$words = Word::orderBy('updated_at', 'desc')->paginate(50);
 
 		return view('lists.words', compact('words', 'list_type', 'languages'));
 	}
