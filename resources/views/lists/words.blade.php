@@ -23,13 +23,13 @@
 			@endif()
 			
 			@forelse ($words as $word)
-				<div class="panel panel-default">
-					<div class="panel-body">
+				{{-- <div class="panel panel-default">
+					<div class="panel-body"> --}}
 
 						{{-- <h4>Translation information</h4> --}}
 						<div class="row">
-							<div class="col-md-6 col-md-offset-0">
-								<ul class="list-group no-bot-margin">
+							<div class="col-md-12 col-md-offset-0">
+								<ul class="list-group">
 									<li class="list-group-item">
 										<img src="{{ $word->language->image }}">
 										<b>{!! link_to_route('meaning_edit_path', $word->text, $word->meaning_id) !!}</b>
@@ -72,8 +72,8 @@
 						@endif --}}
 
 						{{-- <br> --}}
-					</div>
-				</div>
+					{{-- </div>
+				</div> --}}
 
 			@empty
 				<ul class="list-group">
