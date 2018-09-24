@@ -179,6 +179,7 @@ body {
 @media only screen and (min-width : 993px) {
 	#searchbar {
 		border-radius: 5px; /* Otherwise rigth side is jagged */
+		float: none;
 	}
 }
 
