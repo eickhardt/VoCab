@@ -35,7 +35,7 @@
 			</div>
 
 			<div class="input-group showbtn-xs">
-				<input id="searchbar" class="form-control" type="email" placeholder="Search" />
+				<input id="searchbar" class="form-control" autocapitalize="none" placeholder="Search" />
 				<span class="input-group-btn visible-xs visible-sm">
 					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
 					<a id="advanced_search_btn" type="submit" class="btn btn-info advanced_search_btn">

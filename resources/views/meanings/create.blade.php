@@ -22,7 +22,7 @@
 				<div class="form-group {{ $errors->has('real_word_type') ? 'has-error' : '' }}">
 					<label class="col-md-4 control-label">Real type</label>
 					<div class="col-md-6">
-						{!! Form::email('real_word_type', 100, ['class' => 'form-control real_type']) !!}
+						{!! Form::text('real_word_type', 100, ['class' => 'form-control real_type', 'autocapitalize' => 'none']) !!}
 						{!! $errors->first('real_word_type', '<span class="help-block">:message</span>') !!}
 					</div>
 				</div>
@@ -31,7 +31,7 @@
 					<div class="form-group {{ $errors->has($language->short_name) ? 'has-error' : '' }}">
 						<label class="col-md-4 control-label"><img src="{{ $language->image }}"></label>
 						<div class="col-md-6">
-							{!! Form::email($language->short_name, NULL, ['class' => 'form-control']) !!}
+							{!! Form::text($language->short_name, NULL, ['class' => 'form-control', 'autocapitalize' => 'none']) !!}
 							{!! $errors->first($language->short_name, '<span class="help-block">:message</span>') !!}
 						</div>
 					</div>
