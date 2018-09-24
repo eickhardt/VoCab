@@ -135,6 +135,12 @@
 
 	<script type="text/javascript">
 		$(function() {
+
+			// Remove html5 default validation messages
+			$('input, select, textarea').on("invalid", function(e) {
+				e.preventDefault();
+			});
+
 			$('.alert').slideDown('fast');
 			$('.alert').on('click', function() 
 			{
