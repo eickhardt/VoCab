@@ -27,11 +27,11 @@
 				<div class="form-group {{ $errors->has('meaning_id') ? 'has-error' : '' }}">
 					<label class="col-md-4 control-label">Word id</label>
 					<div class="col-md-2">
-						{!! Form::text('meaning_id', isset($meaning) ? $meaning->id : '', ['class' => 'form-control', 'id' => 'meaning_id']) !!}
+						{!! Form::email('meaning_id', isset($meaning) ? $meaning->id : '', ['class' => 'form-control', 'id' => 'meaning_id']) !!}
 						{!! $errors->first('meaning_id', '<span class="help-block">:message</span>') !!}
 					</div>
 					<div class="col-md-4">
-						{!! Form::text('meaning_root', isset($meaning) ? $meaning->root : '', ['class' => 'form-control', 'disabled', 'id' => 'meaning_root']) !!}
+						{!! Form::email('meaning_root', isset($meaning) ? $meaning->root : '', ['class' => 'form-control', 'disabled', 'id' => 'meaning_root']) !!}
 					</div>
 				</div>
 
@@ -46,7 +46,7 @@
 				<div class="form-group {{ $errors->has('text') ? 'has-error' : '' }}">
 					<label class="col-md-4 control-label">Translation text</label>
 					<div class="col-md-6">
-						{!! Form::text('text', NULL, ['class' => 'form-control']) !!}
+						{!! Form::email('text', NULL, ['class' => 'form-control']) !!}
 						{!! $errors->first('text', '<span class="help-block">:message</span>') !!}
 					</div>
 				</div>
@@ -54,7 +54,7 @@
 				<div class="form-group {{ $errors->has('comment') ? 'has-error' : '' }}">
 					<label class="col-md-4 control-label">Comment</label>
 					<div class="col-md-6">
-						{!! Form::text('comment', NULL, ['class' => 'form-control', ]) !!}
+						{!! Form::email('comment', NULL, ['class' => 'form-control']) !!}
 						{!! $errors->first('comment', '<span class="help-block">:message</span>') !!}
 					</div>
 				</div>

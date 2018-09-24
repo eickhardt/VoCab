@@ -34,7 +34,7 @@
 				</div>
 			</div>
 
-			<input id="searchbar" class="form-control" placeholder="Search for..." />
+			<input id="searchbar" class="form-control" type="email" placeholder="Search for..." />
 
 			<ul id="words_table" class="list-group words_list">
 				<li id="cloneme" class="list-group-item" style="display:none;"></li>
