@@ -195,3 +195,7 @@ body {
 	margin-top: 8px;
 	margin-right: 10px;
 }
+
+.no-bot-margin {
+	margin-bottom: 0px;
+}
