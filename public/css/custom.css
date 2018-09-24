@@ -171,6 +171,24 @@ body {
 	}
 }
 
+@media only screen and (max-width : 992px) {
+	#searchbar {
+		width: calc(100% - 83px); /* Hackd */
+	}
+}
+@media only screen and (min-width : 993px) {
+	#searchbar {
+		border-radius: 5px; /* Otherwise rigth side is jagged */
+	}
+}
+
+/* .showbtn-xs .input-group-btn {
+	display: block !important;
+} */
+.showbtn-xs, .showbtn-xs input {
+	display: block !important;
+}
+
 #navbar-header-shortcuts {
 	float: right;
 	margin-top: 8px;

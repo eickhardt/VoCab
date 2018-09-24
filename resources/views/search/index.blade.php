@@ -3,12 +3,12 @@
 @section('content')
 	<?php isset($s) ?: $s = 0; ?>
 	<div class="panel panel-default">
-		<div class="panel-heading">
+		<div class="panel-heading hidden-xs hidden-sm">
 			<h2>
 				<span class="glyphicon glyphicon-search"></span> Search 
 				<span id="waitmsg">/ <span class="glyphicon glyphicon-hourglass"></span> Searching...</span>
-				<a id="advanced_search_btn" type="submit" class="btn btn-info pull-right">
-					<span class="glyphicon glyphicon-cog"></span> <span class="hidden-xs"></span>
+				<a id="advanced_search_btn" type="submit" class="btn btn-info pull-right advanced_search_btn">
+					<span class="glyphicon glyphicon-cog"></span>
 				</a>
 			</h2>
 		</div> 
@@ -34,7 +34,15 @@
 				</div>
 			</div>
 
-			<input id="searchbar" class="form-control" type="email" placeholder="Search for..." />
+			<div class="input-group showbtn-xs">
+				<input id="searchbar" class="form-control" type="email" placeholder="Search" />
+				<span class="input-group-btn visible-xs visible-sm">
+					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+					<a id="advanced_search_btn" type="submit" class="btn btn-info advanced_search_btn">
+						<span class="glyphicon glyphicon-cog"></span>
+					</a>
+				</span>
+			</div>
 
 			<ul id="words_table" class="list-group words_list">
 				<li id="cloneme" class="list-group-item" style="display:none;"></li>
@@ -56,7 +64,7 @@
 			var openTips = {};
 
 			// Show advanced options when the corresponsing button is clicked
-			$('#advanced_search_btn').on('click', function() 
+			$('.advanced_search_btn').on('click', function() 
 			{
 				$('#search_settings').slideToggle('fast');
 			});
