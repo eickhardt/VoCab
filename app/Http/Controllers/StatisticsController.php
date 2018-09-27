@@ -39,7 +39,7 @@ class StatisticsController extends Controller {
 			$year++;
 		} while ($year <= $current_year);
 
-		return $years;
+		return array_reverse($years); // Start from the lastest year first
 	}
 
 	/**
