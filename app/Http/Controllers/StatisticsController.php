@@ -25,6 +25,69 @@ class StatisticsController extends Controller {
 		$this->middleware('auth');
 	}
 
+	/**
+	 * Get the years we should show contribution calendars for.
+	 */
+	public function getYearsForContributionCalendars() {
+		$first_year = Word::orderBy('created_at', 'asc')->first()->created_at->year;
+		$current_year = date("Y");
+
+		$year = $first_year;
+		$years = [];
+		do {
+			$years[] = $year;
+			$year++;
+		} while ($year <= $current_year);
+
+		return $years;
+	}
+
+	/**
+	 * Get calendar heatmap data for specific year.
+	 * 
+	 * Epoch timestamp : contribution count.
+	 * 
+	 * Example: 
+	 * {
+	 * "946705035": 4,
+	 * "946706692": 4,
+	 * "946707210": 0,
+	 * "946709243": 2,
+	 * "946710714": 5,
+	 * "946712907": 3,
+	 * "946713183": 4,
+	 * "946719001": 0,
+	 * "946721450": 5,
+	 * "946721875": 1
+	 * }
+	 */
+	public function getContributionCalendarData($year) {
+		$data = [];
+
+		$days_with_contributions_in_words_for_year = DB::table('words')
+			->select([DB::raw("UNIX_TIMESTAMP(created_at) as 'time'"), DB::raw("COUNT(*) as 'contributions'")])
+			->where(DB::raw('YEAR(created_at)'), '=', $year)
+			->groupBy([DB::raw('DAY(created_at)'), DB::raw('MONTH(created_at)'), DB::raw('YEAR(created_at)'), ])
+			->get();
+		$days_with_contributions_in_meanings_for_year = DB::table('meanings')
+			->select([DB::raw("UNIX_TIMESTAMP(created_at) as 'time'"), DB::raw("COUNT(*) as 'contributions'")])
+			->where(DB::raw('YEAR(created_at)'), '=', $year)
+			->groupBy([DB::raw('DAY(created_at)'), DB::raw('MONTH(created_at)'), DB::raw('YEAR(created_at)'), ])
+			->get();
+		$aggredated_result = [];
+		foreach ($days_with_contributions_in_words_for_year as $day_with_contribution) {
+			$aggredated_result[$day_with_contribution->time] = $day_with_contribution->contributions;
+		}
+		foreach ($days_with_contributions_in_meanings_for_year as $day_with_contribution) {
+			if (isset($aggredated_result[$day_with_contribution->time])) {
+				$aggredated_result[$day_with_contribution->time] += $day_with_contribution->contributions;
+			} else {
+				$aggredated_result[$day_with_contribution->time] = $day_with_contribution->contributions;
+			}
+		}
+
+		return json_encode($aggredated_result);
+	}
 
 	/**
 	 * Gather statistics information and display it on a page.
@@ -171,6 +234,8 @@ class StatisticsController extends Controller {
 
 		$types = MeaningType::all();
 
-		return view('statistics.index', compact('statistics_data', 'recent_words_data', 'types'));
+		$contribution_calendar_years = $this->getYearsForContributionCalendars();
+
+		return view('statistics.index', compact('statistics_data', 'recent_words_data', 'types', 'contribution_calendar_years'));
 	}
 }

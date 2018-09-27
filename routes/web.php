@@ -169,6 +169,13 @@ Route::group(['middleware' => ['web']], function () {
 			['as' => 'statistics_path2', 'uses' => 'StatsFileController@index']
 		);
 
+		Route::get('contribution-calendar-data/{year}', 
+			['as' => 'contribution_calendar_data', 'uses' => 'StatisticsController@getContributionCalendarData']
+		);
+		Route::get('contribution-calendar-years', 
+			['as' => 'contribution_calendar_years', 'uses' => 'StatisticsController@getYearsForContributionCalendars']
+		);
+
 		/**
 		 * Tests
 		 */

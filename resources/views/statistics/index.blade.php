@@ -10,6 +10,36 @@
 
 		<div class="panel-body">
 
+			<h3>Contributions yearly</h3>
+
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+			<script type="text/javascript" src="//d3js.org/d3.v3.min.js"></script>
+			<script type="text/javascript" src="//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.min.js"></script>
+			<link rel="stylesheet" href="//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.css" />
+
+			@foreach ($contribution_calendar_years as $year)		
+				<div id="cal-heatmap-{{ $year }}"></div>
+				<script type="text/javascript">
+						var cal = new CalHeatMap();
+						cal.init({
+							itemSelector: "#cal-heatmap-{{ $year }}",
+							domain: "year",
+							subDomain: "day",
+							data: "{{ route('contribution_calendar_data', $year) }}",
+							start: new Date({{ $year }}, 0),
+							cellSize: 10,
+							range: 1,
+							legend: [20, 40, 60, 80],
+							@if($loop->last)
+								displayLegend: true,
+							@else
+								displayLegend: false,
+							@endif
+						});
+				</script>
+			@endforeach
+
+
 			<h3>Recently added words count</h3>
 
 			<div class="panel panel-default">
