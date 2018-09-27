@@ -17,8 +17,10 @@
 			<script type="text/javascript" src="//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.min.js"></script>
 			<link rel="stylesheet" href="//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.css" />
 
-			@foreach ($contribution_calendar_years as $year)		
-				<div id="cal-heatmap-{{ $year }}"></div>
+			@foreach ($contribution_calendar_years as $year)	
+				<div class="table-responsive">	
+					<div id="cal-heatmap-{{ $year }}"></div>
+				</div>
 				<script type="text/javascript">
 						var cal = new CalHeatMap();
 						cal.init({
@@ -30,6 +32,10 @@
 							cellSize: 10,
 							range: 1,
 							legend: [20, 40, 60, 80],
+							label: {
+								position: "top",
+								align: "left"
+							},
 							@if($loop->last)
 								displayLegend: true,
 							@else
