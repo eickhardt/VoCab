@@ -199,3 +199,7 @@ body {
 .no-bot-margin {
 	margin-bottom: 0px;
 }
+
+.cal-heatmap-container {
+	    margin: 0 auto;
+}
