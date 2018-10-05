@@ -67,7 +67,7 @@
 						</li>
 						{!! Form::open(['method' => 'POST', 'role' => 'search', 'id' => 'navbar-search-form', 'class' => 'navbar-form navbar-left', 'route' => 'search_bar_path']) !!}
 							<div class="input-group">
-								<input id="navbar-search-field" type="email" class="form-control" name="s" placeholder="Search&hellip;">
+								<input id="navbar-search-field" type="text" class="form-control" name="s" placeholder="Search&hellip;">
 								<span class="input-group-btn">
 									<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
 								</span>
@@ -135,11 +135,6 @@
 
 	<script type="text/javascript">
 		$(function() {
-
-			// Remove html5 default validation messages
-			$('input, select, textarea').on("invalid", function(e) {
-				e.preventDefault();
-			});
 
 			$('.alert').slideDown('fast');
 			$('.alert').on('click', function() 
