@@ -69,22 +69,22 @@ class StatisticsController extends Controller {
 			->where(DB::raw('YEAR(created_at)'), '=', $year)
 			->groupBy([DB::raw('DAY(created_at)'), DB::raw('MONTH(created_at)'), DB::raw('YEAR(created_at)'), ])
 			->get();
-		$days_with_contributions_in_meanings_for_year = DB::table('meanings')
-			->select([DB::raw("UNIX_TIMESTAMP(created_at) as 'time'"), DB::raw("COUNT(*) as 'contributions'")])
-			->where(DB::raw('YEAR(created_at)'), '=', $year)
-			->groupBy([DB::raw('DAY(created_at)'), DB::raw('MONTH(created_at)'), DB::raw('YEAR(created_at)'), ])
-			->get();
+		// $days_with_contributions_in_meanings_for_year = DB::table('meanings')
+		// 	->select([DB::raw("UNIX_TIMESTAMP(created_at) as 'time'"), DB::raw("COUNT(*) as 'contributions'")])
+		// 	->where(DB::raw('YEAR(created_at)'), '=', $year)
+		// 	->groupBy([DB::raw('DAY(created_at)'), DB::raw('MONTH(created_at)'), DB::raw('YEAR(created_at)'), ])
+		// 	->get();
 		$aggredated_result = [];
 		foreach ($days_with_contributions_in_words_for_year as $day_with_contribution) {
 			$aggredated_result[$day_with_contribution->time] = $day_with_contribution->contributions;
 		}
-		foreach ($days_with_contributions_in_meanings_for_year as $day_with_contribution) {
-			if (isset($aggredated_result[$day_with_contribution->time])) {
-				$aggredated_result[$day_with_contribution->time] += $day_with_contribution->contributions;
-			} else {
-				$aggredated_result[$day_with_contribution->time] = $day_with_contribution->contributions;
-			}
-		}
+		// foreach ($days_with_contributions_in_meanings_for_year as $day_with_contribution) {
+		// 	if (isset($aggredated_result[$day_with_contribution->time])) {
+		// 		$aggredated_result[$day_with_contribution->time] += $day_with_contribution->contributions;
+		// 	} else {
+		// 		$aggredated_result[$day_with_contribution->time] = $day_with_contribution->contributions;
+		// 	}
+		// }
 
 		return json_encode($aggredated_result);
 	}
