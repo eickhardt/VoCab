@@ -177,7 +177,7 @@
 		{
 			$('.removeme').remove();
 
-			if (search_term.length > 2)
+			if (search_term.length > 1)
 			{
 				$('#words_table').hide('fast');
 				$('#waitmsg').show('fast');
