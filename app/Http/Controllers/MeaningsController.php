@@ -225,29 +225,25 @@ class MeaningsController extends Controller {
 	public function getSimpleMeaning($meaning_id = null)
 	{
 		$html = false;
-		if ($meaning_id)
+		if ($meaning_id) {
 			$html = true;
-			// return $meaning_id;
+		}
 
 		$fail_array['root'] = 'No meaning found.';
-		if (Input::has('meaning_id'))
-		{
+		if (Input::has('meaning_id')) {
 			$meaning_id = Input::get('meaning_id');
 		}
+
 		$meaning = Meaning::with(['words', 'words.language'])->find($meaning_id);
-		if ($meaning)
-		{
-			$meaning_array = $meaning->toArray();
-			if ($html)
-			{
-				return tipContent($meaning_array);
+		if ($meaning) {
+			if ($html) {
+				return tipContent($meaning->words->sortBy('language_id'));
 			}
 
 			return $meaning_array;
 		}
 		return $fail_array;
 	}
-
 
 	/**
 	 * Show a random word.
@@ -289,10 +285,10 @@ class MeaningsController extends Controller {
  *
  * @return String
  */
-function tipContent($meaning_array)
+function tipContent($words)
 {
 	$result_array = [];
-	foreach ($meaning_array['words'] as $word) 
+	foreach ($words as $word) 
 	{
 		$result_array[$word['language']['name']][] = $word['text'].'='.$word['id'].'='.$word['comment'];
 	}
