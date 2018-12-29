@@ -240,7 +240,7 @@ class MeaningsController extends Controller {
 				return tipContent($meaning->words->sortBy('language_id'));
 			}
 
-			return $meaning_array;
+			return $meaning;
 		}
 		return $fail_array;
 	}
