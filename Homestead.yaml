@@ -4,14 +4,14 @@ cpus: 1
 provider: virtualbox
 authorize: ~/.ssh/id_rsa.pub
 keys:
-    - ~/.ssh/id_rsa
+  - ~/.ssh/id_rsa
 folders:
-    - map: 'C:\Users\dde\Code\vocab'
-      to: /home/vagrant/vocab
+  - map: 'C:\Users\dde\Code\vokapp'
+    to: /home/vagrant/vokapp
 sites:
-    - map: vocab.test
-      to: /home/vagrant/vocab/public
+  - map: vokapp.test
+    to: /home/vagrant/vokapp/public
 databases:
-    - homestead
-name: vocab
-hostname: vocab
+  - homestead
+name: vokapp
+hostname: vokapp

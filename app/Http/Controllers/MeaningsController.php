@@ -1,15 +1,13 @@
 <?php namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Controllers\Controller;
-
-use App\Http\Requests;
+use DB;
+use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\CreateMeaningRequest;
 use App\Http\Requests\UpdateMeaningRequest;
 
-use DB;
-use Log;
+use Illuminate\View\View;
 use Auth;
 use Input;
 use Session;
@@ -20,300 +18,313 @@ use App\Meaning;
 use App\MeaningType;
 use App\WordLanguage;
 
-class MeaningsController extends Controller {
+class MeaningsController extends Controller
+{
+    /**
+     * @var Meaning meaning
+     */
+    private $meaning;
 
-	/**
-	 * @var word
-	 */
-	private $meaning;
+    /**
+     * Constructor
+     *
+     * @param Meaning $meaning
+     */
+    public function __construct(Meaning $meaning)
+    {
+        $this->middleware('auth');
 
+        $this->meaning = $meaning;
+    }
 
-	/**
-	 * Constructor
-	 *
-	 * @param Word $word
-	 */
-	public function __construct(Meaning $meaning)
-	{
-		$this->middleware('auth');
+    /**
+     * Display a listing of the resource.
+     *
+     * @return View
+     */
+    public function index()
+    {
+        $languages = Auth::user()->languages;
+        $types = Meaning::all();
 
-		$this->meaning = $meaning;
-	}
+        return view('search.index', compact('languages', 'types'));
+    }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return View
+     */
+    public function create()
+    {
+        $languages = Auth::user()->languages;
+        $types = MeaningType::asKeyValuePairs();
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		$languages = WordLanguage::all();
-		$types = WordType::all();
+        return view('meanings.create', compact('languages', 'types'));
+    }
 
-		return view('search.index', compact('languages', 'types'));
-	}
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param CreateMeaningRequest $request
+     * @return RedirectResponse
+     */
+    public function store(CreateMeaningRequest $request)
+    {
+        // If this code is executed, validation has passed and we can create the meaning
+        $meaning = new Meaning;
+        $meaning->meaning_type_id = $request->get('meaning_type_id');
+        $meaning->real_word_type = $request->get('real_word_type');
+        $meaning->root = $request->get('en');
+        $meaning->user_id = Auth::user()->id;
+        $meaning->save();
 
+        // We also want to create a word in each of the provided languages
+        $languages = Auth::user()->languages;
+        $new_word_count = 0;
+        foreach ($languages as $language) {
+            if ($request->get($language->short_name)) {
+                $word = new Word;
+                $word->text = $request->get($language->short_name);
+                $word->language_id = $language->id;
+                $word->meaning_id = $meaning->id;
+                $word->user_id = Auth::user()->id;
+                $word->save();
+                $new_word_count++;
+            }
+        }
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		$languages = WordLanguage::all();
-		$types = MeaningType::asKeyValuePairs();
+        // Tell the user what happened and redirect
+        Session::flash('success', "A new meaning '" . $meaning->root . "' was created, along with " . $new_word_count . " associated words.");
+        return redirect()->route('meaning_edit_path', $meaning->id);
+    }
 
-		return view('meanings.create', compact('languages', 'types'));
-	}
+    /**
+     * Display the specified resource.
+     *
+     * @param Meaning $meaning
+     * @return View
+     * @throws AuthorizationException
+     */
+    public function show(Meaning $meaning)
+    {
+        $this->authorize('view', $meaning);
 
+        $meanings[] = $meaning;
+        $languages = Auth::user()->languages;
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store(CreateMeaningRequest $request)
-	{
-		// If this code is executed, validation has passed and we can create the meaning.
-		$meaning = new Meaning;
-		$meaning->meaning_type_id = $request->get('meaning_type_id');
-		$meaning->real_word_type = $request->get('real_word_type');
-		$meaning->root = $request->get('en');
-		$meaning->save();
+        return view('lists.meanings', compact('meanings', 'languages'));
+    }
 
-		// We also want to create a word in each of the provided languages
-		$languages = WordLanguage::all();
-		$new_word_count = 0;
-		foreach ($languages as $language) 
-		{
-			if ($request->get($language->short_name))
-			{
-				$word = new Word;
-				$word->text = $request->get($language->short_name);
-				$word->language_id = $language->id;
-				$word->meaning_id = $meaning->id;
-				$word->save();
-				$new_word_count++;
-			}
-		}
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param Meaning $meaning
+     * @return View
+     * @throws AuthorizationException
+     */
+    public function edit(Meaning $meaning)
+    {
+        $this->authorize('update', $meaning);
 
-		// Tell the user what happened and redirect
-		Session::flash('success', "A new meaning '".$meaning->root."' was created, along with ".$new_word_count." associated words.");
-		return redirect()->route('meaning_edit_path', $meaning->id);
-	}
+        $languages = Auth::user()->languages;
+        $types = MeaningType::asKeyValuePairs();
+        $meaning = Meaning::with('words')->find($meaning->id);
 
+        return view('meanings.edit', compact('meaning', 'types', 'languages'));
+    }
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($meaning)
-	{
-		$meanings[] = $meaning;
-		$languages = WordLanguage::all();
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param UpdateMeaningRequest $request
+     * @param Meaning $meaning
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function update(UpdateMeaningRequest $request, Meaning $meaning)
+    {
+        $this->authorize('update', $meaning);
 
-		return view('lists.meanings', compact('meanings', 'languages'));
-	}
+        // Update the meaning, since validation and authorization has passed if we reach this code
+        $meaning->real_word_type = $request->get('real_word_type');
+        $meaning->meaning_type_id = $request->get('meaning_type_id');
+        $meaning->root = $request->get('root');
+        $meaning->save();
 
+        // Tell the user what happened and redirect
+        Session::flash('success', "The meaning '" . $meaning->root . "' was updated.");
+        return redirect()->route('meaning_edit_path', $meaning->id);
+    }
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit(Meaning $meaning)
-	{
-		$languages = WordLanguage::all();
-		$types = MeaningType::asKeyValuePairs();
-		$meaning = Meaning::with('words')->find($meaning->id);
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param Meaning $meaning
+     * @return RedirectResponse
+     * @throws Exception
+     */
+    public function destroy(Meaning $meaning)
+    {
+        // Authenticated, now soft delete the associated words
+        $meaning->words()->delete();
 
-		return view('meanings.edit', compact('meaning', 'types', 'languages'));
-	}
+        // Finally, delete the meaning itself
+        $meaning_root = $meaning->root;
+        $meaning->delete();
 
+        // Let the user know what happened
+        Session::flash('success', "The meaning '" . $meaning_root . "' was trashed, along with its associated words.");
+        return redirect()->route('search_path');
+    }
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update(UpdateMeaningRequest $request, Meaning $meaning)
-	{
-		// Update the meaning, since validation has passed if we reach this code
-		$meaning->real_word_type = $request->get('real_word_type');
-		$meaning->meaning_type_id = $request->get('meaning_type_id');
-		$meaning->root = $request->get('root');
-		$meaning->save();
+    /**
+     * Show a random meaning.
+     *
+     * @return mixed
+     */
+    public function random()
+    {
+        $meaning = Meaning::where('user_id', Auth::user()->id)
+            ->orderBy(DB::raw("RAND()"))
+            ->first();
 
-		// Tell the user what happened and redirect
-		Session::flash('success', "The meaning '".$meaning->root."' was updated.");
-		return redirect()->route('meaning_edit_path', $meaning->id);
-	}
+        if (!$meaning) {
+            Session::flash(
+                'error',
+                'You don\' have any meanings yet :) Create some before you start using the random meaning button.');
+            return redirect()->back();
+        }
 
+        $meanings[] = $meaning;
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy(Meaning $meaning)
-	{
-		// Authenticate or redirect
-		$user = Auth::user();
-		$allowed_users = ['Daniel Eickhardt', 'Gabrielle Tranchet'];
-		if (!in_array($user->name, $allowed_users))
-		{
-			Session::flash('error', "You don't have permission to do that.");
-			return redirect()->back();
-		}
+        $languages = Auth::user()->languages;
+        $list_type = 'Random';
 
-		// Authenticated, now soft delete the associated words
-		$meaning->words()->delete();
-		
-		// Finally, delete the meaning itself
-		$meaning_root = $meaning->root;
-		$meaning->delete();
+        return view('lists.meanings', compact('meanings', 'list_type', 'languages'));
+    }
 
-		// Let the user know what happened
-		Session::flash('success', "The meaning '" .$meaning_root. "' was trashed, along with its associated words.");
-		return redirect()->route('search_path');
-	}
+    /**
+     * Display Word of the Day.
+     *
+     * @return View|RedirectResponse
+     */
+    public function showWotd()
+    {
+        $meanings[] = Wotd::getCurrent();
 
+        if ($meanings[0] == null) {
+            Session::flash(
+                'error',
+                'You don\' have any words yet :) Create some to get a new "Word of the Day" every day.');
+            return redirect()->back();
+        }
 
-	/**
-	 * Show a random meaning.
-	 *
-	 * @return mixed
-	 */
-	public function random()
-	{
-		$meanings[] = Meaning::random();
-		$languages = WordLanguage::all();
-		$list_type = 'Random';
+        $languages = Auth::user()->languages;
 
-		return view('lists.meanings', compact('meanings', 'list_type', 'languages'));
-	}
+        $list_type = 'Word of the Day';
 
+        return view('lists.meanings', compact('meanings', 'list_type', 'languages'));
+    }
 
-	/**
-	 * Display Word of the Day.
-	 *
-	 * @return mixed
-	 */
-	public function wotd()
-	{
-		$meanings[] = Wotd::getCurrent();
-		$languages = WordLanguage::all();
+    /**
+     * Get simple information about a meaning (for AJAX)
+     *
+     * @param integer $meaning_id
+     * @return array|string
+     */
+    public function getSimpleMeaning($meaning_id = null)
+    {
+        $html = false;
+        if ($meaning_id) {
+            $html = true;
+        }
 
-		$list_type = 'Word of the Day';
+        $fail_array['root'] = 'No meaning found.';
+        if (Input::has('meaning_id')) {
+            $meaning_id = Input::get('meaning_id');
+        }
 
-		return view('lists.meanings', compact('meanings', 'list_type', 'languages'));
-	}
+        $meaning = Meaning::where('user_id', Auth::user()->id)
+            ->where('id', $meaning_id)
+            ->with(['words', 'words.language'])
+            ->first();
 
+        if ($meaning) {
+            if ($html) {
+                return tipContent($meaning->words->sortBy('language_id'));
+            }
 
-	/**
-	 * Get simple information about a meaning (for AJAX)
-	 *
-	 * @return Array
-	 */
-	public function getSimpleMeaning($meaning_id = null)
-	{
-		$html = false;
-		if ($meaning_id) {
-			$html = true;
-		}
+            return $meaning;
+        }
+        return $fail_array;
+    }
 
-		$fail_array['root'] = 'No meaning found.';
-		if (Input::has('meaning_id')) {
-			$meaning_id = Input::get('meaning_id');
-		}
+    /**
+     * Show trashed words.
+     *
+     * @return mixed
+     */
+    public function showTrashed()
+    {
+        $list_type = 'Trashed';
+        $languages = WordLanguage::all();
+        $meanings = Meaning::where('user_id', Auth::user()->id)->with('type')->onlyTrashed()->get();
 
-		$meaning = Meaning::with(['words', 'words.language'])->find($meaning_id);
-		if ($meaning) {
-			if ($html) {
-				return tipContent($meaning->words->sortBy('language_id'));
-			}
+        return view('lists.meanings', compact('meanings', 'list_type', 'languages'));
+    }
 
-			return $meaning;
-		}
-		return $fail_array;
-	}
+    /**
+     * Restore a deleted meaning.
+     *
+     * @param integer $id
+     * @return mixed
+     */
+    public function restore($id)
+    {
+        $meaning = Meaning::withTrashed()->find($id);
+        $meaning->restore();
 
-	/**
-	 * Show a random word.
-	 *
-	 * @return mixed
-	 */
-	public function showTrashed()
-	{
-		$list_type = 'Trashed';
-		$languages = WordLanguage::all();
-		$meanings = Meaning::with('type')->onlyTrashed()->get();
+        $words = Word::withTrashed()->where('meaning_id', $meaning->id)->whereNull('deleted_at');
+        $words->restore();
 
-		return view('lists.meanings', compact('meanings', 'list_type', 'languages'));
-	}
-
-
-	/**
-	 * Restore a deleted meaning.
-	 *
-	 * @return mixed
-	 */
-	public function restore($id)
-	{
-		$meaning = Meaning::withTrashed()->find($id);
-		$meaning->restore();
-
-		$words = Word::withTrashed()->where('meaning_id', $meaning->id);
-		$restored_words_count = $words->count();
-		$words->restore();
-
-		Session::flash('success', "The meaning '" .$meaning->root. "' was restored, along with ".$words->count()." associated words.");
-		return redirect()->route('meanings_trashed_path');
-	}
+        Session::flash('success', "The meaning '" . $meaning->root . "' was restored, along with " . $words->count() . " associated words.");
+        return redirect()->route('meanings_trashed_path');
+    }
 }
 
 /**
- * Helper function to build HTML for translations tip on search page. 
+ * Helper function to build HTML for translations tip on search page.
  * TODO: This should be done in JS!!
  *
+ * @param $words
  * @return String
  */
 function tipContent($words)
 {
-	$result_array = [];
-	foreach ($words as $word) 
-	{
-		$result_array[$word['language']['name']][] = $word['text'].'='.$word['id'].'='.$word['comment'];
-	}
+    $result_array = [];
+    foreach ($words as $word) {
+        $result_array[$word['language']['name']][] = $word['text'] . '=' . $word['id'] . '=' . $word['comment'];
+    }
 
-	\Log::info($result_array);
-	$html = '';
-	foreach ($result_array as $name => $words) 
-	{
-		$language = WordLanguage::where('name', $name)->first();
+    $html = '';
+    foreach ($result_array as $name => $words) {
+        $language = WordLanguage::where('name', $name)->first();
 
-		$line = '<p><img class="translation_image" src="'.$language->image.'">';
-		$word_links_in_line = [];
-		foreach ($words as $word) 
-		{
-			$word_exploded = explode('=', $word);
-			if ($word_exploded[2])
-				$word_links_in_line[] = link_to_route('word_edit_path', $word_exploded[0], $word_exploded[1]) . ' - "<i>'.$word_exploded[2].'</i>"';
-			else
-				$word_links_in_line[] = link_to_route('word_edit_path', $word_exploded[0], $word_exploded[1]);
-		}
-		// \Log::info($meaning_array['words']);
-		$line .= implode(', ', $word_links_in_line);
-		$line .= '</p>';
-		$html = $html.$line;
-	}
+        $line = '<p><img class="translation_image" alt="' . $language->name . '" src="' . $language->image . '">';
+        $word_links_in_line = [];
+        foreach ($words as $word) {
+            $word_exploded = explode('=', $word);
+            if ($word_exploded[2])
+                $word_links_in_line[] = link_to_route('word_edit_path', $word_exploded[0], $word_exploded[1]) . ' - "<i>' . $word_exploded[2] . '</i>"';
+            else
+                $word_links_in_line[] = link_to_route('word_edit_path', $word_exploded[0], $word_exploded[1]);
+        }
+        // \Log::info($meaning_array['words']);
+        $line .= implode(', ', $word_links_in_line);
+        $line .= '</p>';
+        $html = $html . $line;
+    }
 
-	return $html;
+    return $html;
 }

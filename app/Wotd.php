@@ -1,60 +1,82 @@
 <?php namespace App;
 
+use Artisan;
+use Auth;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Word;
+/**
+ * App\Wotd
+ *
+ * @property int $id
+ * @property string $date
+ * @property int $meaning_id
+ * @property-read Meaning $meaning
+ * @method static Builder|Wotd newModelQuery()
+ * @method static Builder|Wotd newQuery()
+ * @method static Builder|Wotd query()
+ * @method static Builder|Wotd whereDate($value)
+ * @method static Builder|Wotd whereId($value)
+ * @method static Builder|Wotd whereMeaningId($value)
+ * @mixin Eloquent
+ */
+class Wotd extends Model
+{
+    /**
+     * This model does not have timestamps.
+     *
+     * @var boolean
+     */
+    public $timestamps = false;
 
-class Wotd extends Model {
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'wotds';
 
-	/**
-	 * This model does not have timestamps.
-	 *
-	 * @var boolean
-	 */
-	public $timestamps = false;
+    /**
+     * Fillable fields for a wotd.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'date', 'meaning_id', 'user_id'
+    ];
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'wotds';
-
-	/**
-	 * Fillable fields for a wotd.
-	 *
-	 * @var array
-	 */
-	protected $fillable = [
-		'date', 'meaning_id'
-	];
-
-	/**
-	 * A word of the day has one meaning.
-	 */
-	public function meaning()
+    /**
+     * A word of the day has one meaning.
+     */
+    public function meaning()
     {
         return $this->belongsTo('App\Meaning');
     }
 
-	/**
-	 * Get the current word of the day as an instance of Word.
-	 */
-	public static function getCurrent()
-	{
-		$wotd = new Wotd;
-		$wotd = $wotd->orderBy('date', 'DESC')->orderBy('id', 'DESC')->first();
+    /**
+     * Get the current word of the day as an instance of Meaning.
+     *
+     * @return Meaning|null
+     */
+    public static function getCurrent()
+    {
+        $user_id = Auth::user()->id;
 
-		if (Meaning::find($wotd->meaning_id)->deleted_at)
-		{
-			Artisan::call('setwordofday');
-		}
+        // Check if there are any wotd set for this user
+        $wotd_exists = Wotd::where('user_id', $user_id)->count();
 
-		if ($wotd)
-			$meaning = Meaning::with('words')->find($wotd->meaning_id);
-		else
-			$meaning = Meaning::random();
+        // If no wotd has been set yet for this user, do it
+        if (!$wotd_exists) {
+            Artisan::call('setwordofday', compact('user_id'));
+        }
 
-		return $meaning;
-	}
+        $wotd = Wotd::where('user_id', $user_id)
+            ->orderBy('date', 'DESC')
+            ->orderBy('id', 'DESC')
+            ->first();
+
+        return Meaning::with('words')
+            ->find($wotd->meaning_id);
+    }
 }

@@ -14,13 +14,13 @@ class BroadcastServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Broadcast::routes();
+        // Broadcast::routes(); Commented because this is probably a leftover from an old version of Laravel
 
         /*
          * Authenticate the user's personal channel...
          */
         Broadcast::channel('App.User.{userId}', function ($user, $userId) {
-            return (int) $user->id === (int) $userId;
+            return (int)$user->id === (int)$userId;
         });
     }
 }

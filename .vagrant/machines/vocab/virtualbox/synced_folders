@@ -1,1 +1,0 @@
-{"virtualbox":{"/home/vagrant/vocab":{"type":null,"mount_options":["uid=1000","gid=1000"],"guestpath":"/home/vagrant/vocab","hostpath":"C:/Users/dde/Code/vocab","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/Users/dde/Code/vocab","disabled":false,"__vagrantfile":true}}}

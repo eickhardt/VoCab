@@ -1,124 +1,103 @@
 <?php namespace App\Http\Controllers;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
-use Illuminate\Contracts\Bus\Dispatcher;
-
+use Exception;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Response;
 use Session;
 use Artisan;
 use Auth;
 
 use App\Backup;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-use App\Word;
-use App\Meaning;
+class BackupController extends Controller
+{
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
-class BackupController extends Controller {
+    /**
+     * Backup the database.
+     *
+     * @return mixed
+     */
+    public function backup()
+    {
+        // Check if the user has permission to do this
+        $user = Auth::user();
+        $allowed_users = ['Daniel Eickhardt', 'Gabrielle Tranchet'];
+        if (!in_array($user->name, $allowed_users)) {
+            Session::flash('error', "You don't have permission to do that.");
+            return redirect()->back();
+        }
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->middleware('auth');
-	}
+        // Create the backup
+        Artisan::call('backup:run', ['--only-db' => true]);
 
+        // Create a corresponding database row
+        $backup_path = storage_path() . '/app/Vocab';
+        $files = scandir($backup_path, SCANDIR_SORT_DESCENDING);
+        $newest_file = $files[0];
+        Backup::create(['user_id' => $user->id, 'file' => $newest_file]);
 
-	/**
-	 * Backup the database.
-	 *
-	 * @return mixed
-	 */
-	public function backup()
-	{
-		// Check if the user has permission to do this
-		$user = Auth::user();
-		// $allowed_users = ['Daniel Eickhardt', 'Gabrielle Tranchet'];
-		// if (!in_array($user->name, $allowed_users))
-		// {
-		// 	Session::flash('error', "You don't have permission to do that.");
-		// 	return redirect()->back();
-		// }
+        // Redirect back with a message to the user
+        Session::flash('success', "A new snapshot has been created.");
+        return $this->show();
+    }
 
-		// Create the backup
-		// Artisan::call('backup:run');
-		Artisan::call('backup:run', ['--only-db' => true]);
+    /**
+     * Show the backup page.
+     *
+     * @return View
+     */
+    public function show()
+    {
+        $backups = Backup::with('user')->orderBy('created_at', 'DESC')->take(10)->get();
+        return view('backup.index', compact('backups'));
+    }
 
-		// Create a corresponding database row
-		$backup_path = storage_path().'/app/Vocab';
-		$files = scandir($backup_path, SCANDIR_SORT_DESCENDING);
-		$newest_file = $files[0];
-		$backup = Backup::create(['user_id' => $user->id, 'file' => $newest_file]);
-		
-		// Redirect back with a message to the user
-		Session::flash('success', "A new snapshot has been created.");
-		return $this->show();
-	}
+    /**
+     * Serve download of specific backup snapshot.
+     *
+     * @param $id integer
+     * @return BinaryFileResponse
+     */
+    public function download($id)
+    {
+        $backup = Backup::find($id);
+        return Response::download(storage_path() . '/app/Vocab/' . $backup->file, $backup->file, []);
+    }
 
+    /**
+     * Serve download of specific backup snapshot.
+     *
+     * @param $id integer
+     * @return RedirectResponse
+     * @throws Exception
+     */
+    public function destroy($id)
+    {
+        // Check if the user has permission to do this
+        $user = Auth::user();
+        $allowed_users = ['Daniel Eickhardt', 'Gabrielle Tranchet'];
+        if (!in_array($user->name, $allowed_users)) {
+            Session::flash('error', "You don't have permission to do that.");
+            return redirect()->back();
+        }
 
-	/**
-	 * Show the backup page.
-	 *
-	 * @return View
-	 */
-	public function show()
-	{
-		$backups = Backup::with('user')->orderBy('created_at', 'DESC')->take(10)->get();
-		return view('backup.index', compact('backups'));
-	}
+        $backup = Backup::find($id);
 
+        unlink(storage_path() . '/app/Vocab/' . $backup->file);
 
-	/**
-	 * Serve download of specific backup snapshot.
-	 *
-	 * @return Response
-	 */
-	public function download($id)
-	{
-		$backup = Backup::find($id);
-		return Response::download(storage_path().'/app/Vocab/'.$backup->file, $backup->file, []);
-	}
+        $backup_name = $backup->file;
+        $backup->delete();
 
-
-	/**
-	 * Serve download of specific backup snapshot.
-	 *
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		// Check if the user has permission to do this
-		$user = Auth::user();
-		$allowed_users = ['Daniel Eickhardt', 'Gabrielle Tranchet'];
-		if (!in_array($user->name, $allowed_users))
-		{
-			Session::flash('error', "You don't have permission to do that.");
-			return redirect()->back();
-		}
-
-		$backup = Backup::find($id);
-
-		unlink(storage_path().'/app/Vocab/'.$backup->file);
-
-		$backup_name = $backup->file;
-		$backup->delete();
-
-		Session::flash('success', "The snapshot '".$backup_name."' was deleted.");
-		return redirect()->back();
-
-	}
-
-
-	public function mwdata1()
-	{
-		return Response::download(storage_path().'/app/meanings.json', 'meanings.json', []);
-	}
-
-	public function mwdata2()
-	{
-		return Response::download(storage_path().'/app/words.json', 'words.json', []);
-	}
+        Session::flash('success', "The snapshot '" . $backup_name . "' was deleted.");
+        return redirect()->back();
+    }
 }

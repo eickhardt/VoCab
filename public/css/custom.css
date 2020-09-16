@@ -1,205 +1,211 @@
 .inline {
-	display: inline;
+    display: inline;
 }
 
 .clickable {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .pagination {
-	margin: 0;
+    margin: 0;
 }
 
 #waitmsg {
-	display: none;
+    display: none;
 }
 
 #words_table {
-	display: none;
-	margin: 18px 0 0 0;
+    display: none;
+    margin: 18px 0 0 0;
 }
 
 #noresult {
-	display: none;
+    display: none;
 }
 
 #search_settings {
-	display: none;
+    display: none;
 }
 
 .search_language {
-	margin-right: 20px;
+    margin-right: 20px;
 }
 
 .splash-border {
-	margin: 0 16px;
+    margin: 0 16px;
 }
 
 #awesome {
-	-webkit-filter: grayscale(1); -webkit-filter: grayscale(100%);
-	filter: gray; filter: grayscale(100%);
-	/* filter: url(desaturate.svg#greyscale); */
-	opacity: 0.3;
-	margin: 0 auto;
-	margin-bottom: 18px;
-	border-radius: 5px;
+    -webkit-filter: grayscale(1);
+    -webkit-filter: grayscale(100%);
+    filter: gray;
+    filter: grayscale(100%);
+    /* filter: url(desaturate.svg#greyscale); */
+    opacity: 0.3;
+    margin: 0 auto;
+    margin-bottom: 18px;
+    border-radius: 5px;
 }
 
 .search_settings_header {
-	margin: 0;
+    margin: 0;
 }
 
 .language_checkbox {
-	vertical-align: sub;
+    vertical-align: sub;
 }
 
-.language_well {
-	margin: 0;
+.type_well {
+    margin-bottom: 0 !important;
 }
 
 .panel-heading h2 {
-	margin-top: 10px;
-	color: #777777;
+    margin-top: 10px;
+    color: #777777;
 }
 
 .panel-heading h3 {
-	color: #777777;
+    color: #777777;
 }
 
 .panel-heading h2 .glyphicon, .panel-heading h3 .glyphicon {
-	vertical-align: top;
+    vertical-align: top;
 }
+
 .panel-heading h2 .btn .glyphicon, .panel-heading h3 .btn .glyphicon {
-	vertical-align: text-top;
-	margin-right: 0px;
+    vertical-align: text-top;
+    margin-right: 0px;
 }
 
 .meaning_words_flag {
-	margin-right: 10px;
+    margin-right: 10px;
 }
 
 button .glyphicon {
-	vertical-align: text-top;
-	margin-right: 5px;
+    vertical-align: text-top;
+    margin-right: 5px;
 }
 
 .panel-default .panel-heading {
-	background: url(/img/white.jpg);
-	/*color: white;*/
+    background: url(/img/white.jpg);
+    /*color: white;*/
 }
 
 .navbar-collapse, .navbar-header {
-	background: url(/img/white.jpg);
+    background: url(/img/white.jpg);
 }
 
 .navbar-brand, .navbar-nav > li > a {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .vertical_middle > td {
-	vertical-align: middle !important;
+    vertical-align: middle !important;
 }
 
 .text_center {
-	text-align: center;
+    text-align: center;
 }
 
 body {
-	color: #777777;
+    color: #777777;
 }
 
 .row_image {
-	margin: 0 5px;
+    margin: 0 5px;
 }
 
 .btn-link {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .loading_translations {
-	width: 100%;
-	height:  100%;
+    width: 100%;
+    height: 100%;
 }
 
 .translation_image {
-	margin-right: 6px;
+    margin-right: 6px;
 }
 
 .removeme {
-	transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease;
 }
+
 .removeme:hover {
-	background-color: #f5f5f5;
+    background-color: #f5f5f5;
 }
 
 .btn {
-	transition: all 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .welcome-box {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .translations {
-	margin-right: 10px;
+    margin-right: 10px;
 }
 
 #navbar-shortcuts .btn .glyphicon {
-	margin-right: 0px;
+    margin-right: 0px;
 }
 
-@media only screen and (min-width : 768px) and (max-width : 992px) {
-	#navbar-search-field {
-		width: 115px;
-	}
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+    #navbar-search-field {
+        width: 115px;
+    }
 }
 
-@media only screen and (min-width : 768px) {
-	.btn .glyphicon {
-		vertical-align: top;
-		margin-right: 3px;
-	}
+@media only screen and (min-width: 768px) {
+    .btn .glyphicon {
+        vertical-align: top;
+        margin-right: 3px;
+    }
 }
 
-@media only screen and (max-width : 768px) {
-	#navbar-search-form {
-		padding-left: 30px;
-		padding-right: 30px;
-	}
-	#navbar-search-field {
-		width: 100%;
-	}
+@media only screen and (max-width: 768px) {
+    #navbar-search-form {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    #navbar-search-field {
+        width: 100%;
+    }
 }
 
-@media only screen and (max-width : 992px) {
-	#searchbar {
-		width: calc(100% - 83px); /* Hackd */
-	}
+@media only screen and (max-width: 992px) {
+    #searchbar {
+        width: calc(100% - 83px); /* Hackd */
+    }
 }
-@media only screen and (min-width : 993px) {
-	#searchbar {
-		border-radius: 5px; /* Otherwise rigth side is jagged */
-		float: none;
-	}
+
+@media only screen and (min-width: 993px) {
+    #searchbar {
+        border-radius: 5px; /* Otherwise rigth side is jagged */
+        float: none;
+    }
 }
 
 /* .showbtn-xs .input-group-btn {
 	display: block !important;
 } */
 .showbtn-xs, .showbtn-xs input {
-	display: block !important;
+    display: block !important;
 }
 
 #navbar-header-shortcuts {
-	float: right;
-	margin-top: 8px;
-	margin-right: 10px;
+    float: right;
+    margin-top: 8px;
+    margin-right: 10px;
 }
 
 .no-bot-margin {
-	margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 .cal-heatmap-container {
-	    margin: 0 auto;
+    margin: 0 auto;
 }

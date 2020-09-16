@@ -1,77 +1,70 @@
 <?php namespace App\Http\Controllers;
 
-use App\Word;
 use App\WordLanguage;
 use App\MeaningType;
-use App\Wotd;
 
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Input;
 use Auth;
-// use Redirect;
+use Session;
 
-class HomeController extends Controller {
+class HomeController extends Controller
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
 
-	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
-	public function __construct()
-	{
-		// $this->middleware('auth');
-	}
+    /**
+     * Show the application dashboard to the user.
+     *
+     * @return View
+     */
+    public function index()
+    {
+        if (Auth::guest())
+            return view('home');
+        else
+            return $this->showSearch();
+    }
 
-	/**
-	 * Show the application dashboard to the user.
-	 *
-	 * @return Response
-	 */
-	public function index(Word $word)
-	{
-		$wordcount = $word->count();
-		$wotd = Wotd::getCurrent();
+    /**
+     * Show the search page.
+     *
+     * @return View|RedirectResponse
+     */
+    public function showSearch()
+    {
+        // Get languages and meaning types to display in the search options
+        $languages = Auth::user()->languages;
+        $types = MeaningType::all();
 
-		if (Auth::guest())
-			return view('home', compact('wordcount', 'wotd'));
-		else
-			return $this->showSearch();
-	}
+        // Get the languages that are enabled for this user
+        $user_languages = Auth::user()->languagesIdArray();
 
-	/**
-	 * Show the search page.
-	 *
-	 * @param Word $word
-	 * @return View
-	 */
-	public function showSearch()
-	{
-		$languages = WordLanguage::all();
-		$info_array['languages'] = $languages;
+        // Get search term that may have been set
+        $s = '';
+        if (Input::has('s')) {
+            $s = Input::get('s');
+        }
 
-		// Get the languages the user does NOT want displayed (this is an inverse relationship)
-		$user_languages = Auth::user()->languages_id_array();
-		$info_array['user_languages'] = $user_languages;
+        return view('search.index', compact('languages', 'user_languages', 'types', 's'));
+    }
 
-		$types = MeaningType::all();
-		$info_array['types'] = $types;
-
-		if (Input::has('s'))
-		{
-			$info_array['s'] = Input::get('s');
-		}
-
-		return view('search.index', $info_array);
-	}
-
-	/**
-	 * Show the search page.
-	 *
-	 * @param Word $word
-	 * @return View
-	 */
-	public function showSpecificSearch()
-	{
-		$query = ['s' => Input::get('s')];
-		return redirect()->route('search_path', $query);
-	}
+    /**
+     * Show the search page with a search term already input.
+     *
+     * @return RedirectResponse
+     */
+    public function showSpecificSearch()
+    {
+        $query = ['s' => Input::get('s')];
+        return redirect()->route('search_path', $query);
+    }
 }

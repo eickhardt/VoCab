@@ -15,7 +15,7 @@
 				</div>
 			@endif
 
-			<form class="form-horizontal" role="form" method="POST" action="/login">
+			<form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 				<div class="form-group">
@@ -48,7 +48,7 @@
 							<span class="glyphicon glyphicon-lock"></span> Login
 						</button>
 
-						<a href="/password/email"><span class="glyphicon glyphicon-question-sign"></span> Forgot Your Password?</a>
+						<a href="{{ route('password.request') }}"><span class="glyphicon glyphicon-question-sign"></span> Forgot Your Password?</a>
 					</div>
 				</div>
 			</form>
