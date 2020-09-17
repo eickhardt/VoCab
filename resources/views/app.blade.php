@@ -114,15 +114,15 @@
             <!-- Alerts -->
             @if (Session::has('success'))
                 <div class="alert alert-success" style="display:none;">
-                    <strong>Voila!</strong> - {!! Session::get('success') !!} <br>
+                    <strong>Voila!</strong> - {!! Session::pull('success') !!} <br>
                 </div>
             @elseif (Session::has('warning'))
                 <div class="alert alert-warning" style="display:none;">
-                    <strong>OBS!</strong> - {!! Session::get('warning') !!} <br>
+                    <strong>OBS!</strong> - {!! Session::pull('warning') !!} <br>
                 </div>
             @elseif (Session::has('error'))
                 <div class="alert alert-danger" style="display:none;">
-                    <strong>Oups!</strong> - {!! Session::get('error') !!} <br>
+                    <strong>Oups!</strong> - {!! Session::pull('error') !!} <br>
                 </div>
         @endif
         <!-- EO Alerts -->

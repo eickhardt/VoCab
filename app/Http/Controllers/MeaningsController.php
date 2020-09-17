@@ -181,7 +181,7 @@ class MeaningsController extends Controller
     /**
      * Show a random meaning.
      *
-     * @return mixed
+     * @return View|RedirectResponse
      */
     public function random()
     {

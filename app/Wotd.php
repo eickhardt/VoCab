@@ -37,6 +37,8 @@ class Wotd extends Model
      */
     protected $table = 'wotds';
 
+    protected $dates = ['date'];
+
     /**
      * Fillable fields for a wotd.
      *

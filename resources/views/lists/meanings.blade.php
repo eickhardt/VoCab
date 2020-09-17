@@ -27,7 +27,7 @@
                         @else
                             <h4>Words</h4>
                             <ul class="list-group">
-                                @foreach ($languages as $language)
+                                @forelse ($languages as $language)
                                     <li class="list-group-item">
                                         <img class="meaning_words_flag" src="{{ $language->image }}"
                                              alt="{{ $language->name }}">
@@ -56,11 +56,13 @@
                                                     class="glyphicon glyphicon glyphicon-plus-sign"></span></a>
                                         <span class="badge">{{ $count }}</span>
                                     </li>
-                                @endforeach
+                                @empty
+                                    No words are currently associated with this meaning
+                                @endforelse
                             </ul>
                         @endif
 
-                        <h4>Word information</h4>
+                        <h4>Meaning information</h4>
                         <div class="row">
                             <div class="col-md-6 col-md-offset-0">
                                 <ul class="list-group">

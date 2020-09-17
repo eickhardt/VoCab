@@ -3,17 +3,19 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-class DatabaseSeeder extends Seeder {
+class DatabaseSeeder extends Seeder
+{
 
-	/**
-	 * Run the database seeds.
-	 *
-	 * @return void
-	 */
-	public function run()
-	{
-		$this->call('UserTableSeeder');
-		$this->call('MeaningTypeTableSeeder');
-		$this->call('WordLanguageTableSeeder');
-	}
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $this->call('UserTableSeeder');
+        $this->call('MeaningTypeTableSeeder');
+        $this->call('WordLanguageTableSeeder');
+        $this->call('MeaningTableSeeder');
+    }
 }
