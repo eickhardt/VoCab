@@ -158,28 +158,36 @@ class WordsController extends Controller
         if (Input::has('search_term')) {
             $search_term = Input::get('search_term');
             $search_term = "%{$search_term}%";
-            $words = Word::query()
-                ->where('user_id', Auth::user()->id)
-                ->where('text', 'LIKE', $search_term)
-                ->orWhere('comment', 'LIKE', $search_term);
+            $words_query = Word::where('user_id', Auth::user()->id)
+                ->where(function ($query) use ($search_term) {
+                    $query->where('text', 'LIKE', $search_term)
+                        ->orWhere('comment', 'LIKE', $search_term);
+                });
+
 
             if (Input::has('options') && Input::get('options')) {
                 $options_obj = json_decode(Input::get('options'));
 
+                $languages = [];
+
+                foreach ($options_obj->languages as $language) {
+                    $languages[] = intval($language);
+                }
+
+                if (count($languages)) {
+                    $words_query->whereNotIn('language_id', $languages);
+                }
+
                 if ($options_obj->types) {
-                    $words = $words->whereHas('meaning', function ($q) use ($options_obj) {
+                    $words_query->whereHas('meaning', function ($q) use ($options_obj) {
                         $q->whereNotIn('meaning_type_id', $options_obj->types);
                     });
                 }
-
-                if ($options_obj->languages) {
-                    $words = $words->whereNotIn('language_id', $options_obj->languages);
-                }
             }
 
-            $words = $words->orderBy('text', 'DESC')->get();
+            $words_result = $words_query->orderBy('text', 'DESC')->get();
 
-            return $words->toArray();
+            return $words_result->toArray();
         }
 
         return false;
