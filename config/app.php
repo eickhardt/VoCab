@@ -169,7 +169,7 @@ return [
         /**
          * Debugbar
          */
-        'Barryvdh\Debugbar\ServiceProvider',
+//        'Barryvdh\Debugbar\ServiceProvider',
 
         /**
          * Backup package
