@@ -101,9 +101,7 @@
                 data: {meaning_id: meaning_id, _token: token},
                 success: function (meaning) {
                     $('#meaning_root').val(meaning['root']);
-                    console.log(meaning['words']);
-
-                    links = '<p>Translations with the same meaning root:</p> ';
+                    links = '<p>Words with the same meaning root:</p> ';
                     for (var i = meaning['words'].length - 1; i >= 0; i--) {
                         links = links + '<a href="/words/' + meaning['words'][i].id + '/edit">' + meaning['words'][i].text + '</a>';
 

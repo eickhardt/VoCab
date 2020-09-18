@@ -8,7 +8,7 @@ return [
     'cronpw' => env('CRON_PW', 'cronuserpw'),
     // eo Custom values
 
-    'name' => 'Vocab',
+    'name' => env('APP_NAME', 'Vokapp'),
 
     'env' => env('APP_ENV', 'production'),
 

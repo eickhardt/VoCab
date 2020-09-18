@@ -85,7 +85,6 @@
                             {
                                 label: '{{ $key }}',
                                 backgroundColor: palette(['tol'], {{ count($recent_words_data) }}, {{ $loop->index }}).map(function (hex) {
-                                    console.log(hexToRGB('#' + hex, 0.2));
                                     return hexToRGB('#' + hex, 0.2);
                                 })[{{ $loop->index }}],
                                 borderColor: palette(['tol'], {{ count($recent_words_data) }}, {{ $loop->index }}).map(function (hex) {

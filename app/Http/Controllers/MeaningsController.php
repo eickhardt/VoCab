@@ -67,7 +67,8 @@ class MeaningsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateMeaningRequest $request
-     * @return RedirectResponse
+     * @return View
+     * @throws AuthorizationException
      */
     public function store(CreateMeaningRequest $request)
     {
@@ -96,7 +97,7 @@ class MeaningsController extends Controller
 
         // Tell the user what happened and redirect
         Session::flash('success', "A new meaning '" . $meaning->root . "' was created, along with " . $new_word_count . " associated words.");
-        return redirect()->route('meaning_edit_path', $meaning->id);
+        return $this->edit($meaning);
     }
 
     /**
