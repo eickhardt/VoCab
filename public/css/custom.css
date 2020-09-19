@@ -87,12 +87,12 @@ button .glyphicon {
 }
 
 .panel-default .panel-heading {
-    background: url(/img/white.jpg);
+    background: url(../img/white.jpg);
     /*color: white;*/
 }
 
 .navbar-collapse, .navbar-header {
-    background: url(/img/white.jpg);
+    background: url(../img/white.jpg);
 }
 
 .navbar-brand, .navbar-nav > li > a {
