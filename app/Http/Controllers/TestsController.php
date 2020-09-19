@@ -15,6 +15,7 @@ class TestsController extends Controller
         Mail::send('emails.test', array('testvalue' => 'Pimp'), function ($message) {
             $message->to('ddeickhardt@gmail.com', 'John Smith')->subject('Test!');
         });
+        return "email sent";
     }
 
     public function languages()
