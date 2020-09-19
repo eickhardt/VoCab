@@ -76,8 +76,14 @@ class MeaningsController extends Controller
         $meaning = new Meaning;
         $meaning->meaning_type_id = $request->get('meaning_type_id');
         $meaning->real_word_type = 100; // Deprecated
-        $meaning->root = $request->get('en');
         $meaning->user_id = Auth::user()->id;
+
+        // If the 'en' word is set, and the root isn't, we use the 'en' word as the root
+        if ($request->has('en') && !$request->has('root')) {
+            $meaning->root = $request->get('en');
+        } else {
+            $meaning->root = $request->get('root');
+        }
         $meaning->save();
 
         // We also want to create a word in each of the provided languages

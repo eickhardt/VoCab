@@ -32,7 +32,7 @@ class CreateMeaningRequest extends Request
     public function rules()
     {
         return [
-            'root' => 'required',
+            'root' => 'required_without:en',
             'meaning_type_id' => 'required|exists:meaning_types,id'
         ];
     }
