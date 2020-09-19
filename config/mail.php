@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => env('MAIL_FROM_ADDRESS', 'mail@vokapp.net'), 'name' => 'Vokapp'],
+    'from' => ['address' => env('MAIL_FROM_ADDRESS', 'mail@mailgun.vokapp.net'), 'name' => 'Vokapp'],
 
     /*
     |--------------------------------------------------------------------------
@@ -67,8 +67,7 @@ return [
     |
     */
 
-    'encryption' => '',
-    // 'encryption' => 'tls',
+    'encryption' => 'tls',
 
     /*
     |--------------------------------------------------------------------------
