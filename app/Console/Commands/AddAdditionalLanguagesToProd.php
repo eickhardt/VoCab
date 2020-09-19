@@ -733,8 +733,8 @@ class AddAdditionalLanguagesToProd extends Command
      */
     private function languageExists($short_name)
     {
-        $language = WordLanguage::where('short_name', $short_name)->get();
-        if ($language) {
+        $language = WordLanguage::where('short_name', $short_name)->count();
+        if ($language > 0) {
             return true;
         }
 
