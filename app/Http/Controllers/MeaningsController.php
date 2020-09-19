@@ -75,7 +75,7 @@ class MeaningsController extends Controller
         // If this code is executed, validation has passed and we can create the meaning
         $meaning = new Meaning;
         $meaning->meaning_type_id = $request->get('meaning_type_id');
-        $meaning->real_word_type = $request->get('real_word_type');
+        $meaning->real_word_type = 100; // Deprecated
         $meaning->root = $request->get('en');
         $meaning->user_id = Auth::user()->id;
         $meaning->save();

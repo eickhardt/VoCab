@@ -31,19 +31,10 @@ class CreateMeaningRequest extends Request
      */
     public function rules()
     {
-        $languages = WordLanguage::all();
-
-        $rules = [
+        return [
             'root' => 'required',
-            'real_word_type' => 'required|integer|min:100|max:999',
             'meaning_type_id' => 'required|exists:meaning_types,id'
         ];
-
-        foreach ($languages as $language) {
-            $rules[$language->short_name] = 'string|nullable';
-        }
-
-        return $rules;
     }
 
     /**
