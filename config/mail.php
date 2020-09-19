@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => 'noreply@vocab.dk', 'name' => 'VoCab'],
+	'from' => ['address' => 'robot@vokapp.net', 'name' => 'Vokapp'],
 
 	/*
 	|--------------------------------------------------------------------------
