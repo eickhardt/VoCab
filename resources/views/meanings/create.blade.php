@@ -11,10 +11,18 @@
         <div class="panel-body">
             {!! Form::open(['route' => 'meaning_store_path', 'class' => 'form-horizontal']) !!}
 
+            <div class="form-group {{ $errors->has('root') ? 'has-error' : '' }}">
+                <label class="col-md-4 control-label">Root</label>
+                <div class="col-md-6">
+                    {!! Form::text('root', null, ['class' => 'form-control', 'autocapitalize' => 'none']) !!}
+                    {!! $errors->first('root', '<span class="help-block">:message</span>') !!}
+                </div>
+            </div>
+
             <div class="form-group {{ $errors->has('meaning_type_id') ? 'has-error' : '' }}">
                 <label class="col-md-4 control-label">Type</label>
                 <div class="col-md-6">
-                    {!! Form::select('meaning_type_id', $types, NULL, ['class' => 'form-control', 'id' => 'type_selector']) !!}
+                    {!! Form::select('meaning_type_id', $types, null, ['class' => 'form-control', 'id' => 'type_selector']) !!}
                     {!! $errors->first('meaning_type_id', '<span class="help-block">:message</span>') !!}
                 </div>
             </div>
@@ -33,7 +41,7 @@
                 <div class="form-group {{ $errors->has($language->short_name) ? 'has-error' : '' }}">
                     <label class="col-md-4 control-label"><img alt="" src="{{ $language->image }}"></label>
                     <div class="col-md-6">
-                        {!! Form::text($language->short_name, NULL, ['class' => 'form-control', 'autocapitalize' => 'none']) !!}
+                        {!! Form::text($language->short_name, null, ['class' => 'form-control', 'autocapitalize' => 'none']) !!}
                         {!! $errors->first($language->short_name, '<span class="help-block">:message</span>') !!}
                     </div>
                 </div>

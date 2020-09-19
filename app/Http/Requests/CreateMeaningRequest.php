@@ -1,5 +1,6 @@
 <?php namespace App\Http\Requests;
 
+use App\WordLanguage;
 use Session;
 
 class CreateMeaningRequest extends Request
@@ -30,10 +31,19 @@ class CreateMeaningRequest extends Request
      */
     public function rules()
     {
-        return [
+        $languages = WordLanguage::all();
+
+        $rules = [
+            'root' => 'required',
             'real_word_type' => 'required|integer|min:100|max:999',
             'meaning_type_id' => 'required|exists:meaning_types,id'
         ];
+
+        foreach ($languages as $language) {
+            $rules[$language->short_name] = 'string|nullable';
+        }
+
+        return $rules;
     }
 
     /**
