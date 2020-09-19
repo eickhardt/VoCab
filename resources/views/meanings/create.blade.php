@@ -39,7 +39,11 @@
 
             @foreach ($languages as $language)
                 <div class="form-group {{ $errors->has($language->short_name) ? 'has-error' : '' }}">
-                    <label class="col-md-4 control-label"><img alt="" src="{{ $language->image }}"></label>
+                    <label class="col-md-4 control-label"><img alt="{{ $language->name }}" src="{{ $language->image }}">
+                        @if ($language->short_name == 'en')
+                            <span class="glyphicon glyphicon-tree-conifer"></span>
+                        @endif
+                    </label>
                     <div class="col-md-6">
                         {!! Form::text($language->short_name, null, ['class' => 'form-control', 'autocapitalize' => 'none']) !!}
                         {!! $errors->first($language->short_name, '<span class="help-block">:message</span>') !!}
