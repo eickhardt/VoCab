@@ -160,8 +160,8 @@ Route::group(['middleware' => ['web']], function () {
         /**
          * Tests
          */
-        Route::get('tests/mail',
-            ['as' => 'test_mail_path', 'uses' => 'TestsController@mail']
-        );
+//        Route::get('tests/mail',
+//            ['as' => 'test_mail_path', 'uses' => 'TestsController@mail']
+//        );
     });
 });
