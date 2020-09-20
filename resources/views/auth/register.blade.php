@@ -21,28 +21,29 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label">Name</label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+                        <input type="text" class="form-control" name="name" value="{{ old('name') }}" id="name">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-md-4 control-label">E-Mail Address</label>
                     <div class="col-md-6">
-                        <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                        <input type="email" class="form-control" name="email" value="{{ old('email') }}" id="email">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-md-4 control-label">Password</label>
                     <div class="col-md-6">
-                        <input type="password" class="form-control" name="password">
+                        <input type="password" class="form-control" name="password" id="password">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-md-4 control-label">Confirm Password</label>
                     <div class="col-md-6">
-                        <input type="password" class="form-control" name="password_confirmation">
+                        <input type="password" class="form-control" name="password_confirmation"
+                               id="password_confirmation">
                     </div>
                 </div>
 
