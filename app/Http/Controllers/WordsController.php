@@ -262,7 +262,7 @@ class WordsController extends Controller
     {
         $list_type = 'Recent';
         $languages = WordLanguage::all();
-        $words = Auth::user()->words()->paginate(50);
+        $words = Auth::user()->words()->orderBy('created_at', 'desc')->paginate(50);
 
         return view('lists.words', compact('words', 'list_type', 'languages'));
     }
