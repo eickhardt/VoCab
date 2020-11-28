@@ -31,16 +31,16 @@
                         start: new Date({{ $year }}, 0),
                         cellSize: 10,
                         range: 1,
-                        legend: [20, 40, 60, 80],
+                        legend: [1, 50, 100, 150, 200],
                         label: {
                             position: "top",
                             align: "left"
                         },
                         legendColors: {
-                            empty: "white",
+                            empty: "#efefef",
                             base: "white",
-                            min: "#f4decd",
-                            max: "#761d15",
+                            min: "#dff0d8",
+                            max: "#216e39",
                         },
                         @if($loop->last)
                         displayLegend: true,
