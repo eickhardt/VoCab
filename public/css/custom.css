@@ -27,12 +27,20 @@
     display: none;
 }
 
+#help_panel {
+    display: none;
+}
+
 .search_language {
     margin-right: 20px;
 }
 
 .splash-border {
     margin: 0 16px;
+}
+
+.extra_column {
+    display: none;
 }
 
 #awesome {
