@@ -1,16 +1,16 @@
 <?php namespace App\Http\Controllers;
 
+use Carbon\CarbonPeriod;
 use DB;
 
 use App\Word;
 use App\MeaningType;
-use App\WordLanguage;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class StatisticsController extends Controller
 {
-
     /**
      * Constructor
      */
@@ -21,11 +21,22 @@ class StatisticsController extends Controller
 
     /**
      * Get the years we should show contribution calendars for.
+     *
+     * @return array Reversed years since the first word was added for this user.
      */
     public function getYearsForContributionCalendars()
     {
-        $first_year = Word::orderBy('created_at', 'asc')->first()->created_at->year;
         $current_year = date("Y");
+
+        // If the user does not have any words, just return the current year which will be displayed empty
+        if (Word::where('user_id', auth()->user()->id)->count() < 1) {
+            return [$current_year];
+        }
+
+        $first_year = Word::where('user_id', auth()->user()->id)
+            ->orderBy('created_at', 'asc')
+            ->first()
+            ->created_at->year;
 
         $year = $first_year;
         $years = [];
@@ -61,6 +72,15 @@ class StatisticsController extends Controller
      */
     public function getContributionCalendarData($year)
     {
+        $aggregated_result = [];
+
+        // Cal-Heatmap wants zeroes to be able to show a special color for empty days
+        $year_period = CarbonPeriod::create($year . '-01-01', $year . '-12-31');
+        foreach ($year_period as $date) {
+            $aggregated_result[$date->timestamp] = 0;
+        }
+
+        // Gather the days where the user has contributed
         $days_with_contributions_in_words_for_year = DB::table('words')
             ->where('user_id', Auth::user()->id)
             ->select([DB::raw("UNIX_TIMESTAMP(created_at) as 'time'"), DB::raw("COUNT(*) as 'contributions'")])
@@ -68,7 +88,6 @@ class StatisticsController extends Controller
             ->groupBy([DB::raw('DAY(created_at)'), DB::raw('MONTH(created_at)'), DB::raw('YEAR(created_at)'),])
             ->get();
 
-        $aggregated_result = [];
         foreach ($days_with_contributions_in_words_for_year as $day_with_contribution) {
             $aggregated_result[$day_with_contribution->time] = $day_with_contribution->contributions;
         }
