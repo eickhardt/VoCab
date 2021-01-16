@@ -31,7 +31,7 @@
                         start: new Date({{ $year }}, 0),
                         cellSize: 10,
                         range: 1,
-                        legend: [1, 50, 100, 150, 200],
+                        legend: [20, 50, 100, 200],
                         label: {
                             position: "top",
                             align: "left"
