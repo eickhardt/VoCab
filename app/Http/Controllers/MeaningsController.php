@@ -72,15 +72,17 @@ class MeaningsController extends Controller
      */
     public function store(CreateMeaningRequest $request)
     {
+        $user = Auth::user();
+
         // If this code is executed, validation has passed and we can create the meaning
         $meaning = new Meaning;
         $meaning->meaning_type_id = $request->get('meaning_type_id');
-        $meaning->real_word_type = 100; // Deprecated
-        $meaning->user_id = Auth::user()->id;
+        $meaning->user_id = $user->id;
 
-        // If the 'en' word is set, and the root isn't, we use the 'en' word as the root
-        if ($request->has('en') && !$request->has('root')) {
-            $meaning->root = $request->get('en');
+        // If the root language word is set, and the root isn't, we use the root language word as the root
+        $root_language_short_name = $user->rootLanguage->short_name;
+        if ($request->has($root_language_short_name) && !$request->get('root')) {
+            $meaning->root = $request->get($root_language_short_name);
         } else {
             $meaning->root = $request->get('root');
         }
@@ -95,7 +97,7 @@ class MeaningsController extends Controller
                 $word->text = $request->get($language->short_name);
                 $word->language_id = $language->id;
                 $word->meaning_id = $meaning->id;
-                $word->user_id = Auth::user()->id;
+                $word->user_id = $user->id;
                 $word->save();
                 $new_word_count++;
             }
@@ -154,7 +156,6 @@ class MeaningsController extends Controller
         $this->authorize('update', $meaning);
 
         // Update the meaning, since validation and authorization has passed if we reach this code
-        $meaning->real_word_type = $request->get('real_word_type');
         $meaning->meaning_type_id = $request->get('meaning_type_id');
         $meaning->root = $request->get('root');
         $meaning->save();
@@ -222,7 +223,7 @@ class MeaningsController extends Controller
 
         if ($meanings[0] == null) {
             Session::flash(
-                'error',
+                'warning',
                 'You don\' have any words yet :) Create some to get a new "Word of the Day" every day.');
             return redirect()->back();
         }
