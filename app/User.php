@@ -18,9 +18,12 @@ use Illuminate\Support\Carbon;
  * App\User
  *
  * @property array languages
+ * @property WordLanguage rootLanguage
  * @property integer id
+ * @property integer root_language_id
  * @property string name
  * @property array words
+ * @property array meanings
  * @property string $email
  * @property string $password
  * @property boolean $is_first_login
@@ -70,11 +73,19 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $hidden = ['password', 'remember_token'];
 
     /**
-     * This user's preferred languages.
+     * This user's active languages.
      */
     public function languages()
     {
         return $this->belongsToMany('App\WordLanguage');
+    }
+
+    /**
+     * This user's default main language (used as default root for meanings and imports).
+     */
+    public function rootLanguage()
+    {
+        return $this->belongsTo('App\WordLanguage', 'root_language_id');
     }
 
     /**
@@ -83,6 +94,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function words()
     {
         return $this->hasMany('App\Word');
+    }
+
+    /**
+     * This Users Word of the Day (s).
+     */
+    public function wotds()
+    {
+        return $this->hasMany('App\Wotd');
     }
 
     /**
@@ -100,12 +119,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function languagesIdArray()
     {
-        $languages = $this->languages;
-
-        $languages_id_array = [];
-        foreach ($languages as $language) {
-            $languages_id_array[] = $language->id;
-        }
-        return $languages_id_array;
+        return $this->languages()->pluck('id')->toArray();
     }
 }
