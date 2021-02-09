@@ -27,22 +27,13 @@
                 </div>
             </div>
 
-            @if (Auth::user()->is_admin)
-                <div class="form-group {{ $errors->has('real_word_type') ? 'has-error' : '' }}">
-                    <label class="col-md-4 control-label">Real type</label>
-                    <div class="col-md-6">
-                        {!! Form::text('real_word_type', 100, ['class' => 'form-control real_type', 'autocapitalize' => 'none']) !!}
-                        {!! $errors->first('real_word_type', '<span class="help-block">:message</span>') !!}
-                    </div>
-                </div>
-            @endif
-
             @foreach ($languages as $language)
                 <div class="form-group {{ $errors->has($language->short_name) ? 'has-error' : '' }}">
-                    <label class="col-md-4 control-label"><img alt="{{ $language->name }}" src="{{ $language->image }}">
-                        @if ($language->short_name == 'en')
+                    <label class="col-md-4 control-label">
+                        @if ($language->id == Auth::user()->root_language_id)
                             <span class="glyphicon glyphicon-tree-conifer"></span>
                         @endif
+                        <img alt="{{ $language->name }}" src="{{ $language->image }}">
                     </label>
                     <div class="col-md-6">
                         {!! Form::text($language->short_name, null, ['class' => 'form-control', 'autocapitalize' => 'none']) !!}

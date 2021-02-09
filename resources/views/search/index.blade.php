@@ -67,7 +67,7 @@
             // For holding our opentips
             let openTips = {};
 
-            // Show advanced options when the corresponsing button is clicked
+            // Show advanced options when the corresponding button is clicked
             $('.advanced_search_btn').on('click', function () {
                 $('#search_settings').slideToggle('fast');
             });
@@ -120,6 +120,16 @@
                 }
             });
 
+            $(document).on("change", ".language_checkbox", function () {
+                let search_term = searchBar.val();
+                updateList2(search_term, token, method, url, languages, getOptions());
+            });
+
+            $(document).on("change", ".type_checkbox", function () {
+                let search_term = searchBar.val();
+                updateList2(search_term, token, method, url, languages, getOptions());
+            });
+
             // Check if there is something to search for already
             let s = '{{ $s }}';
             if (s !== '0') {
@@ -145,10 +155,10 @@
             });
             options.types = types;
 
-            // Array of languages to exclude
+            // Array of languages to include
             let languages = [];
             $('.language_checkbox').each(function () {
-                if (!$(this).is(':checked')) {
+                if ($(this).is(':checked')) {
                     languages.push($(this).val());
                 }
             });
@@ -172,9 +182,18 @@
                     success: function (words) {
                         if (words.length > 0) {
                             for (let i = 0; i <= words.length - 1; i++) {
+                                console.log(languages);
                                 let edit_link = "/meaning/" + words[i]['meaning_id'] + "/edit";
                                 let row = $('#cloneme').clone().removeAttr('id').removeAttr('style').addClass('removeme');
-                                row.html('<div class="btn btn-xs btn-primary translations" data-id="' + words[i]['meaning_id'] + '"><span class="glyphicon glyphicon-list"></span></div><img class="row_image" alt="flag" src="' + languages[words[i]['language_id'] - 1].image + '"> ' + '<a href="' + edit_link + '">' + words[i]['text'] + '</a>');
+                                row.html('<div class="btn btn-xs btn-primary translations" data-id="'
+                                    + words[i]['meaning_id']
+                                    + '"><span class="glyphicon glyphicon-list"></span></div><img class="row_image" alt="flag" src="'
+                                    + languages[words[i]['language_id']].image
+                                    + '"> ' + '<a href="'
+                                    + edit_link
+                                    + '">'
+                                    + words[i]['text']
+                                    + '</a>');
 
                                 row.prependTo($('.words_list'));
                             }

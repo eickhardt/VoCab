@@ -5,7 +5,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class DatabaseSeeder extends Seeder
 {
-
     /**
      * Run the database seeds.
      *
@@ -13,9 +12,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call('UserTableSeeder');
         $this->call('MeaningTypeTableSeeder');
         $this->call('WordLanguageTableSeeder');
+        $this->call('UserTableSeeder');
         $this->call('MeaningTableSeeder');
     }
 }

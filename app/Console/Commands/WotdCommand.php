@@ -71,6 +71,11 @@ class WotdCommand extends Command
      */
     private function setWotdForUser(User $user)
     {
+        if ($user->meanings()->count() < 1) {
+            $this->info('Skipping, no words exist for user: ' . $user->name . '.');
+            return;
+        }
+
         // Pick a random meaning from the meanings table for this user
         $meaning = Meaning::where('user_id', $user->id)
             ->orderBy(DB::raw("RAND()"))
@@ -89,9 +94,9 @@ class WotdCommand extends Command
                 'meaning_id' => $meaning->id,
                 'user_id' => $user->id
             ]);
-            $this->info('Word of the day has been set fur user ' . $user->name . '.');
+            $this->info('Word of the day has been set fur user: ' . $user->name . '.');
         } else {
-            $this->info('Word of the day was already set for user ' . $user->name . '.');
+            $this->info('Word of the day was already set for user: ' . $user->name . '.');
         }
     }
 }

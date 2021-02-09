@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|Wotd whereId($value)
  * @method static Builder|Wotd whereMeaningId($value)
  * @mixin Eloquent
+ * @property int $user_id
+ * @method static Builder|Wotd whereUserId($value)
  */
 class Wotd extends Model
 {
@@ -77,6 +79,10 @@ class Wotd extends Model
             ->orderBy('date', 'DESC')
             ->orderBy('id', 'DESC')
             ->first();
+
+        if ($wotd == null) {
+            return null;
+        }
 
         return Meaning::with('words')
             ->find($wotd->meaning_id);

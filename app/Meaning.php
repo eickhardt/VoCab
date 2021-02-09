@@ -11,7 +11,6 @@ use Illuminate\Support\Carbon;
  * App\Meaning
  *
  * @property int $id
- * @property int $real_word_type
  * @property int $meaning_type_id
  * @property string|null $root
  * @property Carbon|null $deleted_at
@@ -53,7 +52,7 @@ class Meaning extends Model
      * @var array
      */
     protected $fillable = [
-        'word_type_id', 'real_word_type', 'english',
+        'word_type_id', 'english',
         'created_at', 'updated_at', 'deleted_at', 'user_id'
     ];
 

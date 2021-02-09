@@ -95,6 +95,8 @@
                            aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li>{!! link_to_route('user_settings_path', 'Settings') !!}</li>
+                            <li>{!! link_to_route('import_path', 'Import') !!}</li>
+                            <li>{!! link_to_route('export_path', 'Export') !!}</li>
                             <li class="divider"></li>
                             <li><a href="/logout">Logout</a></li>
                         </ul>

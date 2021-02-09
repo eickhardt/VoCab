@@ -6,6 +6,8 @@ return [
     'user1pw' => env('USER1_PW', 'user1pw'),
     'user2pw' => env('USER2_PW', 'user2pw'),
     'cronpw' => env('CRON_PW', 'cronuserpw'),
+    'max_active_languages' => env('MAX_ACTIVE_LANGUAGES', 12),
+    'hours_to_keep_csv_export_files' => env('HOURS_TO_KEEP_CSV_EXPORT_FILES', 72),
     // eo Custom values
 
     'name' => env('APP_NAME', 'Vokapp'),
@@ -249,7 +251,5 @@ return [
         'Minify' => 'Devfactory\Minify\Facades\MinifyFacade',
         'Image' => 'Intervention\Image\Facades\Image',
         'Image' => 'Illuminate\Support\Facades\Notification',
-
     ],
-
 ];

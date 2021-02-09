@@ -4,3 +4,4 @@
 .phpstorm.meta.php
 _ide_helper.php
 .vagrant
+/worker.log

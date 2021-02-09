@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\WordLanguage;
 use Illuminate\Console\Command;
 
-class AddAdditionalLanguagesToProd extends Command
+class AddAdditionalLanguagesToProdCommand extends Command
 {
     /**
      * The console command name.

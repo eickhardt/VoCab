@@ -51,7 +51,7 @@
                 </script>
             @endforeach
 
-            <h3>Recently added words</h3>
+            <h3>Recently added</h3>
 
             <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
             <script type="text/javascript" src="/js/palette.js">
@@ -143,7 +143,7 @@
             {{--                </div>--}}
             {{--            </div>--}}
 
-            <h3>General statistics</h3>
+            <h3>Distribution</h3>
 
             <div class="panel panel-default">
                 <div class="table-responsive">

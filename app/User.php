@@ -3,6 +3,7 @@
 use Eloquent;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
@@ -17,33 +18,41 @@ use Illuminate\Support\Carbon;
 /**
  * App\User
  *
- * @property array languages
- * @property WordLanguage rootLanguage
- * @property integer id
- * @property integer root_language_id
- * @property string name
- * @property array words
- * @property array meanings
+ * @property int $id
+ * @property string $name
  * @property string $email
  * @property string $password
- * @property boolean $is_first_login
- * @property boolean $is_admin
  * @property string|null $remember_token
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property int $is_first_login
+ * @property int $is_admin
+ * @property int|null $root_language_id
+ * @property int $is_porting
+ * @property-read Collection|WordLanguage[] $languages
  * @property-read int|null $languages_count
+ * @property-read Collection|Meaning[] $meanings
+ * @property-read int|null $meanings_count
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
+ * @property-read WordLanguage|null $rootLanguage
+ * @property-read Collection|Word[] $words
  * @property-read int|null $words_count
+ * @property-read Collection|Wotd[] $wotds
+ * @property-read int|null $wotds_count
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
  * @method static Builder|User query()
  * @method static Builder|User whereCreatedAt($value)
  * @method static Builder|User whereEmail($value)
  * @method static Builder|User whereId($value)
+ * @method static Builder|User whereIsAdmin($value)
+ * @method static Builder|User whereIsFirstLogin($value)
+ * @method static Builder|User whereIsPorting($value)
  * @method static Builder|User whereName($value)
  * @method static Builder|User wherePassword($value)
  * @method static Builder|User whereRememberToken($value)
+ * @method static Builder|User whereRootLanguageId($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin Eloquent
  */
@@ -63,7 +72,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'is_first_login', 'is_admin'];
+    protected $fillable = ['name', 'email', 'password', 'is_first_login', 'is_admin', 'is_porting'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -120,5 +129,23 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function languagesIdArray()
     {
         return $this->languages()->pluck('id')->toArray();
+    }
+
+    /**
+     * Lock porting for this user. Remember to unlock again!
+     */
+    public function lockPorting()
+    {
+        $this->is_porting = true;
+        $this->save();
+    }
+
+    /**
+     * Unlock porting for this user.
+     */
+    public function unlockPorting()
+    {
+        $this->is_porting = false;
+        $this->save();
     }
 }

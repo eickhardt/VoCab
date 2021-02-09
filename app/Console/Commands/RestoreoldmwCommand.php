@@ -6,6 +6,7 @@ use File;
 
 use App\Word;
 use App\Meaning;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 class RestoreoldmwCommand extends Command
 {
@@ -38,6 +39,7 @@ class RestoreoldmwCommand extends Command
      * Execute the console command.
      *
      * @return void
+     * @throws FileNotFoundException
      */
     public function handle()
     {
@@ -55,8 +57,8 @@ class RestoreoldmwCommand extends Command
         foreach ($meanings as $meaning) {
             $meanings_count++;
             $new_meaning = new Meaning;
+            $new_meaning->user_id = 1;
             $new_meaning->meaning_type_id = $meaning->word_type_id;
-            $new_meaning->real_word_type = $meaning->real_word_type;
             if (isset($meaning->english))
                 $new_meaning->root = $meaning->english;
             else
@@ -80,6 +82,7 @@ class RestoreoldmwCommand extends Command
             $words_count++;
             $new_word = new Word;
             $new_word->language_id = $word->word_language_id;
+            $new_word->user_id = 1;
             $new_word->text = $word->text;
             $new_word->meaning_id = $word->meaning_id;
             $new_word->created_at = $word->created_at;

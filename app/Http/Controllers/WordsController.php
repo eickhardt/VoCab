@@ -175,7 +175,7 @@ class WordsController extends Controller
                 }
 
                 if (count($languages)) {
-                    $words_query->whereNotIn('language_id', $languages);
+                    $words_query->whereIn('language_id', $languages);
                 }
 
                 if ($options_obj->types) {

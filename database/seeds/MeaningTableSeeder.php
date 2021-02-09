@@ -23,7 +23,6 @@ class MeaningTableSeeder extends Seeder
             // Create a meaning
             $meaning = new Meaning;
             $meaning->meaning_type_id = 2;
-            $meaning->real_word_type = 200;
             $meaning->root = 'cat';
             $meaning->user_id = $user->id;
             $meaning->save();

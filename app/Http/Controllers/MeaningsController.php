@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateMeaningRequest;
 use Illuminate\View\View;
 use Auth;
 use Input;
+use Request;
 use Session;
 
 use App\Word;
@@ -189,24 +190,27 @@ class MeaningsController extends Controller
     /**
      * Show a random meaning.
      *
+     * @param Request $request
      * @return View|RedirectResponse
      */
-    public function random()
+    public function random(Request $request)
     {
-        $meaning = Meaning::where('user_id', Auth::user()->id)
+        $user = $request->user();
+
+        $meaning = Meaning::where('user_id', $user->id)
             ->orderBy(DB::raw("RAND()"))
             ->first();
 
         if (!$meaning) {
             Session::flash(
-                'error',
+                'warning',
                 'You don\' have any meanings yet :) Create some before you start using the random meaning button.');
             return redirect()->back();
         }
 
         $meanings[] = $meaning;
 
-        $languages = Auth::user()->languages;
+        $languages = $user->languages;
         $list_type = 'Random';
 
         return view('lists.meanings', compact('meanings', 'list_type', 'languages'));

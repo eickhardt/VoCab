@@ -61,14 +61,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group {{ $errors->has('real_type') ? 'has-error' : '' }}">
-                        <label class="col-md-4 control-label">Real type</label>
-                        <div class="col-md-6">
-                            {!! Form::text('real_word_type', $meaning->real_word_type, ['class' => 'form-control real_type']) !!}
-                            {!! $errors->first('real_word_type', '<span class="help-block">:message</span>') !!}
-                        </div>
-                    </div>
-
                     <div class="form-group {{ $errors->has('root') ? 'has-error' : '' }}">
                         <label class="col-md-4 control-label">Root</label>
                         <div class="col-md-6">

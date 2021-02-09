@@ -70,18 +70,15 @@
                                         Root: <b>{{ $meaning->root }}</b>
                                     </li>
                                     <li class="list-group-item">
-                                        Type name: <b>{{ ucfirst($meaning->type->name) }}</b>
+                                        Type: <b>{{ ucfirst($meaning->type->name) }}</b>
                                     </li>
                                     <li class="list-group-item">
-                                        Real type: <b>{{ $meaning->real_word_type }}</b>
+                                        Id: <b>{{ $meaning->id }}</b>
                                     </li>
                                 </ul>
                             </div>
                             <div class="col-md-6 col-md-offset-0">
                                 <ul class="list-group">
-                                    <li class="list-group-item">
-                                        Id: <b>{{ $meaning->id }}</b>
-                                    </li>
                                     <li class="list-group-item">
                                         Created at {{ date("F j, Y, g:i a", strtotime($meaning->created_at)) }}
                                     </li>

@@ -30,7 +30,6 @@ class FirstLogin
             // Create the users first meaning
             $meaning = new Meaning;
             $meaning->meaning_type_id = 2; // Noun
-            $meaning->real_word_type = 200; // Noun (deprecated)
             $meaning->root = 'dog';
             $meaning->user_id = $user->id;
             $meaning->save();
