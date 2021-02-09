@@ -31,7 +31,7 @@ class BackupController extends Controller
         // Check if the user has permission to do this
         $user = Auth::user();
         $allowed_users = ['Daniel Eickhardt', 'Gabrielle Tranchet'];
-        if (!in_array($user->name, $allowed_users)) {
+        if (!$user->is_admin) {
             Session::flash('error', "You don't have permission to do that.");
             return redirect()->back();
         }
@@ -83,9 +83,7 @@ class BackupController extends Controller
     public function destroy($id)
     {
         // Check if the user has permission to do this
-        $user = Auth::user();
-        $allowed_users = ['Daniel Eickhardt', 'Gabrielle Tranchet'];
-        if (!in_array($user->name, $allowed_users)) {
+        if (!Auth::user()->is_admin) {
             Session::flash('error', "You don't have permission to do that.");
             return redirect()->back();
         }

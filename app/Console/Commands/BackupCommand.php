@@ -45,8 +45,7 @@ class BackupCommand extends Command
     {
         if (Auth::attempt(['email' => $this->argument('email'), 'password' => $this->argument('password')])) {
             $user = Auth::user();
-            $allowed_users = ['Daniel Eickhardt', 'Gabrielle Tranchet', 'Robot Robertson'];
-            if (in_array($user->name, $allowed_users)) {
+            if ($user->is_admin) {
                 Artisan::call('backup:run');
 
                 $backup_path = storage_path() . '/app/';
