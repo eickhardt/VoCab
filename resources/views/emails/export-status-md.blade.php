@@ -10,11 +10,11 @@ An error occurred while processing your data export. Please try again or contact
 @endif
 
 @if ($success)
-@component('mail::button', ['url' => route('statistics_path')])
+@component('mail::button', ['url' => route('csv_export_download_path')])
 Download
 @endcomponent
 @else
-@component('mail::button', ['url' => route('import_path')])
+@component('mail::button', ['url' => route('export_path')])
 Retry
 @endcomponent
 @endif
