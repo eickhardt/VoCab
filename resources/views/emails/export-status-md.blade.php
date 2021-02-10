@@ -11,15 +11,15 @@ An error occurred while processing your data export. Please try again or contact
 
 @if ($success)
 @component('mail::button', ['url' => route('statistics_path')])
-    Download
+Download
 @endcomponent
 @else
 @component('mail::button', ['url' => route('import_path')])
-    Retry
+Retry
 @endcomponent
 @endif
 
-Import ID: {{ $import_id }}
+Import ID: {{ $export_id }}
 
 Thanks,<br>
 {{ config('app.name') }}
