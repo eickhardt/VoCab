@@ -29,7 +29,6 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Meaning whereDeletedAt($value)
  * @method static Builder|Meaning whereId($value)
  * @method static Builder|Meaning whereMeaningTypeId($value)
- * @method static Builder|Meaning whereRealWordType($value)
  * @method static Builder|Meaning whereRoot($value)
  * @method static Builder|Meaning whereUpdatedAt($value)
  * @method static Builder|Meaning whereUserId($value)

@@ -9,68 +9,72 @@
         </div>
 
         <div id="main-body" class="panel-body">
+            <div class="panel panel-default">
+                <div class="panel-body">
 
-            @if (isset($meaning))
-                <div id="words" class="panel panel-default">
-                    <div class="panel-body">
-                        <p>Translations with the same root: </p>
-                        @foreach($meaning->words as $word)
-                            <?php $links[] = link_to_route('word_edit_path', $word->text, $word->id); ?>
-                        @endforeach
-                        {!! implode(', ', $links) !!}
+                    @if (isset($meaning))
+                        <div id="words" class="panel panel-default">
+                            <div class="panel-body">
+                                <p>Translations with the same root: </p>
+                                @foreach($meaning->words as $word)
+                                    <?php $links[] = link_to_route('word_edit_path', $word->text, $word->id); ?>
+                                @endforeach
+                                {!! implode(', ', $links) !!}
+                            </div>
+                        </div>
+                    @endif
+
+                    {!! Form::open(['route' => 'word_store_path', 'class' => 'form-horizontal']) !!}
+
+                    <div class="form-group {{ $errors->has('meaning_id') ? 'has-error' : '' }}">
+                        <label class="col-md-4 control-label">Meaning id</label>
+                        <div class="col-md-2">
+                            {!! Form::text('meaning_id', isset($meaning) ? $meaning->id : '', ['class' => 'form-control', 'id' => 'meaning_id', 'autocapitalize' => 'none']) !!}
+                            {!! $errors->first('meaning_id', '<span class="help-block">:message</span>') !!}
+                        </div>
+                        <div class="col-md-4">
+                            {!! Form::text('meaning_root', isset($meaning) ? $meaning->root : '', ['class' => 'form-control', 'disabled', 'id' => 'meaning_root', 'autocapitalize' => 'none']) !!}
+                        </div>
                     </div>
-                </div>
-            @endif
 
-            {!! Form::open(['route' => 'word_store_path', 'class' => 'form-horizontal']) !!}
+                    <div class="form-group {{ $errors->has('language_id') ? 'has-error' : '' }}">
+                        <label class="col-md-4 control-label">Language</label>
+                        <div class="col-md-6">
+                            {!! Form::select('language_id', $languages, null, ['class' => 'form-control', 'id' => 'type_selector']) !!}
+                            {!! $errors->first('language_id', '<span class="help-block">:message</span>') !!}
+                        </div>
+                    </div>
 
-            <div class="form-group {{ $errors->has('meaning_id') ? 'has-error' : '' }}">
-                <label class="col-md-4 control-label">Meaning id</label>
-                <div class="col-md-2">
-                    {!! Form::text('meaning_id', isset($meaning) ? $meaning->id : '', ['class' => 'form-control', 'id' => 'meaning_id', 'autocapitalize' => 'none']) !!}
-                    {!! $errors->first('meaning_id', '<span class="help-block">:message</span>') !!}
-                </div>
-                <div class="col-md-4">
-                    {!! Form::text('meaning_root', isset($meaning) ? $meaning->root : '', ['class' => 'form-control', 'disabled', 'id' => 'meaning_root', 'autocapitalize' => 'none']) !!}
-                </div>
-            </div>
+                    <div class="form-group {{ $errors->has('text') ? 'has-error' : '' }}">
+                        <label class="col-md-4 control-label">Text</label>
+                        <div class="col-md-6">
+                            {!! Form::text('text', null, ['class' => 'form-control', 'autocapitalize' => 'none']) !!}
+                            {!! $errors->first('text', '<span class="help-block">:message</span>') !!}
+                        </div>
+                    </div>
 
-            <div class="form-group {{ $errors->has('language_id') ? 'has-error' : '' }}">
-                <label class="col-md-4 control-label">Language</label>
-                <div class="col-md-6">
-                    {!! Form::select('language_id', $languages, null, ['class' => 'form-control', 'id' => 'type_selector']) !!}
-                    {!! $errors->first('language_id', '<span class="help-block">:message</span>') !!}
-                </div>
-            </div>
+                    <div class="form-group {{ $errors->has('comment') ? 'has-error' : '' }}">
+                        <label class="col-md-4 control-label">Comment</label>
+                        <div class="col-md-6">
+                            {!! Form::text('comment', null, ['class' => 'form-control', 'autocapitalize' => 'none']) !!}
+                            {!! $errors->first('comment', '<span class="help-block">:message</span>') !!}
+                        </div>
+                    </div>
 
-            <div class="form-group {{ $errors->has('text') ? 'has-error' : '' }}">
-                <label class="col-md-4 control-label">Text</label>
-                <div class="col-md-6">
-                    {!! Form::text('text', null, ['class' => 'form-control', 'autocapitalize' => 'none']) !!}
-                    {!! $errors->first('text', '<span class="help-block">:message</span>') !!}
-                </div>
-            </div>
-
-            <div class="form-group {{ $errors->has('comment') ? 'has-error' : '' }}">
-                <label class="col-md-4 control-label">Comment</label>
-                <div class="col-md-6">
-                    {!! Form::text('comment', null, ['class' => 'form-control', 'autocapitalize' => 'none']) !!}
-                    {!! $errors->first('comment', '<span class="help-block">:message</span>') !!}
+                    <div class="form-group">
+                        <div class="col-md-6 col-md-offset-4">
+                            <button type="submit" class="btn btn-success">
+                                <span class="glyphicon glyphicon-plus-sign"></span> Create
+                            </button>
+                        </div>
+                    </div>
+                    {!! Form::close() !!}
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class="col-md-6 col-md-offset-4">
-                    <button type="submit" class="btn btn-success">
-                        <span class="glyphicon glyphicon-plus-sign"></span> Create
-                    </button>
-                </div>
-            </div>
-            {!! Form::close() !!}
-
-            <button onclick="document.location='{{ route('search_path') }}'" type="submit" class="btn btn-primary">
+            <a href="{{ route('search_path') }}" type="submit" class="btn btn-primary">
                 <span class="glyphicon glyphicon-search"></span> Goto search
-            </button>
+            </a>
         </div>
     </div>
 @endsection

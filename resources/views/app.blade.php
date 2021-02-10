@@ -10,6 +10,7 @@
     <!-- Bootstrap -->
     {{-- <link href="/css/bootstrap.min.css" rel="stylesheet"> --}}
     <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 {!! Minify::stylesheet('/css/opentip.css') !!}
 {!! Minify::stylesheet('/css/app.css') !!}
 {!! Minify::stylesheet('/css/custom.css') !!}
@@ -142,6 +143,7 @@
 <script src="/js/jquery-ui.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script src="/js/opentip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 {!! Minify::javascript('/js/bindWithDelay.js') !!}
 
 <script type="text/javascript">

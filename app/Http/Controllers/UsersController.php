@@ -2,6 +2,7 @@
 
 use App\Http\Requests\DeleteAllRequest;
 use App\Http\Requests\Request;
+use Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Input;
@@ -22,58 +23,63 @@ class UsersController extends Controller
 
         // Get the languages the user has enabled
         $user_languages = $user->languagesIdArray();
+//        dd($user_languages);
 
         // Get all languages
-        $languages = WordLanguage::all();
+        $languages          = WordLanguage::all();
         $selector_languages = $languages->pluck('name', 'id');
 
         // Get the user's root language
         $root_language_id = $user->rootLanguage()->pluck('id');
 
         return view('users.settings.index',
-            compact('languages', 'selector_languages', 'user_languages', 'root_language_id'));
+                    compact('languages', 'selector_languages', 'user_languages', 'root_language_id'));
     }
 
     /**
      * Stores a users active languages settings.
      *
-     * @param Request $request
      * @return RedirectResponse
      */
     public function storeActiveLanguageSettings()
     {
+        $to_be_active_language_ids = Input::get('working_languages');
+//        dd($to_be_active_language_ids);
+//        dd(Input::all());
+
         // There must be at least one active language
-        if (count(Input::except(['_token'])) < 1) {
+        if ($to_be_active_language_ids === null || count($to_be_active_language_ids) < 1) {
             Session::flash('error', 'At least one active language is required.');
-            redirect()->route('user_settings_path');
-        } else if (count(Input::except(['_token'])) > config('app.max_active_languages')) {
-            Session::flash('error', 'A maximum of 12 active languages is currently allowed.');
-            redirect()->route('user_settings_path');
+            return redirect()->route('user_settings_path');
         }
 
-        // Get the user that's logged in
-        $user = auth()->user();
-
-        // Grab all languages
-        $languages = WordLanguage::all();
+        // Check if there are too many languages
+        if (count($to_be_active_language_ids) > config('app.max_active_languages')) {
+            Session::flash('error', 'A maximum of ' . config('app.max_active_languages') . ' active languages is allowed.');
+            return redirect()->route('user_settings_path');
+        }
 
         // Verify that the root language is among the selected ones
+        $user                   = Auth::user();
         $root_language_verified = false;
-        foreach ($languages as $language) {
-            if ($language->id == $user->root_language_id) {
+        dd($user);
+        foreach ($to_be_active_language_ids as $language) {
+            if ($language == $user->root_language_id) {
                 $root_language_verified = true;
             }
         }
 
         if (!$root_language_verified) {
             Session::flash('error', 'The language which is currently selected as root can\'t be disabled.');
-            redirect()->route('user_settings_path');
+            return redirect()->route('user_settings_path');
         }
+
+        $languages = WordLanguage::all();
 
         // Check which languages the user wants displayed
         foreach ($languages as $language) {
             // If the language is in the post data, create relationship
-            if (in_array($language->id, Input::except(['_token']))) {
+            if (in_array($language->id, $to_be_active_language_ids)) {
                 if (!$user->languages()->find($language->id)) {
                     $user->languages()->attach($language->id);
                 }
@@ -100,7 +106,7 @@ class UsersController extends Controller
 
         // Check that the language the user has selected as root is actually active
         $new_root_language_id = Input::get('root_language_id');
-        $language_is_active = false;
+        $language_is_active   = false;
 
         foreach ($user->languages as $language) {
             if ($new_root_language_id == $language->id) {
@@ -118,7 +124,7 @@ class UsersController extends Controller
             Session::flash('error', 'The selected root language must be active.');
         }
 
-        return redirect()->route('settings');
+        return redirect()->route('user_settings_path');
     }
 
     /**

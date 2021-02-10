@@ -66,78 +66,59 @@
                 </div>
             </div>
 
-            {!! Form::open(['route' => 'import_do_path', 'files'=>'true', 'class' => 'form-horizontal']) !!}
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {!! Form::open(['route' => 'import_do_path', 'files'=>'true', 'class' => 'form-horizontal']) !!}
 
-            <div class="form-group {{ $errors->has('csv_file') ? 'has-error' : '' }}">
-                <label class="col-md-4 control-label">CSV file</label>
-                <div class="col-md-6">
-                    {{ Form::file('csv_file') }}
-                    {!! $errors->first('csv_file', '<span class="help-block">:message</span>') !!}
+                    <div class="form-group {{ $errors->has('csv_file') ? 'has-error' : '' }}">
+                        <label class="col-md-4 control-label">CSV file</label>
+                        <div class="col-md-6">
+                            <label class="btn btn-default">
+                                {{ Form::file('csv_file') }}
+                            </label>
+                            {!! $errors->first('csv_file', '<span class="help-block">:message</span>') !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6 col-md-offset-4">
+                            <button type="submit" class="btn btn-success">
+                                <span class="glyphicon glyphicon-plus-sign"></span> Import
+                            </button>
+                        </div>
+                    </div>
+
+                    {!! Form::close() !!}
                 </div>
             </div>
 
-            {{--            <div class="form-group {{ $errors->has('ignore_header') ? 'has-error' : '' }}">--}}
-            {{--                <label class="col-md-4 control-label">Ignore header</label>--}}
-            {{--                <div class="col-md-6">--}}
-            {{--                    {{ Form::checkbox('ignore_header', 1, true, ['class' => 'language_checkbox']) }} Ignore the first--}}
-            {{--                    line--}}
-            {{--                    {!! $errors->first('ignore_header', '<span class="help-block">:message</span>') !!}--}}
-            {{--                </div>--}}
-            {{--            </div>--}}
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {!! Form::open(['route' => 'delete_all_path', 'class' => 'form-horizontal']) !!}
+                    <p>You may want to clear your data before importing. This will force delete all your meanings and
+                        words, including trashed and languages you do not have activated. <b><u>This action
+                                cannot be
+                                undone.</u></b></p>
+                    <p>You currently have {{ $meanings_count }} meanings and {{ $words_count }} words, including
+                        trashed.</p>
+                    <div class="form-group {{ $errors->has('confirm_delete_all') ? 'has-error' : '' }}">
+                        <label class="col-md-4 control-label">Confirmation</label>
+                        <div class="col-md-6">
+                            {{ Form::text('confirm_delete_all', null, ['placeholder' => 'Type "delete" here']) }}
+                            {!! $errors->first('confirm_delete_all', '<span class="help-block">:message</span>') !!}
+                        </div>
+                    </div>
 
-            {{--            @foreach ($columns as $column)--}}
-            {{--                @if ($loop->index == 3)--}}
-            {{--                    <div class="form-group">--}}
-            {{--                        <div class="col-md-6 col-md-offset-4">--}}
-            {{--                            <div id="extra_columns_button" class="btn btn-info">--}}
-            {{--                                <span class="glyphicon glyphicon-arrow-down"></span> More language columns--}}
-            {{--                            </div>--}}
-            {{--                        </div>--}}
-            {{--                    </div>--}}
-            {{--                @endif--}}
-            {{--                <div class="form-group {{ $loop->index >= 3 ? 'extra_column' : '' }} {{ $errors->has($column) ? 'has-error' : '' }}">--}}
-            {{--                    <label class="col-md-4 control-label">Column {{ $loop->index + 1 }}</label>--}}
-            {{--                    <div class="col-md-6">--}}
-            {{--                        {{ Form::select($column, $languages, null, ['placeholder' => 'Pick a language']) }}--}}
-            {{--                        {!! $errors->first($column, '<span class="help-block">:message</span>') !!}--}}
-            {{--                    </div>--}}
-            {{--                </div>--}}
-            {{--            @endforeach--}}
-
-            <div class="form-group">
-                <div class="col-md-6 col-md-offset-4">
-                    <button type="submit" class="btn btn-success">
-                        <span class="glyphicon glyphicon-plus-sign"></span> Import
-                    </button>
+                    <div class="form-group">
+                        <div class="col-md-6 col-md-offset-4">
+                            <button type="submit" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-ban-circle"></span> Force delete all
+                            </button>
+                        </div>
+                    </div>
+                    {!! Form::close() !!}
                 </div>
             </div>
-
-            {!! Form::close() !!}
-
-            <hr>
-
-            {!! Form::open(['route' => 'delete_all_path', 'class' => 'form-horizontal']) !!}
-            <p>You may want to clear your data before importing. This will force delete all your meanings and
-                words, including trashed and languages you do not have activated. <b><u>This action
-                        cannot be
-                        undone.</u></b></p>
-            <p>You currently have {{ $meanings_count }} meanings and {{ $words_count }} words, including trashed.</p>
-            <div class="form-group {{ $errors->has('confirm_delete_all') ? 'has-error' : '' }}">
-                <label class="col-md-4 control-label">Confirmation</label>
-                <div class="col-md-6">
-                    {{ Form::text('confirm_delete_all', null, ['placeholder' => 'Type "delete" here']) }}
-                    {!! $errors->first('confirm_delete_all', '<span class="help-block">:message</span>') !!}
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-6 col-md-offset-4">
-                    <button type="submit" class="btn btn-danger">
-                        <span class="glyphicon glyphicon-ban-circle"></span> Force delete all
-                    </button>
-                </div>
-            </div>
-            {!! Form::close() !!}
 
         </div>
     </div>

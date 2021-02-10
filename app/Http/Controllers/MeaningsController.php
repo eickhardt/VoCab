@@ -46,7 +46,7 @@ class MeaningsController extends Controller
     public function index()
     {
         $languages = Auth::user()->languages;
-        $types = Meaning::all();
+        $types     = Meaning::all();
 
         return view('search.index', compact('languages', 'types'));
     }
@@ -59,7 +59,7 @@ class MeaningsController extends Controller
     public function create()
     {
         $languages = Auth::user()->languages;
-        $types = MeaningType::asKeyValuePairs();
+        $types     = MeaningType::asKeyValuePairs();
 
         return view('meanings.create', compact('languages', 'types'));
     }
@@ -76,9 +76,9 @@ class MeaningsController extends Controller
         $user = Auth::user();
 
         // If this code is executed, validation has passed and we can create the meaning
-        $meaning = new Meaning;
+        $meaning                  = new Meaning;
         $meaning->meaning_type_id = $request->get('meaning_type_id');
-        $meaning->user_id = $user->id;
+        $meaning->user_id         = $user->id;
 
         // If the root language word is set, and the root isn't, we use the root language word as the root
         $root_language_short_name = $user->rootLanguage->short_name;
@@ -90,15 +90,15 @@ class MeaningsController extends Controller
         $meaning->save();
 
         // We also want to create a word in each of the provided languages
-        $languages = Auth::user()->languages;
+        $languages      = Auth::user()->languages;
         $new_word_count = 0;
         foreach ($languages as $language) {
             if ($request->get($language->short_name)) {
-                $word = new Word;
-                $word->text = $request->get($language->short_name);
+                $word              = new Word;
+                $word->text        = $request->get($language->short_name);
                 $word->language_id = $language->id;
-                $word->meaning_id = $meaning->id;
-                $word->user_id = $user->id;
+                $word->meaning_id  = $meaning->id;
+                $word->user_id     = $user->id;
                 $word->save();
                 $new_word_count++;
             }
@@ -121,7 +121,7 @@ class MeaningsController extends Controller
         $this->authorize('view', $meaning);
 
         $meanings[] = $meaning;
-        $languages = Auth::user()->languages;
+        $languages  = Auth::user()->languages;
 
         return view('lists.meanings', compact('meanings', 'languages'));
     }
@@ -138,8 +138,8 @@ class MeaningsController extends Controller
         $this->authorize('update', $meaning);
 
         $languages = Auth::user()->languages;
-        $types = MeaningType::asKeyValuePairs();
-        $meaning = Meaning::with('words')->find($meaning->id);
+        $types     = MeaningType::asKeyValuePairs();
+        $meaning   = Meaning::with('words')->find($meaning->id);
 
         return view('meanings.edit', compact('meaning', 'types', 'languages'));
     }
@@ -158,7 +158,7 @@ class MeaningsController extends Controller
 
         // Update the meaning, since validation and authorization has passed if we reach this code
         $meaning->meaning_type_id = $request->get('meaning_type_id');
-        $meaning->root = $request->get('root');
+        $meaning->root            = $request->get('root');
         $meaning->save();
 
         // Tell the user what happened and redirect
@@ -190,16 +190,15 @@ class MeaningsController extends Controller
     /**
      * Show a random meaning.
      *
-     * @param Request $request
      * @return View|RedirectResponse
      */
-    public function random(Request $request)
+    public function random()
     {
-        $user = $request->user();
+        $user = Auth::user();
 
         $meaning = Meaning::where('user_id', $user->id)
-            ->orderBy(DB::raw("RAND()"))
-            ->first();
+                          ->orderBy(DB::raw("RAND()"))
+                          ->first();
 
         if (!$meaning) {
             Session::flash(
@@ -258,9 +257,9 @@ class MeaningsController extends Controller
         }
 
         $meaning = Meaning::where('user_id', Auth::user()->id)
-            ->where('id', $meaning_id)
-            ->with(['words', 'words.language'])
-            ->first();
+                          ->where('id', $meaning_id)
+                          ->with(['words', 'words.language'])
+                          ->first();
 
         if ($meaning) {
             if ($html) {
@@ -281,7 +280,7 @@ class MeaningsController extends Controller
     {
         $list_type = 'Trashed';
         $languages = WordLanguage::all();
-        $meanings = Meaning::where('user_id', Auth::user()->id)->with('type')->onlyTrashed()->get();
+        $meanings  = Meaning::where('user_id', Auth::user()->id)->with('type')->onlyTrashed()->get();
 
         return view('lists.meanings', compact('meanings', 'list_type', 'languages'));
     }
@@ -323,7 +322,7 @@ function tipContent($words)
     foreach ($result_array as $name => $words) {
         $language = WordLanguage::where('name', $name)->first();
 
-        $line = '<p><img class="translation_image" alt="' . $language->name . '" src="' . $language->image . '">';
+        $line               = '<p><img class="translation_image" alt="' . $language->name . '" src="' . $language->image . '">';
         $word_links_in_line = [];
         foreach ($words as $word) {
             $word_exploded = explode('=', $word);

@@ -28,25 +28,25 @@ class FirstLogin
             $user->save();
 
             // Create the users first meaning
-            $meaning = new Meaning;
+            $meaning                  = new Meaning;
             $meaning->meaning_type_id = 2; // Noun
-            $meaning->root = 'dog';
-            $meaning->user_id = $user->id;
+            $meaning->root            = 'dog';
+            $meaning->user_id         = $user->id;
             $meaning->save();
 
             // Create the users first word
-            $word = new Word;
-            $word->text = 'dog';
-            $word->language_id = 1; // English
-            $word->meaning_id = $meaning->id;
-            $word->user_id = $user->id;
+            $word              = new Word;
+            $word->text        = 'dog';
+            $word->language_id = 1;        // English
+            $word->meaning_id  = $meaning->id;
+            $word->user_id     = $user->id;
             $word->save();
 
             // Assign english as the only default active language
             $user->languages()->attach(1); // English
 
             // First time the user logs in we want them to set active languages on the settings page
-            Session::flash('success', "Welcome to Vokapp :) Please select the languages you'd like to work with.");
+            Session::flash('success', "Welcome to Vokapp :) Please select your root language and the languages you'd like to learn.");
             return redirect()->route('user_settings_path');
         }
 
