@@ -95,8 +95,9 @@ class ExportController extends Controller
         $download_filename = CsvPortUtil::getCsvExportDownloadFileName();
 
         Log::info('User downloaded csv-export', [
+            'export_db_id'      => $export->id,
             'user_id'           => $user->id,
-            'download_filename' => $download_filename
+            'download_filename' => $export->file_name
         ]);
 
         // Serve the generated file as a download, and then delete it
