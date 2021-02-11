@@ -4,8 +4,6 @@
 namespace App\Port;
 
 
-use Log;
-
 class CsvPortUtil
 {
     /**
@@ -72,7 +70,17 @@ class CsvPortUtil
      */
     public static function getCsvExportFilePath($file_name)
     {
-        return storage_path(CsvConstants::CSV_EXPORT_FOLDER . $file_name);
+        return CsvConstants::CSV_EXPORT_FOLDER . $file_name;
+    }
+
+    /**
+     * Create a name for a served CSV export file.
+     *
+     * @return string
+     */
+    public static function getCsvExportDownloadFileName()
+    {
+        return strtolower(config('app.name')) . '-export.csv';
     }
 
     /**
@@ -95,7 +103,7 @@ class CsvPortUtil
      */
     public static function getCsvImportFilePath($file_name)
     {
-        return storage_path(CsvConstants::CSV_IMPORT_FOLDER . $file_name);
+        return CsvConstants::CSV_IMPORT_FOLDER . $file_name;
     }
 
     /**

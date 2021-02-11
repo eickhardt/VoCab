@@ -4,15 +4,14 @@ namespace App\Http\Controllers;
 
 use App\CsvExport;
 use App\Jobs\ProcessCsvExportJob;
-use App\Port\CsvConstants;
 use App\Port\CsvPortUtil;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Log;
-use Request;
 use Session;
+use Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ExportController extends Controller
@@ -92,9 +91,9 @@ class ExportController extends Controller
             return redirect()->route('export_path');
         }
 
-        $file_path = storage_path(CsvConstants::CSV_EXPORT_FOLDER . $export->filename);
+        $file_path = storage_path('app/' . CsvPortUtil::getCsvExportFilePath($export->file_name));
 
-        $download_filename = 'vokapp-export-' . time() . '.csv';
+        $download_filename = CsvPortUtil::getCsvExportDownloadFileName();
 
         Log::info('User downloaded csv-export', [
             'user_id'           => $user->id,
@@ -105,8 +104,7 @@ class ExportController extends Controller
         return response()->download(
             $file_path,
             $download_filename,
-            [
-                'Content-Type' => 'text/csv'
-            ])->deleteFileAfterSend(true);
+            ['Content-Type' => 'text/csv']
+        )->deleteFileAfterSend(true);
     }
 }

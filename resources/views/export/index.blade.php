@@ -32,6 +32,10 @@
                     </div>
 
                     {!! Form::close() !!}
+
+                    <a href="{{ route('csv_export_download_path')  }}" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-circle-arrow-down"></span> Download
+                    </a>
                 </div>
             </div>
         </div>

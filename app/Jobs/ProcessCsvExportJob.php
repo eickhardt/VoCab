@@ -7,6 +7,7 @@ use App\Port\Export\CsvExporter;
 use App\Port\CsvPortUtil;
 use App\User;
 use Exception;
+use File;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -75,9 +76,10 @@ class ProcessCsvExportJob implements ShouldQueue
                                     ]);
 
         Log::info(CsvExport::class . ' created', [
-            'id'        => $export->id,
+            'export_id' => $export->id,
             'user_id'   => $this->user->id,
-            'file_name' => $file_name
+            'file_name' => $file_name,
+            'file_path' => $file_path
         ]);
 
         $this->finalize(true);
