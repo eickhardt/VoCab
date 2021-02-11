@@ -21,16 +21,12 @@ abstract class CsvExporter
     public static function export($meanings, $languages)
     {
         // Create the column headers
-////        Debugbar::startMeasure('createCsvHeaderLine', 'Time createCsvHeaderLine');
         $csv_file_contents = CsvExporter::createCsvHeaderLine($languages);
-////        Debugbar::stopMeasure('createCsvHeaderLine');
 
         // Add a line for each meaning
-////        Debugbar::startMeasure('createMeaningLines', 'Time createMeaningLine');
         foreach ($meanings as $meaning) {
             $csv_file_contents .= CsvExporter::createMeaningLine($meaning, $languages);
         }
-//        Debugbar::stopMeasure('createMeaningLines');
 
         return $csv_file_contents;
     }
@@ -80,7 +76,6 @@ abstract class CsvExporter
         $meaning_line .= $meaning->updated_at . CsvConstants::CSV_COLUMN_DELIMITER;
         $meaning_line .= $meaning->deleted_at . CsvConstants::CSV_COLUMN_DELIMITER;
 
-//        Debugbar::startMeasure('addWordColumns', 'Add word columns for each language');
         // Add word columns for each language
         foreach ($languages as $language) {
             $word_found = false;
@@ -94,7 +89,6 @@ abstract class CsvExporter
                 $meaning_line .= CsvExporter::createWordString(null); // Add delimiters if no word exists
             }
         }
-//        Debugbar::stopMeasure('addWordColumns');
 
         return $meaning_line . CsvConstants::CSV_END_OF_LINE;
     }
