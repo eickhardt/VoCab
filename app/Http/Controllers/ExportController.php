@@ -11,7 +11,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Log;
 use Session;
-use Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ExportController extends Controller
