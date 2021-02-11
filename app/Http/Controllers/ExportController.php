@@ -105,6 +105,6 @@ class ExportController extends Controller
             $file_path,
             $download_filename,
             ['Content-Type' => 'text/csv']
-        )->deleteFileAfterSend(true);
+        );
     }
 }
