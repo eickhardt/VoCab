@@ -188,7 +188,7 @@
                                 row.html('<div class="btn btn-xs btn-primary translations" data-id="'
                                     + words[i]['meaning_id']
                                     + '"><span class="glyphicon glyphicon-list"></span></div><img class="row_image" alt="flag" src="'
-                                    + languages[words[i]['language_id']].image
+                                    + languages[words[i]['language_id'] - 1].image
                                     + '"> ' + '<a href="'
                                     + edit_link
                                     + '">'
