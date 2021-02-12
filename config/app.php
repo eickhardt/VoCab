@@ -245,11 +245,11 @@ return [
         'View'      => 'Illuminate\Support\Facades\View',
         'Gate'      => 'Illuminate\Support\Facades\Gate',
 
-        'Form'     => Collective\Html\FormFacade::class,
-        'Html'     => Collective\Html\HtmlFacade::class,
-        'Debugbar' => 'Barryvdh\Debugbar\Facade',
-        'Minify'   => 'Devfactory\Minify\Facades\MinifyFacade',
-        'Image'    => 'Intervention\Image\Facades\Image',
-        'Image'    => 'Illuminate\Support\Facades\Notification',
+        'Form'         => Collective\Html\FormFacade::class,
+        'Html'         => Collective\Html\HtmlFacade::class,
+        'Debugbar'     => 'Barryvdh\Debugbar\Facade',
+        'Minify'       => 'Devfactory\Minify\Facades\MinifyFacade',
+        'Image'        => 'Intervention\Image\Facades\Image',
+        'Notification' => 'Illuminate\Support\Facades\Notification',
     ],
 ];
