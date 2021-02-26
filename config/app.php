@@ -3,11 +3,12 @@
 return [
 
     // Custom values
-    'user1pw'                        => env('USER1_PW', 'user1pw'),
-    'user2pw'                        => env('USER2_PW', 'user2pw'),
-    'cronpw'                         => env('CRON_PW', 'cronuserpw'),
-    'max_active_languages'           => env('MAX_ACTIVE_LANGUAGES', 12),
-    'hours_to_keep_csv_export_files' => env('HOURS_TO_KEEP_CSV_EXPORT_FILES', 72),
+    'user1pw'                          => env('USER1_PW', 'user1pw'),
+    'user2pw'                          => env('USER2_PW', 'user2pw'),
+    'cronpw'                           => env('CRON_PW', 'cronuserpw'),
+    'max_active_languages'             => env('MAX_ACTIVE_LANGUAGES', 12),
+    'max_words_of_language_in_meaning' => env('MAX_WORDS_OF_LANGUAGE_IN_MEANING', 99),
+    'hours_to_keep_csv_export_files'   => env('HOURS_TO_KEEP_CSV_EXPORT_FILES', 72),
     // eo Custom values
 
     'name' => env('APP_NAME', 'Vokapp'),

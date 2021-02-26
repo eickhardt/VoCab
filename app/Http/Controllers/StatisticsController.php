@@ -34,11 +34,11 @@ class StatisticsController extends Controller
         }
 
         $first_year = Word::where('user_id', auth()->user()->id)
-            ->orderBy('created_at', 'asc')
-            ->first()
+                          ->orderBy('created_at', 'asc')
+                          ->first()
             ->created_at->year;
 
-        $year = $first_year;
+        $year  = $first_year;
         $years = [];
         do {
             $years[] = $year;
@@ -82,11 +82,11 @@ class StatisticsController extends Controller
 
         // Gather the days where the user has contributed
         $days_with_contributions_in_words_for_year = DB::table('words')
-            ->where('user_id', Auth::user()->id)
-            ->select([DB::raw("UNIX_TIMESTAMP(created_at) as 'time'"), DB::raw("COUNT(*) as 'contributions'")])
-            ->where(DB::raw('YEAR(created_at)'), '=', $year)
-            ->groupBy([DB::raw('DAY(created_at)'), DB::raw('MONTH(created_at)'), DB::raw('YEAR(created_at)'),])
-            ->get();
+                                                       ->where('user_id', Auth::user()->id)
+                                                       ->select([DB::raw("UNIX_TIMESTAMP(created_at) as 'time'"), DB::raw("COUNT(*) as 'contributions'")])
+                                                       ->where(DB::raw('YEAR(created_at)'), '=', $year)
+                                                       ->groupBy([DB::raw('DAY(created_at)'), DB::raw('MONTH(created_at)'), DB::raw('YEAR(created_at)'),])
+                                                       ->get();
 
         foreach ($days_with_contributions_in_words_for_year as $day_with_contribution) {
             $aggregated_result[$day_with_contribution->time] = $day_with_contribution->contributions;
@@ -103,19 +103,19 @@ class StatisticsController extends Controller
     public function index()
     {
         // Get all enabled languages for this user
-        $languages = Auth::user()->languages;
+        $languages = Auth::user()->activeLanguages;
 
         // Recently added words count
-        $days = 6;
+        $days              = 6;
         $recent_words_data = [];
         foreach ($languages as $language) {
             for ($day = $days; $day >= 0; $day--) {
-                $date = date('Y-m-d', strtotime('-' . $day . ' day', time()));
+                $date       = date('Y-m-d', strtotime('-' . $day . ' day', time()));
                 $word_count = Word::query()
-                    ->where('user_id', Auth::user()->id)
-                    ->where('language_id', $language->id)
-                    ->where(DB::raw('DATE(created_at)'), $date)
-                    ->count();
+                                  ->where('user_id', Auth::user()->id)
+                                  ->where('language_id', $language->id)
+                                  ->where(DB::raw('DATE(created_at)'), $date)
+                                  ->count();
 
                 $recent_words_data[$language->name][$date] = $word_count;
             }
@@ -127,25 +127,25 @@ class StatisticsController extends Controller
         $allLine = [];
 
         // Line 1, All words line
-        $allLine['total'] = Word::where('user_id', Auth::user()->id)
-            ->count();
+        $allLine['total']      = Word::where('user_id', Auth::user()->id)
+                                     ->count();
         $allLine['adjectives'] = Word::where('user_id', Auth::user()->id)
-            ->whereHas('meaning.type', function ($query) {
-                $query->where('id', '=', 1);
-            })->count();
-        $allLine['nouns'] = Word::where('user_id', Auth::user()->id)->whereHas('meaning.type', function ($query) {
+                                     ->whereHas('meaning.type', function ($query) {
+                                         $query->where('id', '=', 1);
+                                     })->count();
+        $allLine['nouns']      = Word::where('user_id', Auth::user()->id)->whereHas('meaning.type', function ($query) {
             $query->where('id', '=', 2);
         })->count();
-        $allLine['verbs'] = Word::where('user_id', Auth::user()->id)->whereHas('meaning.type', function ($query) {
+        $allLine['verbs']      = Word::where('user_id', Auth::user()->id)->whereHas('meaning.type', function ($query) {
             $query->where('id', '=', 3);
         })->count();
-        $allLine['adverbs'] = Word::where('user_id', Auth::user()->id)->whereHas('meaning.type', function ($query) {
+        $allLine['adverbs']    = Word::where('user_id', Auth::user()->id)->whereHas('meaning.type', function ($query) {
             $query->where('id', '=', 4);
         })->count();
-        $allLine['others'] = Word::where('user_id', Auth::user()->id)->whereHas('meaning.type', function ($query) {
+        $allLine['others']     = Word::where('user_id', Auth::user()->id)->whereHas('meaning.type', function ($query) {
             $query->where('id', '=', 5);
         })->count();
-        $allLine['percent'] = 100;
+        $allLine['percent']    = 100;
 
         // Save the line
         $allLines['All'] = $allLine;

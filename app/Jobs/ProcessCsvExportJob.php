@@ -2,19 +2,16 @@
 
 namespace App\Jobs;
 
-use App\CsvExport;
-use App\Port\Export\CsvExporter;
-use App\Port\CsvPortUtil;
+use App\Port\Export\Services\CsvExportDataProcessorService\ICsvExportDataProcessorService;
+use App\Port\Export\Services\CsvExportService\ICsvExportService;
 use App\User;
 use Exception;
-use File;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Log;
-use Storage;
 
 class ProcessCsvExportJob implements ShouldQueue
 {
@@ -28,59 +25,38 @@ class ProcessCsvExportJob implements ShouldQueue
     /**
      * @var string Unique id of this export.
      */
-    protected $export_id;
+    protected $request_fingerprint;
+
+    /**
+     * @var ICsvExportDataProcessorService Entity that will export the data to file.
+     */
+    protected $exporter;
 
     /**
      * Create a new job instance.
      *
-     * @param User $user The user we are exporting for.
-     * @param string $export_id Unique id of this export.
+     * @param User $user The user we are exporting data for.
+     * @param string $request_fingerprint
      */
-    public function __construct(User $user, $export_id)
+    public function __construct(User $user, string $request_fingerprint)
     {
-        $this->user      = $user;
-        $this->export_id = $export_id;
+        $this->user                = $user;
+        $this->request_fingerprint = $request_fingerprint;
     }
 
     /**
      * Execute the job.
+     *
+     * @param ICsvExportService $exporter Entity that will export the data to file.
      */
-    public function handle()
+    public function handle(ICsvExportService $exporter)
     {
         Log::info(self::class . ' is being handled', [
-            'user_id'   => $this->user->id,
-            'export_id' => $this->export_id
+            'user_id'             => $this->user->id,
+            'request_fingerprint' => $this->request_fingerprint
         ]);
 
-        // Grab data from DB
-        $data = $this->user->meanings()->withTrashed()->with('words')->get();
-
-        // Generate the string content and save as CSV file to storage
-        $csv_content = CsvExporter::export(
-            $data,
-            $this->user->languages
-        );
-
-        $file_name = CsvPortUtil::generateCsvExportFileName(
-            $this->user->id,
-            $this->export_id
-        );
-        $file_path = CsvPortUtil::getCsvExportFilePath($file_name);
-
-        Storage::put($file_path, $csv_content);
-
-        // Save export result in database for later reference
-        $export = CsvExport::create([
-                                        'user_id'   => $this->user->id,
-                                        'file_name' => $file_name
-                                    ]);
-
-        Log::info(CsvExport::class . ' created', [
-            'export_id' => $export->id,
-            'user_id'   => $this->user->id,
-            'file_name' => $file_name,
-            'file_path' => $file_path
-        ]);
+        $exporter->export($this->user, $this->request_fingerprint);
 
         $this->finalize(true);
     }
@@ -100,13 +76,12 @@ class ProcessCsvExportJob implements ShouldQueue
     /**
      * Job is completed, send the user a status and allow them to use porting again.
      *
-     * @param $success bool Whether or not the export was successful.
+     * @param $success bool Whether the export was successful.
      */
-    protected function finalize($success)
+    protected function finalize(bool $success)
     {
         $this->user->unlockPorting();
 
-        // Send status email to the user
-        SendCsvExportStatusEmailJob::dispatch($this->user, $success, $this->export_id);
+        SendCsvExportStatusEmailJob::dispatch($this->user, $success, $this->request_fingerprint);
     }
 }

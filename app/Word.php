@@ -62,8 +62,6 @@ class Word extends Eloquent
      */
     use SoftDeletes;
 
-    protected $dates = ['deleted_at'];
-
     /**
      * A Word is in one language.
      */

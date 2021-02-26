@@ -27,7 +27,7 @@ class ImportController extends Controller
      *
      * @return View
      */
-    public function show()
+    public function show(): View
     {
         $user_id = Auth::user()->id;
 
@@ -45,36 +45,35 @@ class ImportController extends Controller
      * @param ImportRequest $request Validation happens here.
      * @return RedirectResponse
      */
-    public function import(ImportRequest $request)
+    public function import(ImportRequest $request): RedirectResponse
     {
-        $user = $request->user();
+        $user = Auth::user();
 
-        if ($user->is_porting) {
-            Session::flash('warning', 'Please wait for the current port to complete before starting a new one. You\'ll receive an email once its ready.');
-        } else {
-            $user->is_porting = true;
-            $user->save();
-
-            $import_id = CsvPortUtil::getNextPortId();
-
-            $importer = new CsvImporter(
-                new CsvColumnHeaderValidator(),
-                $user,
-                $request->file('csv_file')->getRealPath(),
-                $import_id
-            );
-
-            ProcessCsvImportJob::dispatch(
-                $user,
-                $importer,
-                $import_id
-            );
-
-            Session::flash(
-                'success',
-                'The import is being processed. You\'ll receive an email once its ready.'
-            );
+        if ($user->isPortLocked()) {
+            Session::flash('warning', 'Please wait for the current port to complete processing before ' .
+                                      'initiating a new one. You\'ll receive an email once its ready.');
+            return redirect()->route('import_path');
         }
+
+        $user->lockPorting();
+
+        $importer = new CsvImporter(
+            new CsvColumnHeaderValidator(),
+            $user,
+            $request->file('csv_file')->getRealPath(),
+            $request->fingerprint()
+        );
+
+        ProcessCsvImportJob::dispatch(
+            $user,
+            $importer,
+            $request->fingerprint()
+        );
+
+        Session::flash(
+            'success',
+            'The import is being processed. You\'ll receive an email when its ready.'
+        );
 
         return redirect()->route('import_path');
     }

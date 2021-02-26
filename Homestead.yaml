@@ -13,5 +13,6 @@ sites:
     to: /home/vagrant/vokapp/public
 databases:
   - homestead
+  - testing
 name: vokapp
 hostname: vokapp

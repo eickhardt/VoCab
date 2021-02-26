@@ -43,13 +43,13 @@ class CsvImportModel
      * @param int $index The index of the column in the CSV file header.
      * @param WordLanguage | null $language If this is a Word field: The language it belongs to.
      */
-    public function addColumn($csv_column_name, $index, $language = null)
+    public function addColumn(string $csv_column_name, int $index, $language = null)
     {
-        // Get the base name of the column without the language shortname prefix
-        $no_prefix_column_name = '';
+        // Get the base name of the column without the language number & shortname prefix
         if ($language != null) {
-            $no_prefix_column_name = substr($csv_column_name, 3);
-            $this->columns[]       = new CsvColumn(
+            $no_prefix_column_name = substr($csv_column_name, 6);
+
+            $this->columns[] = new CsvColumn(
                 $csv_column_name,
                 $index,
                 $this->column_to_parser_map[$no_prefix_column_name],

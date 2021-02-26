@@ -1,8 +1,10 @@
 <?php
 
 use App\Meaning;
+use App\MeaningType;
 use App\User;
 use App\Word;
+use App\WordLanguage;
 use Illuminate\Database\Seeder;
 
 class MeaningTableSeeder extends Seeder
@@ -22,17 +24,21 @@ class MeaningTableSeeder extends Seeder
 
             // Create a meaning
             $meaning = new Meaning;
-            $meaning->meaning_type_id = 2;
-            $meaning->root = 'cat';
-            $meaning->user_id = $user->id;
+
+            $meaning->meaning_type_id = MeaningType::whereName('noun')->first()->id;
+            $meaning->root            = 'cat';
+            $meaning->user_id         = $user->id;
+
             $meaning->save();
 
             // Create a word
             $word = new Word;
-            $word->text = 'cat';
-            $word->language_id = 1; // English
+
+            $word->text        = 'cat';
+            $word->language_id = WordLanguage::whereShortName('en')->first()->id;; // English
             $word->meaning_id = $meaning->id;
-            $word->user_id = $user->id;
+            $word->user_id    = $user->id;
+
             $word->save();
         }
     }

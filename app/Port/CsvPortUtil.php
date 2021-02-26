@@ -4,6 +4,8 @@
 namespace App\Port;
 
 
+use Carbon\Carbon;
+
 class CsvPortUtil
 {
     /**
@@ -12,54 +14,20 @@ class CsvPortUtil
      * @param $csv_header_line string Header line from a CSV file import.
      * @return string[] List of string names of the fields.
      */
-    public static function getCsvLineValues($csv_header_line)
+    public static function getCsvLineValues(string $csv_header_line): array
     {
         return self::removeEolsFromValues(explode(CsvConstants::CSV_COLUMN_DELIMITER, $csv_header_line));
     }
 
     /**
-     * Check if the given string ends with the given string.
-     *
-     * @param string $column_name The string the search.
-     * @return bool Whether or not the haystack ends with the needle.
-     */
-    public static function isValidWordColumnName($column_name)
-    {
-        foreach (CsvConstants::getAllWordCsvColumnNames() as $valid_column) {
-
-            // Check if the column is prefixed with what could be a language shortname
-            if (strlen($column_name) - strlen($valid_column) === CsvConstants::LANGUAGE_SHORTNAME_LENGTH + 1) {
-
-                // Check if the column ends with a valid column name i.e. "en_text" -> "text"
-                if (substr($column_name, -strlen($valid_column)) === $valid_column) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Generates a random string of 10 chars using alphanumerics.
-     *
-     * @return false|string
-     */
-    public static function getNextPortId()
-    {
-        return substr(str_shuffle(MD5(microtime())), 0, 10);
-    }
-
-    /**
      * Generate unique file name for export file.
      *
-     * @param int $user_id Id of the user that we are exporting for.
-     * @param string $export_id Unique id of the export.
+     * @param string $request_fingerprint Unique id of the export.
      * @return string
      */
-    public static function generateCsvExportFileName($user_id, $export_id)
+    public static function generateCsvExportFileName(string $request_fingerprint): string
     {
-        return 'export_' . $user_id . '_' . $export_id . '_' . time() . '.csv';
+        return 'export_' . $request_fingerprint . '_' . time() . '.csv';
     }
 
     /**
@@ -68,31 +36,34 @@ class CsvPortUtil
      * @param string $file_name Name of the file to get path for.
      * @return string
      */
-    public static function getCsvExportFilePath($file_name)
+    public static function getCsvExportFilePath(string $file_name): string
     {
-        return CsvConstants::CSV_EXPORT_FOLDER . $file_name;
+        return storage_path('app/' . CsvConstants::CSV_EXPORT_FOLDER . $file_name);
     }
 
     /**
-     * Create a name for a served CSV export file.
+     * Create a name for a served CSV export file. This should be the filename the user sees when downloading.
      *
+     * @param Carbon $export_time The timestamp of the export.
      * @return string
      */
-    public static function getCsvExportDownloadFileName()
+    public static function generateCsvExportDownloadFileName(Carbon $export_time): string
     {
-        return strtolower(config('app.name')) . '-export.csv';
+        return strtolower(config('app.name'))
+               . '-export-'
+               . self::carbonToSimpleTimestampString($export_time)
+               . '.csv';
     }
 
     /**
      * Generate unique file name for import file.
      *
-     * @param int $user_id Id of the user that we are importing for.
-     * @param string $import_id Unique id of the import.
+     * @param string $request_fingerprint Unique id of the import.
      * @return string
      */
-    public static function generateCsvImportFileName($user_id, $import_id)
+    public static function generateCsvImportFileName(string $request_fingerprint): string
     {
-        return 'import_' . $user_id . '_' . $import_id . '_' . time() . '.csv';
+        return 'import_' . $request_fingerprint . '_' . time() . '.csv';
     }
 
     /**
@@ -101,9 +72,24 @@ class CsvPortUtil
      * @param string $file_name Name of the file to get path for.
      * @return string
      */
-    public static function getCsvImportFilePath($file_name)
+    public static function getCsvImportFilePath(string $file_name): string
     {
-        return CsvConstants::CSV_IMPORT_FOLDER . $file_name;
+        return storage_path('app/' . CsvConstants::CSV_IMPORT_FOLDER . $file_name);
+    }
+
+    /**
+     * Get a simple string from a Carbon instance. 2012-09-05 23:26:11 -> 20120905-232611
+     *
+     * @param Carbon $time
+     * @return string
+     */
+    public static function carbonToSimpleTimestampString(Carbon $time): string
+    {
+        $time = $time->toDateTimeString();
+        $time = str_replace(':', '-', $time);
+        $time = str_replace('-', '', $time);
+
+        return str_replace(' ', '-', $time);
     }
 
     /**
@@ -112,7 +98,7 @@ class CsvPortUtil
      * @param string[] $header_fields Array of header fields extracted from the CSV header line.
      * @return string[] Header fields without EOLs.
      */
-    protected static function removeEolsFromValues(array $header_fields)
+    protected static function removeEolsFromValues(array $header_fields): array
     {
         $cleaned_fields = [];
         foreach ($header_fields as $field) {

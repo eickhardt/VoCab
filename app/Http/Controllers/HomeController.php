@@ -1,13 +1,11 @@
 <?php namespace App\Http\Controllers;
 
-use App\WordLanguage;
 use App\MeaningType;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Input;
 use Auth;
-use Session;
 
 class HomeController extends Controller
 {
@@ -42,8 +40,8 @@ class HomeController extends Controller
     public function showSearch()
     {
         // Get languages and meaning types to display in the search options
-        $languages = Auth::user()->languages;
-        $types = MeaningType::all();
+        $languages = Auth::user()->activeLanguages;
+        $types     = MeaningType::all();
 
         // Get the languages that are enabled for this user
         $user_languages = Auth::user()->languagesIdArray();

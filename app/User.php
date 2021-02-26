@@ -29,7 +29,7 @@ use Illuminate\Support\Carbon;
  * @property int $is_admin
  * @property int|null $root_language_id
  * @property int $is_porting
- * @property-read Collection|WordLanguage[] $languages
+ * @property-read Collection|WordLanguage[] $activeLanguages
  * @property-read int|null $languages_count
  * @property-read Collection|Meaning[] $meanings
  * @property-read int|null $meanings_count
@@ -84,7 +84,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * This user's active languages.
      */
-    public function languages()
+    public function activeLanguages()
     {
         return $this->belongsToMany('App\WordLanguage');
     }
@@ -128,7 +128,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function languagesIdArray()
     {
-        return $this->languages()->pluck('id')->toArray();
+        return $this->activeLanguages()->pluck('id')->toArray();
     }
 
     /**
@@ -147,5 +147,29 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         $this->is_porting = false;
         $this->save();
+    }
+
+    /**
+     * @return bool Checks if the user is currently locked for porting.
+     */
+    public function isPortLocked(): bool
+    {
+        return !$this->is_admin && $this->is_porting;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getCsvExportData(): Collection
+    {
+        return $this->meanings()->withTrashed()->with('words')->get();
+    }
+
+    /**
+     * @return int Get the count of all meanings on this user including trashed.
+     */
+    public function getAllMeaningsCount(): int
+    {
+        return $this->meanings()->withTrashed()->count();
     }
 }

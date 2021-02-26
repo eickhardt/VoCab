@@ -1,7 +1,6 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Requests\DeleteAllRequest;
-use App\Http\Requests\Request;
 use Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -17,13 +16,12 @@ class UsersController extends Controller
      *
      * @return View
      */
-    public function showSettings()
+    public function showSettings(): View
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
         // Get the languages the user has enabled
         $user_languages = $user->languagesIdArray();
-//        dd($user_languages);
 
         // Get all languages
         $languages          = WordLanguage::all();
@@ -41,11 +39,9 @@ class UsersController extends Controller
      *
      * @return RedirectResponse
      */
-    public function storeActiveLanguageSettings()
+    public function storeActiveLanguageSettings(): RedirectResponse
     {
         $to_be_active_language_ids = Input::get('working_languages');
-//        dd($to_be_active_language_ids);
-//        dd(Input::all());
 
         // There must be at least one active language
         if ($to_be_active_language_ids === null || count($to_be_active_language_ids) < 1) {
@@ -62,7 +58,7 @@ class UsersController extends Controller
         // Verify that the root language is among the selected ones
         $user                   = Auth::user();
         $root_language_verified = false;
-        dd($user);
+
         foreach ($to_be_active_language_ids as $language) {
             if ($language == $user->root_language_id) {
                 $root_language_verified = true;
@@ -80,12 +76,12 @@ class UsersController extends Controller
         foreach ($languages as $language) {
             // If the language is in the post data, create relationship
             if (in_array($language->id, $to_be_active_language_ids)) {
-                if (!$user->languages()->find($language->id)) {
-                    $user->languages()->attach($language->id);
+                if (!$user->activeLanguages()->find($language->id)) {
+                    $user->activeLanguages()->attach($language->id);
                 }
             } else {
                 // Otherwise, remove the relationship
-                $user->languages()->detach($language->id);
+                $user->activeLanguages()->detach($language->id);
             }
         }
 
@@ -99,16 +95,16 @@ class UsersController extends Controller
      *
      * @return RedirectResponse
      */
-    public function storeRootLanguageSettings()
+    public function storeRootLanguageSettings(): RedirectResponse
     {
         // Get the user that's logged in
-        $user = auth()->user();
+        $user = Auth::user();
 
         // Check that the language the user has selected as root is actually active
         $new_root_language_id = Input::get('root_language_id');
         $language_is_active   = false;
 
-        foreach ($user->languages as $language) {
+        foreach ($user->activeLanguages as $language) {
             if ($new_root_language_id == $language->id) {
                 $language_is_active = true;
             }
@@ -143,7 +139,7 @@ class UsersController extends Controller
      * @param DeleteAllRequest $request
      * @return RedirectResponse
      */
-    public function deleteAll(DeleteAllRequest $request)
+    public function deleteAll(DeleteAllRequest $request): RedirectResponse
     {
         $user = $request->user();
 

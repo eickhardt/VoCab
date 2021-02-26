@@ -73,4 +73,19 @@ class WordLanguage extends Model
 
         return $array;
     }
+
+    /**
+     * For the given language ids, get a structure mapping the ids to short names. Pass null for all languages.
+     *
+     * @param int[] $ids
+     * @return array Language id to shortname map for the given ids.
+     */
+    public static function getLanguageIdToShortNameMap(array $ids = null)
+    {
+        if ($ids === null) {
+            return WordLanguage::pluck('short_name', 'id')->toArray();
+        } else {
+            return WordLanguage::whereIn('id', $ids)->pluck('short_name', 'id')->toArray();
+        }
+    }
 }

@@ -14,7 +14,7 @@ abstract class CsvConstants
     /**
      * @var string The char we put between the language field name prefix and the language field names.
      */
-    const CSV_LANGUAGE_PREFIX_GLUE = '_';
+    const CSV_FIELD_GLUE = '_';
 
     /**
      * @var string Name of the folder in storage where export CSV files are kept.
@@ -75,10 +75,10 @@ abstract class CsvConstants
      * @var array Names of optional Word fields.
      */
     const OPTIONAL_WORD_COLUMNS = [
+        CsvColumnNames::comment,
         CsvColumnNames::created_at,
         CsvColumnNames::updated_at,
-        CsvColumnNames::deleted_at,
-        CsvColumnNames::comment
+        CsvColumnNames::deleted_at
     ];
 
     /**

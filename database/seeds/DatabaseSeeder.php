@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,9 +11,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call('MeaningTypeTableSeeder');
-        $this->call('WordLanguageTableSeeder');
-        $this->call('UserTableSeeder');
-        $this->call('MeaningTableSeeder');
+        $this->call(MeaningTypeTableSeeder::class);
+        $this->call(WordLanguageTableSeeder::class);
+        $this->call(UserTableSeeder::class);
+        $this->call(MeaningTableSeeder::class);
     }
 }

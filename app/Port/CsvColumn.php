@@ -20,6 +20,11 @@ class CsvColumn
     protected $index;
 
     /**
+     * @var int Number of the word in the given language.
+     */
+    protected $word_language_number = 0;
+
+    /**
      * @var CellParser Parser that can turn the column content into the necessary type of content for the DB.
      */
     protected $parser;
@@ -41,6 +46,10 @@ class CsvColumn
         $this->parser                  = $parser;
         $this->no_language_prefix_name = $no_language_prefix_name;
         $this->language                = $language;
+
+        if ($language != null) {
+            $this->word_language_number = intval(substr($name, 0, 2));
+        }
     }
 
     /**
@@ -81,5 +90,13 @@ class CsvColumn
     public function getLanguage()
     {
         return $this->language;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWordLanguageNumber()
+    {
+        return $this->word_language_number;
     }
 }

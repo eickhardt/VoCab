@@ -43,9 +43,9 @@ class MeaningsController extends Controller
      *
      * @return View
      */
-    public function index()
+    public function index(): View
     {
-        $languages = Auth::user()->languages;
+        $languages = Auth::user()->activeLanguages;
         $types     = Meaning::all();
 
         return view('search.index', compact('languages', 'types'));
@@ -56,9 +56,9 @@ class MeaningsController extends Controller
      *
      * @return View
      */
-    public function create()
+    public function create(): View
     {
-        $languages = Auth::user()->languages;
+        $languages = Auth::user()->activeLanguages;
         $types     = MeaningType::asKeyValuePairs();
 
         return view('meanings.create', compact('languages', 'types'));
@@ -90,7 +90,7 @@ class MeaningsController extends Controller
         $meaning->save();
 
         // We also want to create a word in each of the provided languages
-        $languages      = Auth::user()->languages;
+        $languages      = Auth::user()->activeLanguages;
         $new_word_count = 0;
         foreach ($languages as $language) {
             if ($request->get($language->short_name)) {
@@ -106,7 +106,8 @@ class MeaningsController extends Controller
 
         // Tell the user what happened and redirect
         Session::flash('success', "A new meaning '" . $meaning->root . "' was created, along with " . $new_word_count . " associated words.");
-        return $this->edit($meaning);
+
+        return redirect()->route('meaning_edit_path', $meaning->id);
     }
 
     /**
@@ -116,12 +117,12 @@ class MeaningsController extends Controller
      * @return View
      * @throws AuthorizationException
      */
-    public function show(Meaning $meaning)
+    public function show(Meaning $meaning): View
     {
         $this->authorize('view', $meaning);
 
         $meanings[] = $meaning;
-        $languages  = Auth::user()->languages;
+        $languages  = Auth::user()->activeLanguages;
 
         return view('lists.meanings', compact('meanings', 'languages'));
     }
@@ -133,11 +134,11 @@ class MeaningsController extends Controller
      * @return View
      * @throws AuthorizationException
      */
-    public function edit(Meaning $meaning)
+    public function edit(Meaning $meaning): View
     {
         $this->authorize('update', $meaning);
 
-        $languages = Auth::user()->languages;
+        $languages = Auth::user()->activeLanguages;
         $types     = MeaningType::asKeyValuePairs();
         $meaning   = Meaning::with('words')->find($meaning->id);
 
@@ -152,7 +153,7 @@ class MeaningsController extends Controller
      * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function update(UpdateMeaningRequest $request, Meaning $meaning)
+    public function update(UpdateMeaningRequest $request, Meaning $meaning): RedirectResponse
     {
         $this->authorize('update', $meaning);
 
@@ -173,7 +174,7 @@ class MeaningsController extends Controller
      * @return RedirectResponse
      * @throws Exception
      */
-    public function destroy(Meaning $meaning)
+    public function destroy(Meaning $meaning): RedirectResponse
     {
         // Authenticated, now soft delete the associated words
         $meaning->words()->delete();
@@ -184,6 +185,7 @@ class MeaningsController extends Controller
 
         // Let the user know what happened
         Session::flash('success', "The meaning '" . $meaning_root . "' was trashed, along with its associated words.");
+
         return redirect()->route('search_path');
     }
 
@@ -209,7 +211,7 @@ class MeaningsController extends Controller
 
         $meanings[] = $meaning;
 
-        $languages = $user->languages;
+        $languages = $user->activeLanguages;
         $list_type = 'Random';
 
         return view('lists.meanings', compact('meanings', 'list_type', 'languages'));
@@ -231,7 +233,7 @@ class MeaningsController extends Controller
             return redirect()->back();
         }
 
-        $languages = Auth::user()->languages;
+        $languages = Auth::user()->activeLanguages;
 
         $list_type = 'Word of the Day';
 
@@ -289,9 +291,9 @@ class MeaningsController extends Controller
      * Restore a deleted meaning.
      *
      * @param integer $id
-     * @return mixed
+     * @return RedirectResponse
      */
-    public function restore($id)
+    public function restore(int $id): RedirectResponse
     {
         $meaning = Meaning::withTrashed()->find($id);
         $meaning->restore();
@@ -311,7 +313,7 @@ class MeaningsController extends Controller
  * @param $words
  * @return String
  */
-function tipContent($words)
+function tipContent($words): string
 {
     $result_array = [];
     foreach ($words as $word) {

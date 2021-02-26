@@ -93,7 +93,7 @@ class CsvImporter
             }
         }
 
-        if ($line_number <= 2) {
+        if ($line_number <= 1) {
             throw new ImportException('The CSV file must contain at least 1 header line and 1 meaning line');
         }
 
@@ -122,7 +122,7 @@ class CsvImporter
      */
     protected function saveImportFile($temp_file_path)
     {
-        $new_file_name     = CsvPortUtil::generateCsvImportFileName($this->user->id, $this->import_id);
+        $new_file_name     = CsvPortUtil::generateCsvImportFileName($this->import_id);
         $file_storage_path = CsvPortUtil::getCsvImportFilePath($new_file_name);
 
         File::copy($temp_file_path, $file_storage_path);

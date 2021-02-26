@@ -9,6 +9,7 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 use Log;
 use Session;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -28,7 +29,7 @@ class ExportController extends Controller
      *
      * @return View
      */
-    public function show()
+    public function show(): View
     {
         return view('export.index');
     }
@@ -36,29 +37,29 @@ class ExportController extends Controller
     /**
      * Check if the user is allowed to start an export and dispatch a job if so.
      *
+     * @param Request $request
      * @return RedirectResponse
      */
-    public function export()
+    public function export(Request $request): RedirectResponse
     {
         $user = Auth::user();
 
-        if ($user->is_porting) {
+        if ($user->isPortLocked()) {
 
             Session::flash('warning', 'Please wait for the current port to complete before starting a new one. You\'ll receive an email once its ready.');
 
-        } else if ($user->meanings()->withTrashed()->count() < 1) {
+        } else if ($user->getAllMeaningsCount() < 1) {
 
             Session::flash('warning', 'You have no meanings to export. Go create some :)');
 
         } else {
-            $user->is_porting = true;
-            $user->save();
+            $user->lockPorting();
 
-            ProcessCsvExportJob::dispatch($user, CsvPortUtil::getNextPortId());
+            ProcessCsvExportJob::dispatch($user, $request->fingerprint());
 
             Session::flash(
                 'success',
-                'The export is being processed. You\'ll receive an email with a download link once its ready.'
+                'The export is being processed. You\'ll receive an email with a download link when its ready.'
             );
         }
 
@@ -86,21 +87,22 @@ class ExportController extends Controller
                            )->orderBy('updated_at', 'desc')->first();
 
         if (!$export) {
-            Session::flash('error', 'Export is expired or you haven\'t created one yet.');
+            Session::flash('error', 'Your most recent export is expired or you haven\'t created any yet.');
+
             return redirect()->route('export_path');
         }
 
-        $file_path = storage_path('app/' . CsvPortUtil::getCsvExportFilePath($export->file_name));
+        $file_path = CsvPortUtil::getCsvExportFilePath($export->file_name);
 
-        $download_filename = CsvPortUtil::getCsvExportDownloadFileName();
+        $download_filename = CsvPortUtil::generateCsvExportDownloadFileName($export->updated_at);
 
         Log::info('User downloaded csv-export', [
-            'export_db_id'      => $export->id,
+            'export_id'         => $export->id,
             'user_id'           => $user->id,
             'download_filename' => $export->file_name
         ]);
 
-        // Serve the generated file as a download, and then delete it
+        // Serve the generated file as a download (files are house kept elsewhere)
         return response()->download(
             $file_path,
             $download_filename,

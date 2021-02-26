@@ -42,11 +42,12 @@ class WordsController extends Controller
      * @return View
      * @throws AuthorizationException
      */
-    public function show(Word $word)
+    public function show(Word $word): View
     {
         $this->authorize('view', $word);
 
         $words[] = $word;
+
         return view('lists.words', compact('words'));
     }
 
@@ -57,7 +58,7 @@ class WordsController extends Controller
      * @return View
      * @throws AuthorizationException
      */
-    public function edit(Word $word)
+    public function edit(Word $word): View
     {
         $this->authorize('update', $word);
 
@@ -71,10 +72,10 @@ class WordsController extends Controller
      *
      * @param UpdateWordRequest $request
      * @param Word $word
-     * @return mixed
+     * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function update(UpdateWordRequest $request, Word $word)
+    public function update(UpdateWordRequest $request, Word $word): RedirectResponse
     {
         $this->authorize('update', $word);
 
@@ -94,12 +95,12 @@ class WordsController extends Controller
      *
      * @return View
      */
-    public function create()
+    public function create(): View
     {
-        $info_array['languages'] = Auth::user()->languages()->pluck('name', 'id');
+        $info_array['languages'] = Auth::user()->activeLanguages()->pluck('name', 'id');
 
         if (Input::has('meaning_id')) {
-            $meaning = Meaning::with('type')->with('words')->find(Input::get('meaning_id'));
+            $meaning               = Meaning::with('type')->with('words')->find(Input::get('meaning_id'));
             $info_array['meaning'] = $meaning;
         }
 
@@ -116,18 +117,19 @@ class WordsController extends Controller
      * @param CreateWordRequest $request
      * @return RedirectResponse
      */
-    public function store(CreateWordRequest $request)
+    public function store(CreateWordRequest $request): RedirectResponse
     {
         // If this code is executed, validation has passed and we can create the word.
         $word = Word::create([
-            'language_id' => $request->get('language_id'),
-            'text' => $request->get('text'),
-            'meaning_id' => $request->get('meaning_id'),
-            'comment' => $request->get('comment'),
-            'user_id' => Auth::user()->id,
-        ]);
+                                 'language_id' => $request->get('language_id'),
+                                 'text'        => $request->get('text'),
+                                 'meaning_id'  => $request->get('meaning_id'),
+                                 'comment'     => $request->get('comment'),
+                                 'user_id'     => Auth::user()->id,
+                             ]);
 
         Session::flash('success', "A new word '" . $word->text . "' was created.");
+
         return redirect()->route('meaning_edit_path', $word->meaning_id);
     }
 
@@ -135,16 +137,17 @@ class WordsController extends Controller
      * Soft delete a word.
      *
      * @param Word $word
-     * @return mixed
+     * @return RedirectResponse
      * @throws Exception
      */
-    public function destroy(Word $word)
+    public function destroy(Word $word): RedirectResponse
     {
         $old_word = $word->text;
 
         $word->delete();
 
         Session::flash('success', "The word '" . $old_word . "' was deleted.");
+
         return redirect()->route('search_path');
     }
 
@@ -159,10 +162,10 @@ class WordsController extends Controller
             $search_term = Input::get('search_term');
             $search_term = "%{$search_term}%";
             $words_query = Word::where('user_id', Auth::user()->id)
-                ->where(function ($query) use ($search_term) {
-                    $query->where('text', 'LIKE', $search_term)
-                        ->orWhere('comment', 'LIKE', $search_term);
-                });
+                               ->where(function ($query) use ($search_term) {
+                                   $query->where('text', 'LIKE', $search_term)
+                                         ->orWhere('comment', 'LIKE', $search_term);
+                               });
 
 
             if (Input::has('options') && Input::get('options')) {
@@ -201,8 +204,8 @@ class WordsController extends Controller
     public function random()
     {
         $word = Word::where('user_id', Auth::user()->id)
-            ->orderBy(DB::raw("RAND()"))
-            ->first();
+                    ->orderBy(DB::raw("RAND()"))
+                    ->first();
 
         if (!$word) {
             Session::flash(
@@ -223,11 +226,11 @@ class WordsController extends Controller
      *
      * @return View
      */
-    public function showTrashed()
+    public function showTrashed(): View
     {
         $list_type = 'Trashed';
         $languages = WordLanguage::all();
-        $words = Word::onlyTrashed()->where('user_id', Auth::user()->id)->get();
+        $words     = Word::onlyTrashed()->where('user_id', Auth::user()->id)->get();
 
         return view('lists.words', compact('words', 'list_type', 'languages'));
     }
@@ -238,7 +241,7 @@ class WordsController extends Controller
      * @param integer $id
      * @return RedirectResponse
      */
-    public function restore($id)
+    public function restore(int $id): RedirectResponse
     {
         $word = Word::withTrashed()->find($id);
 
@@ -258,11 +261,11 @@ class WordsController extends Controller
      *
      * @return View
      */
-    public function showMostRecent()
+    public function showMostRecent(): View
     {
         $list_type = 'Recent';
         $languages = WordLanguage::all();
-        $words = Auth::user()->words()->orderBy('created_at', 'desc')->paginate(50);
+        $words     = Auth::user()->words()->orderBy('created_at', 'desc')->paginate(50);
 
         return view('lists.words', compact('words', 'list_type', 'languages'));
     }
