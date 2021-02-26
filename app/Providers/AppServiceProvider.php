@@ -1,10 +1,8 @@
 <?php namespace App\Providers;
 
-use App\Port\Export\Services\CsvExportFileCreator\CsvExportFileCreator;
-use App\Port\Export\Services\CsvExportFileCreator\ICsvExportFileCreatorService;
 use App\Port\Export\Services\CsvExportDataProcessorService\CsvExportDataProcessorServiceImpl;
 use App\Port\Export\Services\CsvExportDataProcessorService\ICsvExportDataProcessorService;
-use App\Port\Export\Services\CsvExportService\CsvExportService;
+use App\Port\Export\Services\CsvExportService\CsvExportServiceImpl;
 use App\Port\Export\Services\CsvExportService\ICsvExportService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
@@ -36,6 +34,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(ICsvExportDataProcessorService::class, CsvExportDataProcessorServiceImpl::class);
-        $this->app->bind(ICsvExportService::class, CsvExportService::class);
+        $this->app->bind(ICsvExportService::class, CsvExportServiceImpl::class);
     }
 }

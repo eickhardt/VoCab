@@ -10,7 +10,7 @@ use App\Port\Export\Services\CsvExportDataProcessorService\ICsvExportDataProcess
 use App\User;
 use Log;
 
-class CsvExportService implements ICsvExportService
+class CsvExportServiceImpl implements ICsvExportService
 {
     /**
      * @var ICsvExportDataProcessorService Entity that will process DB data to CSV.
