@@ -24,30 +24,29 @@ class BackupController extends Controller
     /**
      * Backup the database.
      *
-     * @return mixed
+     * @return RedirectResponse
      */
-    public function backup()
+    public function backup(): RedirectResponse
     {
         // Check if the user has permission to do this
         $user = Auth::user();
-        $allowed_users = ['Daniel Eickhardt', 'Gabrielle Tranchet'];
         if (!$user->is_admin) {
             Session::flash('error', "You don't have permission to do that.");
-            return redirect()->back();
+            return redirect()->route('backup_show_path');
         }
 
         // Create the backup
         Artisan::call('backup:run', ['--only-db' => true]);
 
         // Create a corresponding database row
-        $backup_path = storage_path() . '/app/Vocab';
-        $files = scandir($backup_path, SCANDIR_SORT_DESCENDING);
+        $backup_path = storage_path() . '/app/' . config('app.name');
+        $files       = scandir($backup_path, SCANDIR_SORT_DESCENDING);
         $newest_file = $files[0];
         Backup::create(['user_id' => $user->id, 'file' => $newest_file]);
 
         // Redirect back with a message to the user
         Session::flash('success', "A new snapshot has been created.");
-        return $this->show();
+        return redirect()->route('backup_show_path');
     }
 
     /**
@@ -55,9 +54,10 @@ class BackupController extends Controller
      *
      * @return View
      */
-    public function show()
+    public function show(): View
     {
         $backups = Backup::with('user')->orderBy('created_at', 'DESC')->take(10)->get();
+
         return view('backup.index', compact('backups'));
     }
 
@@ -67,10 +67,11 @@ class BackupController extends Controller
      * @param $id integer
      * @return BinaryFileResponse
      */
-    public function download($id)
+    public function download(int $id): BinaryFileResponse
     {
         $backup = Backup::find($id);
-        return Response::download(storage_path() . '/app/Vocab/' . $backup->file, $backup->file, []);
+
+        return Response::download(storage_path() . '/app/' . config('app.name') . $backup->file, $backup->file, []);
     }
 
     /**
@@ -80,22 +81,22 @@ class BackupController extends Controller
      * @return RedirectResponse
      * @throws Exception
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         // Check if the user has permission to do this
         if (!Auth::user()->is_admin) {
             Session::flash('error', "You don't have permission to do that.");
-            return redirect()->back();
+            return redirect()->route('backup_show_path');
         }
 
         $backup = Backup::find($id);
 
-        unlink(storage_path() . '/app/Vocab/' . $backup->file);
+        unlink(storage_path() . '/app/' . config('app.name') . '/' . $backup->file);
 
         $backup_name = $backup->file;
         $backup->delete();
 
         Session::flash('success', "The snapshot '" . $backup_name . "' was deleted.");
-        return redirect()->back();
+        return redirect()->route('backup_show_path');
     }
 }
