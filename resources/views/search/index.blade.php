@@ -185,15 +185,17 @@
                                 console.log(languages);
                                 let edit_link = "/meaning/" + words[i]['meaning_id'] + "/edit";
                                 let row = $('#cloneme').clone().removeAttr('id').removeAttr('style').addClass('removeme');
-                                row.html('<div class="btn btn-xs btn-primary translations" data-id="'
-                                    + words[i]['meaning_id']
-                                    + '"><span class="glyphicon glyphicon-list"></span></div><img class="row_image" alt="flag" src="'
-                                    + languages[words[i]['language_id'] - 1].image
-                                    + '"> ' + '<a href="'
-                                    + edit_link
-                                    + '">'
-                                    + words[i]['text']
-                                    + '</a>');
+                                if (languages[words[i]['language_id'] - 1]) {
+                                    row.html('<div class="btn btn-xs btn-primary translations" data-id="'
+                                        + words[i]['meaning_id']
+                                        + '"><span class="glyphicon glyphicon-list"></span></div><img class="row_image" alt="flag" src="'
+                                        + languages[words[i]['language_id'] - 1].image
+                                        + '"> ' + '<a href="'
+                                        + edit_link
+                                        + '">'
+                                        + words[i]['text']
+                                        + '</a>');
+                                }
 
                                 row.prependTo($('.words_list'));
                             }
